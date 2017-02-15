@@ -28,7 +28,7 @@ namespace KN.Web.Park
         {
 
         }
-        /* temp
+        
         private void importExcel()
         {
 
@@ -202,7 +202,8 @@ namespace KN.Web.Park
                                     if (strPaymentCd.Equals(CommValue.PAYMENT_TYPE_VALUE_TRANSFER))
                                     {
                                         // KN_USP_SET_INSERT_LEDGERINFO_S01
-                                        BalanceMngBlo.RegistryLedgerAddonInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, ddlTransfer.SelectedValue);
+                                        //BalanceMngBlo.RegistryLedgerAddonInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, ddlTransfer.SelectedValue);
+                                        BalanceMngBlo.RegistryLedgerAddonInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, "0");
                                     }
                                 }
                             }
@@ -375,7 +376,7 @@ namespace KN.Web.Park
                 ErrLogger.MakeLogger(ex);
             }
         }
-        */
+        
         protected void MakeCalculate()
         {
             //if (string.IsNullOrEmpty(txtCardFee.Text))
