@@ -452,6 +452,9 @@
     <Content Include="Common\RdPopup\RDPopupUtilFeeDetail.aspx" />
     <Content Include="Common\RdPopup\RDPopupWaterFeeDetail.aspx" />
     <Content Include="Common\VBScript\fnShowReport.vbs" />
+    <Content Include="DLL\EPPlus.dll" />
+    <Content Include="DLL\ZedGraph.dll" />
+    <Content Include="DLL\ZedGraph.Web.dll" />
     <Content Include="KN.Web.Publish.xml" />
     <Content Include="Management\Manage\APTDebitList.aspx" />
     <Content Include="Management\Manage\MngParkingFeeUpdateAPT.aspx" />
