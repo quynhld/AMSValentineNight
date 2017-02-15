@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+
+using KN.Common.Base;
+using KN.Common.Base.Code;
+using KN.Common.Method.Common;
+using KN.Common.Method.Lib;
+using KN.Common.Method.Log;
+using KN.Common.Method.Util;
+using KN.Resident.Biz;
+
+
+using KN.Settlement.Biz;
+using System.Text;
+
+namespace KN.Web.Common.RdPopup
+{
+    public partial class RDPopupDebitList1 : BasePage
+    {
+        public string strMRDFile = string.Empty;
+        public string NOW_DOMAIN = string.Empty;
+        public string DOC_NO = string.Empty;
+        public string REQ_DT = string.Empty;
+        public string PAY_TYPE = string.Empty;
+        public string RENT_CD = string.Empty;
+        public string LINK_NM = string.Empty;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!CheckParams())
+            {
+                StringBuilder sbWarning = new StringBuilder();
+
+                sbWarning.Append("alert('");
+                sbWarning.Append(AlertNm["INFO_ACCESS_WRONG"]);
+                sbWarning.Append("');");
+                sbWarning.Append("self.close();");
+
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Warning", sbWarning.ToString(), CommValue.AUTH_VALUE_TRUE);
+            }
+            else
+            {
+                // 내부IP
+                string strHostIp = "http://" + HttpContext.Current.Request.ServerVariables["LOCAL_ADDR"].ToString();
+                string strHostPort = HttpContext.Current.Request.ServerVariables["SERVER_PORT"].ToString();
+
+                if (!strHostPort.Equals(CommValue.PUBLIC_VALUE_PORT))
+                {
+                    strHostIp = strHostIp + ":" + strHostPort;
+                }
+
+                if (strHostIp.Equals(CommValue.PUBLIC_VALUE_DOMAIN.ToLower()) ||
+                    strHostIp.Equals(CommValue.PUBLIC_VALUE_TESTHOST.ToLower()) ||
+                    strHostIp.Equals(CommValue.PUBLIC_VALUE_TESTDOMAIN.ToLower()))
+                {
+                    // 공식외부IP
+                    NOW_DOMAIN = CommValue.PUBLIC_VALUE_DOMAIN;
+
+                    if (PAY_TYPE.Equals("0003"))
+                    {
+                        strMRDFile = "NormalDebitNote_L-OS.mrd";
+
+                    }
+                    else if (PAY_TYPE.Equals("0001"))
+                    {
+                        strMRDFile = "NormalDebitNote_L-P.mrd";
+                    }
+                    else if (PAY_TYPE.Equals("0002"))
+                    {
+                        strMRDFile = "NormalDebitNoteUSD_L-P.mrd";
+                    }
+                    else
+                    {
+                        strMRDFile = "NormalDebitNoteOS_L-P.mrd";
+                    }
+                    
+                }
+                else if (strHostIp.Equals(CommValue.PRIVATE_VALUE_DOMAIN.ToLower()) || strHostIp.Equals(CommValue.PRIVATE_VALUE_TESTDOMAIN.ToLower()))
+                {
+
+                    // 공식내부IP
+                    NOW_DOMAIN = CommValue.PRIVATE_VALUE_DOMAIN;
+                    if (PAY_TYPE.Equals("0003"))
+                    {
+                        strMRDFile = "NormalDebitNote_L-OS.mrd";
+
+                    }
+                    else if (PAY_TYPE.Equals("0001"))
+                    {
+                        strMRDFile = "NormalDebitNote_L-P.mrd";
+                    }
+                    else if (PAY_TYPE.Equals("0002"))
+                    {
+                        strMRDFile = "NormalDebitNoteUSD_L-P.mrd";
+                    }
+                    else
+                    {
+                        strMRDFile = "NormalDebitNoteOS_L-P.mrd";
+                    }
+                }
+            }
+        }
+
+        private bool CheckParams()
+        {
+            bool isReturnOk = CommValue.AUTH_VALUE_FALSE;
+
+            if (Request.Params["Datum0"] != null)
+            {
+                if (!string.IsNullOrEmpty(Request.Params["Datum0"]))
+                {
+                    DOC_NO = Request.Params["Datum0"];
+                    txtHfDocNo.Text = Request.Params["Datum0"];
+                }
+                if (!string.IsNullOrEmpty(Request.Params["Datum1"]))
+                {
+                    REQ_DT = Request.Params["Datum1"];
+                    txthfRequestDt.Text = Request.Params["Datum1"];
+                }
+                if (!string.IsNullOrEmpty(Request.Params["Datum2"]))
+                {
+                    PAY_TYPE = Request.Params["Datum2"];                   
+                }
+                if (!string.IsNullOrEmpty(Request.Params["Datum3"]))
+                {
+                    RENT_CD = Request.Params["Datum3"];
+                    txtHfRentCd.Text = RENT_CD;
+                }
+                isReturnOk = CommValue.AUTH_VALUE_TRUE;
+            }
+            return isReturnOk;
+        }
+
+        protected void imgbtnPrint_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {                
+                 //KN_USP_SET_INSERT_INVOICEFORTEMP_S01 & Update InvoieNo
+                var insMemNo = Session["MemNo"].ToString();
+                var insMemIP = Session["UserIP"].ToString();
+                InvoiceMngBlo.InsertHoadonInfo(txtHfRentCd.Text,txtHfDocNo.Text,txthfRequestDt.Text,insMemNo,insMemIP);
+
+                var sbNoSelection = new StringBuilder();
+
+                sbNoSelection.Append("opener.window.fnLoadData();");
+
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "RefreshParent", sbNoSelection.ToString(), CommValue.AUTH_VALUE_TRUE);
+            }
+            catch (Exception ex)
+            {
+                ErrLogger.MakeLogger(ex);
+            }
+
+        }
+
+        protected void imgBtnReprint_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                AuthCheckLib.CheckSession();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "PreviewPrint", "rd_Print1();", CommValue.AUTH_VALUE_TRUE);                
+                InvoiceMngBlo.UpdatingCreateYN(DOC_NO);
+            }
+            catch (Exception ex)
+            {
+                ErrLogger.MakeLogger(ex);
+            }
+        }
+    }
+}

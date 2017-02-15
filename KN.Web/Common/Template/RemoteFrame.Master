@@ -1,0 +1,120 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="RemoteFrame.master.cs" Inherits="KN.Web.Common.Template.RemoteFrame" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title><%=TITLE_NOW%></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta http-equiv="ImageToolBar" content="no"/>
+<meta name="Keywords" content="사이트내용"/>
+<meta name="Description" content="사이트소개"/>
+<meta name="Copyright" content="저작권정보"/>
+<meta name="Author" content="Shim"/>
+<meta name="Date" content="2010.08"/>
+<link rel="stylesheet" type="text/css" href="/Common/Css/keangnam.css"/>
+<script language="javascript" type="text/javascript" src="/Common/Javascript/jquery-1.4.2.min.js"></script>
+<script language="javascript" type="text/javascript" src="/Common/Javascript/Global.js"></script>
+<script language="javascript" type="text/javascript" src="/Common/Javascript/Calendar.js"></script>
+<script language="javascript" type="text/javascript" src="/Common/Javascript/BirthCalendar.js"></script>
+<script language="javascript" type="text/javascript" src="/Common/Javascript/ContractCalendar.js"></script>
+<script type="text/javascript">
+    function fnAlert(strText, strLink) {
+        alert(strText);
+        location.replace(strLink);
+    }
+</script>
+</head>
+<body>
+    <form id="frmMaster" runat="server">
+    <asp:ScriptManager ID="smManager" runat="server"></asp:ScriptManager>
+        <asp:TextBox ID="txtMasterMenuSeq" runat="server" Visible="false"></asp:TextBox>
+        <div class="knTw">
+            <div class="kn-wrap">
+                <div class="knw">	
+                    <div class="knw-head">
+                        <div class="util">
+                            <asp:Literal ID="ltTopSiteMap" runat="server"></asp:Literal>
+                            <asp:Literal ID="ltTopLogOut" runat="server"></asp:Literal>
+                            <asp:Literal ID="ltTopHome" runat="server"></asp:Literal>
+                        </div>
+                        <div class="nav">
+                            <div class="logo">
+                                <img src="/Common/Images/Common/kn-logo.png" alt="keangnam" title="keangnam"/>
+                            </div>
+                            <asp:ListView ID="lvTop1stMenu" runat="server" OnItemDataBound="lvTop1stMenu_ItemDataBound" ItemPlaceholderID="iphItemPlaceHideId">
+                                <LayoutTemplate>
+                                    <div class="top-nav">
+                                        <span id="iphItemPlaceHideId" runat="server"></span>
+                                    </div>
+                                </LayoutTemplate>
+                                <ItemTemplate>
+                                    <asp:Literal ID="ltTopMenu" runat="server"></asp:Literal>
+                                </ItemTemplate>
+                            </asp:ListView>
+                            <div class="sun-nav-wp">
+                                <div class="sub-nav-lt">
+                                    <div class="sub-nav-rt">
+                                        <asp:ListView ID="lvTop2ndMenu" runat="server" OnItemDataBound="lvTop2ndMenu_ItemDataBound" ItemPlaceholderID="iphItemPlaceHideId">
+                                            <LayoutTemplate>
+                                                <div class="sub-nav-md">
+                                                    <span id="iphItemPlaceHideId" runat="server"></span>
+                                                </div>
+                                            </LayoutTemplate>
+                                            <ItemTemplate>
+                                                <asp:Literal ID="ltTopMenu" runat="server"></asp:Literal>
+                                            </ItemTemplate>
+                                        </asp:ListView>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="top-tit">
+                                <img src="/Common/Images/Common/kn-titB.png" alt="자산관리 시스템" title="자산관리 시스템"/>
+                            </div>
+                        </div>
+                    </div><!-- e/ knw-head  -->
+                </div>
+                <div class="knw-cont">
+                    <div class="left-nav">
+                        <p class="lenTit"><%=USER_NM%></p>
+                        <div class="lenBtbg">
+                            <p class="lenTit1"><asp:Literal ID="ltLeftTitle" runat="server"></asp:Literal></p>
+                            <div class="lenTpbg">
+			                    <asp:ListView ID="lvLeftMenu" runat="server" OnItemDataBound="lvLeftMenu_ItemDataBound" ItemPlaceholderID="iphItemPlaceHideId">
+			                        <LayoutTemplate>
+			                            <ul class="lenDlist">
+			                                <li id="iphItemPlaceHideId" runat="server"></li>
+			                            </ul>
+			                        </LayoutTemplate>
+			                        <ItemTemplate>
+			                            <asp:Literal ID="ltLeftMenu" runat="server"></asp:Literal>
+			                        </ItemTemplate>
+			                    </asp:ListView>
+                            </div>
+                        </div>
+                    </div><!-- e/ left-nav  -->
+                    <div class="content">
+                        <div class="cont-Btbg">
+                            <div class="cont-Tpbg">
+                                <div class="cont-Mid">
+                                    <div class="cont-tit">
+                                        <div class="sub-util"><span class="home"><asp:Literal ID="ltHome" runat="server"></asp:Literal></span> &gt; <asp:Literal ID="ltDepth1" runat="server"></asp:Literal> &gt; <asp:Literal ID="ltDepth2" runat="server"></asp:Literal></div>
+                                        <div class="sub-tit"><%=PAGE_TITLE%></div>
+                                    </div><!-- e/ cont-tit  -->
+                                    <div class="cont-wp">
+                                        <asp:Literal ID="ltWarning" runat="server"></asp:Literal>
+                                        <asp:ContentPlaceHolder ID="cphContent" runat="server"><< CONTENT 위치 >></asp:ContentPlaceHolder>
+                                    </div><!-- e/ cont-wp  -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <span><img src="/Common/Images/Common/foot-copy.gif" alt="Copyright 2010 CHESTNUTVINA  ALL RIGHTS RESERVED." title="Copyright 2010 CHESTNUTVINA  ALL RIGHTS RESERVED."/></span>
+                        </div>
+                    </div><!-- e/ content  -->
+                </div><!-- e/ knw-cont  -->
+            </div>
+        </div>
+	</form>
+</body>
+</html>
