@@ -28,7 +28,7 @@ namespace KN.Web.Park
         {
 
         }
-
+        /* temp
         private void importExcel()
         {
 
@@ -135,7 +135,7 @@ namespace KN.Web.Park
                             DataTable dtVatRatio = VatMngBlo.WatchVatInfo(CommValue.ITEM_TYPE_VALUE_PARKINGFEE);
                             DataTable dtPrintOut = new DataTable();
                             DataTable dtLedgerDet = new DataTable();
-                            /*tam thoi
+                            
                             //if (Int32.Parse(rdobtnParkingDays.SelectedValue) > CommValue.NUMBER_VALUE_0)
                             //    intLoopCnt = Int32.Parse(ddlDuringMonth.SelectedValue) + CommValue.NUMBER_VALUE_1;
                             //else
@@ -146,7 +146,7 @@ namespace KN.Web.Park
 
                             //if (!string.IsNullOrEmpty(txtHfMonthlyFee.Text))
                             //    dblMonthlyFee = double.Parse(txtHfMonthlyFee.Text);
-                            //*/
+                            //
                             double dblItemTotEnAmt = CommValue.NUMBER_VALUE_0_0;
                             double dblItemTotViAmt = CommValue.NUMBER_VALUE_0_0;
                             double dblDongToDollar = CommValue.NUMBER_VALUE_0_0;
@@ -375,7 +375,7 @@ namespace KN.Web.Park
                 ErrLogger.MakeLogger(ex);
             }
         }
-
+        */
         protected void MakeCalculate()
         {
             //if (string.IsNullOrEmpty(txtCardFee.Text))
