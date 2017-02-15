@@ -1,0 +1,794 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2BAD19E0-5312-43FF-A242-399FBE7E161C}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KNNEW</RootNamespace>
+    <AssemblyName>KNNEW</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.20710.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\DotNetOpenAuth.AspNet.dll" />
+    <Content Include="bin\DotNetOpenAuth.AspNet.xml" />
+    <Content Include="bin\DotNetOpenAuth.Core.dll" />
+    <Content Include="bin\DotNetOpenAuth.Core.xml" />
+    <Content Include="bin\DotNetOpenAuth.OAuth.Consumer.dll" />
+    <Content Include="bin\DotNetOpenAuth.OAuth.Consumer.xml" />
+    <Content Include="bin\DotNetOpenAuth.OAuth.dll" />
+    <Content Include="bin\DotNetOpenAuth.OAuth.xml" />
+    <Content Include="bin\DotNetOpenAuth.OpenId.dll" />
+    <Content Include="bin\DotNetOpenAuth.OpenId.RelyingParty.dll" />
+    <Content Include="bin\DotNetOpenAuth.OpenId.RelyingParty.xml" />
+    <Content Include="bin\DotNetOpenAuth.OpenId.xml" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.xml" />
+    <Content Include="bin\KN.Board.dll" />
+    <Content Include="bin\KN.Board.pdb" />
+    <Content Include="bin\KN.Common.Base.dll" />
+    <Content Include="bin\KN.Common.Base.pdb" />
+    <Content Include="bin\KN.Common.DB.dll" />
+    <Content Include="bin\KN.Common.Method.dll" />
+    <Content Include="bin\KN.Common.Method.pdb" />
+    <Content Include="bin\KN.Config.dll" />
+    <Content Include="bin\KN.Config.pdb" />
+    <Content Include="bin\KN.Manage.dll" />
+    <Content Include="bin\KN.Manage.pdb" />
+    <Content Include="bin\KN.Parking.dll" />
+    <Content Include="bin\KN.Parking.pdb" />
+    <Content Include="bin\KN.Resident.dll" />
+    <Content Include="bin\KN.Resident.pdb" />
+    <Content Include="bin\KN.Settlement.dll" />
+    <Content Include="bin\KN.Settlement.pdb" />
+    <Content Include="bin\KNNEW.dll" />
+    <Content Include="bin\KNNEW.pdb" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.xml" />
+    <Content Include="bin\Microsoft.Web.WebPages.OAuth.dll" />
+    <Content Include="bin\Microsoft.Web.WebPages.OAuth.xml" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\System.Net.Http.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\System.Net.Http.WebRequest.dll" />
+    <Content Include="bin\System.Net.Http.WebRequest.xml" />
+    <Content Include="bin\System.Net.Http.xml" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Helpers.xml" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.xml" />
+    <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="bin\WebMatrix.Data.dll" />
+    <Content Include="bin\WebMatrix.Data.xml" />
+    <Content Include="bin\WebMatrix.WebData.dll" />
+    <Content Include="bin\WebMatrix.WebData.xml" />
+    <Content Include="Common\Images\Btn\Btn-Type1-Left.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type1-Mid.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type1-Right.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type2-Left.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type2-Mid.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type2-Right.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type3-Left.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type3-Mid.gif" />
+    <Content Include="Common\Images\Btn\Btn-Type3-Right.gif" />
+    <Content Include="Common\Images\Btn\btn_blue_print.gif" />
+    <Content Include="Common\Images\Btn\FIPBtn1.gif" />
+    <Content Include="Common\Images\Btn\FIPBtn2.gif" />
+    <Content Include="Common\Images\Btn\FIPBtn3.gif" />
+    <Content Include="Common\Images\Btn\Index-kn-FindId.png" />
+    <Content Include="Common\Images\Btn\Index-kn-FindPW.png" />
+    <Content Include="Common\Images\Btn\Index-kn-login.png" />
+    <Content Include="Common\Images\Btn\Ls-closeBtn.png" />
+    <Content Include="Common\Images\Btn\Ls-openBtn.png" />
+    <Content Include="Common\Images\Btn\next.gif" />
+    <Content Include="Common\Images\Btn\next2.gif" />
+    <Content Include="Common\Images\Btn\prev.gif" />
+    <Content Include="Common\Images\Btn\prev2.gif" />
+    <Content Include="Common\Images\Btn\Recomplie.png" />
+    <Content Include="Common\Images\Btn\sh-btn1.gif" />
+    <Content Include="Common\Images\Btn\Sh_Lbg.gif" />
+    <Content Include="Common\Images\Btn\Sh_Mbg.gif" />
+    <Content Include="Common\Images\Btn\Sh_Rbg.gif" />
+    <Content Include="Common\Images\Btn\Txt-Ftype1-Left.gif" />
+    <Content Include="Common\Images\Btn\Txt-Ftype1-Mid.gif" />
+    <Content Include="Common\Images\Btn\Txt-Ftype1-Right.gif" />
+    <Content Include="Common\Images\Btn\Txt-Ftype2-Left.gif" />
+    <Content Include="Common\Images\Btn\Txt-Ftype2-Mid.gif" />
+    <Content Include="Common\Images\Btn\Txt-Ftype2-Right.gif" />
+    <Content Include="Common\Images\Common\alert-Tbg.gif" />
+    <Content Include="Common\Images\Common\bg.gif" />
+    <Content Include="Common\Images\Common\bg_bottom.gif" />
+    <Content Include="Common\Images\Common\bg_repeat.gif" />
+    <Content Include="Common\Images\Common\bg_top.gif" />
+    <Content Include="Common\Images\Common\bigBtn_bg.gif" />
+    <Content Include="Common\Images\Common\blank.gif" />
+    <Content Include="Common\Images\Common\body_bg.gif" />
+    <Content Include="Common\Images\Common\body_bg.png" />
+    <Content Include="Common\Images\Common\body_repeatbg.gif" />
+    <Content Include="Common\Images\Common\body_repeatbg.png" />
+    <Content Include="Common\Images\Common\bottom-nav-topbg.gif" />
+    <Content Include="Common\Images\Common\btDot.gif" />
+    <Content Include="Common\Images\Common\btn.gif" />
+    <Content Include="Common\Images\Common\btn2.gif" />
+    <Content Include="Common\Images\Common\btn3.gif" />
+    <Content Include="Common\Images\Common\calendar.gif" />
+    <Content Include="Common\Images\Common\cancelBtn.gif" />
+    <Content Include="Common\Images\Common\cont-bottomBg.gif" />
+    <Content Include="Common\Images\Common\cont-midBg.gif" />
+    <Content Include="Common\Images\Common\cont-topBg.gif" />
+    <Content Include="Common\Images\Common\cont.gif" />
+    <Content Include="Common\Images\Common\Copy.png" />
+    <Content Include="Common\Images\Common\disk.gif" />
+    <Content Include="Common\Images\Common\error-Tbg.gif" />
+    <Content Include="Common\Images\Common\findp-bg.gif" />
+    <Content Include="Common\Images\Common\FIP-WpBg.gif" />
+    <Content Include="Common\Images\Common\FIP-WpBg2.gif" />
+    <Content Include="Common\Images\Common\FIP-WpBg3.gif" />
+    <Content Include="Common\Images\Common\foot-copy.gif" />
+    <Content Include="Common\Images\Common\footer.gif" />
+    <Content Include="Common\Images\Common\home.gif" />
+    <Content Include="Common\Images\Common\icon01.gif" />
+    <Content Include="Common\Images\Common\icon2.gif" />
+    <Content Include="Common\Images\Common\IDPW-Bg.gif" />
+    <Content Include="Common\Images\Common\IDPW-Bg2.gif" />
+    <Content Include="Common\Images\Common\Index-kn-Company.png" />
+    <Content Include="Common\Images\Common\Index-kn-Id.png" />
+    <Content Include="Common\Images\Common\Index-kn-logo.png" />
+    <Content Include="Common\Images\Common\Index-kn-PW.png" />
+    <Content Include="Common\Images\Common\Index-kn-Select.png" />
+    <Content Include="Common\Images\Common\Index-kn-Title.png" />
+    <Content Include="Common\Images\Common\indexBg.gif" />
+    <Content Include="Common\Images\Common\kn-bdBG.png" />
+    <Content Include="Common\Images\Common\kn-logo.png" />
+    <Content Include="Common\Images\Common\kn-pt-logo.gif" />
+    <Content Include="Common\Images\Common\kn-pt-logo2.gif" />
+    <Content Include="Common\Images\Common\kn-pt-logo3.gif" />
+    <Content Include="Common\Images\Common\kn-pt-logo3.jpg" />
+    <Content Include="Common\Images\Common\kn-titB.png" />
+    <Content Include="Common\Images\Common\KnImg1.gif" />
+    <Content Include="Common\Images\Common\KnImg2.gif" />
+    <Content Include="Common\Images\Common\KnImg3.gif" />
+    <Content Include="Common\Images\Common\leBg.gif" />
+    <Content Include="Common\Images\Common\left-nav-topbg.gif" />
+    <Content Include="Common\Images\Common\lnb_bg.gif" />
+    <Content Include="Common\Images\Common\logo.gif" />
+    <Content Include="Common\Images\Common\map_bg.gif" />
+    <Content Include="Common\Images\Common\mid-nav-topbg.gif" />
+    <Content Include="Common\Images\Common\minus.gif" />
+    <Content Include="Common\Images\Common\modifyBtn.gif" />
+    <Content Include="Common\Images\Common\nav-rpBg.gif" />
+    <Content Include="Common\Images\Common\nav-rpBg.png" />
+    <Content Include="Common\Images\Common\nav-rpBg2.gif" />
+    <Content Include="Common\Images\Common\nav-rpBg2.png" />
+    <Content Include="Common\Images\Common\officeBtn.gif" />
+    <Content Include="Common\Images\Common\plus.gif" />
+    <Content Include="Common\Images\Common\ptbg.gif" />
+    <Content Include="Common\Images\Common\reBg.gif" />
+    <Content Include="Common\Images\Common\reply.gif" />
+    <Content Include="Common\Images\Common\riBg.gif" />
+    <Content Include="Common\Images\Common\saveBtn.gif" />
+    <Content Include="Common\Images\Common\side.gif" />
+    <Content Include="Common\Images\Common\sub-nav-left.gif" />
+    <Content Include="Common\Images\Common\Sub-nav-leftbg.gif" />
+    <Content Include="Common\Images\Common\sub-nav-mid.gif" />
+    <Content Include="Common\Images\Common\Sub-nav-midbg.gif" />
+    <Content Include="Common\Images\Common\sub-nav-rg.gif" />
+    <Content Include="Common\Images\Common\Sub-nav-rightbg.gif" />
+    <Content Include="Common\Images\Common\sub-nav_bg.gif" />
+    <Content Include="Common\Images\Common\sub-nav_bg.png" />
+    <Content Include="Common\Images\Common\TabBg-Off.gif" />
+    <Content Include="Common\Images\Common\TabBg-Over.gif" />
+    <Content Include="Common\Images\Common\testbg-Left.gif" />
+    <Content Include="Common\Images\Common\testbg-repeat.gif" />
+    <Content Include="Common\Images\Common\testbg-Right.gif" />
+    <Content Include="Common\Images\Common\top.gif" />
+    <Content Include="Common\Images\Common\TypeA-thBg.gif" />
+    <Content Include="Common\Images\Common\TypeA-tit-Lbg.gif" />
+    <Content Include="Common\Images\Common\TypeA-tit-Rbg.gif" />
+    <Content Include="Common\Images\Common\TypeA-titBg.gif" />
+    <Content Include="Common\Images\Common\TypeA-titBg2.gif" />
+    <Content Include="Common\Images\Icon\1depth.gif" />
+    <Content Include="Common\Images\Icon\2depth.gif" />
+    <Content Include="Common\Images\Icon\3depth.gif" />
+    <Content Include="Common\Images\Icon\4depth.gif" />
+    <Content Include="Common\Images\Icon\buletR.gif" />
+    <Content Include="Common\Images\Icon\calendar.gif" />
+    <Content Include="Common\Images\Icon\check.gif" />
+    <Content Include="Common\Images\Icon\Code-plus.gif" />
+    <Content Include="Common\Images\Icon\Code-tc.gif" />
+    <Content Include="Common\Images\Icon\Code-Wt.gif" />
+    <Content Include="Common\Images\Icon\down.gif" />
+    <Content Include="Common\Images\Icon\edit.gif" />
+    <Content Include="Common\Images\Icon\equa.gif" />
+    <Content Include="Common\Images\Icon\exell.gif" />
+    <Content Include="Common\Images\Icon\file.gif" />
+    <Content Include="Common\Images\Icon\GraIcB.png" />
+    <Content Include="Common\Images\Icon\GraIcR.png" />
+    <Content Include="Common\Images\Icon\graph.gif" />
+    <Content Include="Common\Images\Icon\han.gif" />
+    <Content Include="Common\Images\Icon\home-bul.gif" />
+    <Content Include="Common\Images\Icon\icn_tabIcn.gif" />
+    <Content Include="Common\Images\Icon\Magnifier.gif" />
+    <Content Include="Common\Images\Icon\mail.gif" />
+    <Content Include="Common\Images\Icon\main-util-bul.gif" />
+    <Content Include="Common\Images\Icon\n.gif" />
+    <Content Include="Common\Images\Icon\new.gif" />
+    <Content Include="Common\Images\Icon\office.gif" />
+    <Content Include="Common\Images\Icon\pdf.gif" />
+    <Content Include="Common\Images\Icon\Pg_Next.gif" />
+    <Content Include="Common\Images\Icon\Pg_Pre.gif" />
+    <Content Include="Common\Images\Icon\plus.gif" />
+    <Content Include="Common\Images\Icon\ppt.gif" />
+    <Content Include="Common\Images\Icon\print.gif" />
+    <Content Include="Common\Images\Icon\reply.gif" />
+    <Content Include="Common\Images\Icon\sortIcon.gif" />
+    <Content Include="Common\Images\Icon\sortIcon2.gif" />
+    <Content Include="Common\Images\Icon\Table-th-bar.gif" />
+    <Content Include="Common\Images\Icon\tons.png" />
+    <Content Include="Common\Images\Icon\Trash.gif" />
+    <Content Include="Common\Images\Icon\up.gif" />
+    <Content Include="Common\Images\Icon\word.gif" />
+    <Content Include="Common\Images\Main\ky-logo.gif" />
+    <Content Include="Common\Images\Main\kymain-copy.gif" />
+    <Content Include="Common\Images\Main\kymain-Enter.gif" />
+    <Content Include="Common\Images\Main\kymain-FID.gif" />
+    <Content Include="Common\Images\Main\kymain-Fpw.gif" />
+    <Content Include="Common\Images\Main\kymain-ID.gif" />
+    <Content Include="Common\Images\Main\kymain-login.gif" />
+    <Content Include="Common\Images\Main\kymain-PW.gif" />
+    <Content Include="Common\Images\Main\kymain-SL.gif" />
+    <Content Include="Common\Images\Main\kymain-tit.gif" />
+    <Content Include="Common\Images\Main\kymain_topbg.gif" />
+    <Content Include="Content\Css\deco.css" />
+    <Content Include="Content\Css\default.css" />
+    <Content Include="Content\Css\keangnam.css" />
+    <Content Include="Content\Css\type.css" />
+    <Content Include="Content\Images\Btn\Btn-Type1-Left.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type1-Mid.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type1-Right.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type2-Left.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type2-Mid.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type2-Right.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type3-Left.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type3-Mid.gif" />
+    <Content Include="Content\Images\Btn\Btn-Type3-Right.gif" />
+    <Content Include="Content\Images\Btn\btn_blue_print.gif" />
+    <Content Include="Content\Images\Btn\FIPBtn1.gif" />
+    <Content Include="Content\Images\Btn\FIPBtn2.gif" />
+    <Content Include="Content\Images\Btn\FIPBtn3.gif" />
+    <Content Include="Content\Images\Btn\Index-kn-FindId.png" />
+    <Content Include="Content\Images\Btn\Index-kn-FindPW.png" />
+    <Content Include="Content\Images\Btn\Index-kn-login.png" />
+    <Content Include="Content\Images\Btn\Ls-closeBtn.png" />
+    <Content Include="Content\Images\Btn\Ls-openBtn.png" />
+    <Content Include="Content\Images\Btn\next.gif" />
+    <Content Include="Content\Images\Btn\next2.gif" />
+    <Content Include="Content\Images\Btn\prev.gif" />
+    <Content Include="Content\Images\Btn\prev2.gif" />
+    <Content Include="Content\Images\Btn\Recomplie.png" />
+    <Content Include="Content\Images\Btn\sh-btn1.gif" />
+    <Content Include="Content\Images\Btn\Sh_Lbg.gif" />
+    <Content Include="Content\Images\Btn\Sh_Mbg.gif" />
+    <Content Include="Content\Images\Btn\Sh_Rbg.gif" />
+    <Content Include="Content\Images\Btn\Txt-Ftype1-Left.gif" />
+    <Content Include="Content\Images\Btn\Txt-Ftype1-Mid.gif" />
+    <Content Include="Content\Images\Btn\Txt-Ftype1-Right.gif" />
+    <Content Include="Content\Images\Btn\Txt-Ftype2-Left.gif" />
+    <Content Include="Content\Images\Btn\Txt-Ftype2-Mid.gif" />
+    <Content Include="Content\Images\Btn\Txt-Ftype2-Right.gif" />
+    <Content Include="Content\Images\Common\alert-Tbg.gif" />
+    <Content Include="Content\Images\Common\bg.gif" />
+    <Content Include="Content\Images\Common\bg_bottom.gif" />
+    <Content Include="Content\Images\Common\bg_repeat.gif" />
+    <Content Include="Content\Images\Common\bg_top.gif" />
+    <Content Include="Content\Images\Common\bigBtn_bg.gif" />
+    <Content Include="Content\Images\Common\blank.gif" />
+    <Content Include="Content\Images\Common\body_bg.gif" />
+    <Content Include="Content\Images\Common\body_bg.png" />
+    <Content Include="Content\Images\Common\body_repeatbg.gif" />
+    <Content Include="Content\Images\Common\body_repeatbg.png" />
+    <Content Include="Content\Images\Common\bottom-nav-topbg.gif" />
+    <Content Include="Content\Images\Common\btDot.gif" />
+    <Content Include="Content\Images\Common\btn.gif" />
+    <Content Include="Content\Images\Common\btn2.gif" />
+    <Content Include="Content\Images\Common\btn3.gif" />
+    <Content Include="Content\Images\Common\calendar.gif" />
+    <Content Include="Content\Images\Common\cancelBtn.gif" />
+    <Content Include="Content\Images\Common\cont-bottomBg.gif" />
+    <Content Include="Content\Images\Common\cont-midBg.gif" />
+    <Content Include="Content\Images\Common\cont-topBg.gif" />
+    <Content Include="Content\Images\Common\cont.gif" />
+    <Content Include="Content\Images\Common\Copy.png" />
+    <Content Include="Content\Images\Common\disk.gif" />
+    <Content Include="Content\Images\Common\error-Tbg.gif" />
+    <Content Include="Content\Images\Common\findp-bg.gif" />
+    <Content Include="Content\Images\Common\FIP-WpBg.gif" />
+    <Content Include="Content\Images\Common\FIP-WpBg2.gif" />
+    <Content Include="Content\Images\Common\FIP-WpBg3.gif" />
+    <Content Include="Content\Images\Common\foot-copy.gif" />
+    <Content Include="Content\Images\Common\footer.gif" />
+    <Content Include="Content\Images\Common\home.gif" />
+    <Content Include="Content\Images\Common\icon01.gif" />
+    <Content Include="Content\Images\Common\icon2.gif" />
+    <Content Include="Content\Images\Common\IDPW-Bg.gif" />
+    <Content Include="Content\Images\Common\IDPW-Bg2.gif" />
+    <Content Include="Content\Images\Common\Index-kn-Company.png" />
+    <Content Include="Content\Images\Common\Index-kn-Id.png" />
+    <Content Include="Content\Images\Common\Index-kn-logo.png" />
+    <Content Include="Content\Images\Common\Index-kn-PW.png" />
+    <Content Include="Content\Images\Common\Index-kn-Select.png" />
+    <Content Include="Content\Images\Common\Index-kn-Title.png" />
+    <Content Include="Content\Images\Common\indexBg.gif" />
+    <Content Include="Content\Images\Common\kn-bdBG.png" />
+    <Content Include="Content\Images\Common\kn-logo.png" />
+    <Content Include="Content\Images\Common\kn-pt-logo.gif" />
+    <Content Include="Content\Images\Common\kn-pt-logo2.gif" />
+    <Content Include="Content\Images\Common\kn-pt-logo3.gif" />
+    <Content Include="Content\Images\Common\kn-pt-logo3.jpg" />
+    <Content Include="Content\Images\Common\kn-titB.png" />
+    <Content Include="Content\Images\Common\KnImg1.gif" />
+    <Content Include="Content\Images\Common\KnImg2.gif" />
+    <Content Include="Content\Images\Common\KnImg3.gif" />
+    <Content Include="Content\Images\Common\leBg.gif" />
+    <Content Include="Content\Images\Common\left-nav-topbg.gif" />
+    <Content Include="Content\Images\Common\lnb_bg.gif" />
+    <Content Include="Content\Images\Common\logo.gif" />
+    <Content Include="Content\Images\Common\map_bg.gif" />
+    <Content Include="Content\Images\Common\mid-nav-topbg.gif" />
+    <Content Include="Content\Images\Common\minus.gif" />
+    <Content Include="Content\Images\Common\modifyBtn.gif" />
+    <Content Include="Content\Images\Common\nav-rpBg.gif" />
+    <Content Include="Content\Images\Common\nav-rpBg.png" />
+    <Content Include="Content\Images\Common\nav-rpBg2.gif" />
+    <Content Include="Content\Images\Common\nav-rpBg2.png" />
+    <Content Include="Content\Images\Common\officeBtn.gif" />
+    <Content Include="Content\Images\Common\plus.gif" />
+    <Content Include="Content\Images\Common\ptbg.gif" />
+    <Content Include="Content\Images\Common\reBg.gif" />
+    <Content Include="Content\Images\Common\reply.gif" />
+    <Content Include="Content\Images\Common\riBg.gif" />
+    <Content Include="Content\Images\Common\saveBtn.gif" />
+    <Content Include="Content\Images\Common\side.gif" />
+    <Content Include="Content\Images\Common\sub-nav-left.gif" />
+    <Content Include="Content\Images\Common\Sub-nav-leftbg.gif" />
+    <Content Include="Content\Images\Common\sub-nav-mid.gif" />
+    <Content Include="Content\Images\Common\Sub-nav-midbg.gif" />
+    <Content Include="Content\Images\Common\sub-nav-rg.gif" />
+    <Content Include="Content\Images\Common\Sub-nav-rightbg.gif" />
+    <Content Include="Content\Images\Common\sub-nav_bg.gif" />
+    <Content Include="Content\Images\Common\sub-nav_bg.png" />
+    <Content Include="Content\Images\Common\TabBg-Off.gif" />
+    <Content Include="Content\Images\Common\TabBg-Over.gif" />
+    <Content Include="Content\Images\Common\testbg-Left.gif" />
+    <Content Include="Content\Images\Common\testbg-repeat.gif" />
+    <Content Include="Content\Images\Common\testbg-Right.gif" />
+    <Content Include="Content\Images\Common\top.gif" />
+    <Content Include="Content\Images\Common\TypeA-thBg.gif" />
+    <Content Include="Content\Images\Common\TypeA-tit-Lbg.gif" />
+    <Content Include="Content\Images\Common\TypeA-tit-Rbg.gif" />
+    <Content Include="Content\Images\Common\TypeA-titBg.gif" />
+    <Content Include="Content\Images\Common\TypeA-titBg2.gif" />
+    <Content Include="Content\Images\Icon\1depth.gif" />
+    <Content Include="Content\Images\Icon\2depth.gif" />
+    <Content Include="Content\Images\Icon\3depth.gif" />
+    <Content Include="Content\Images\Icon\4depth.gif" />
+    <Content Include="Content\Images\Icon\buletR.gif" />
+    <Content Include="Content\Images\Icon\calendar.gif" />
+    <Content Include="Content\Images\Icon\check.gif" />
+    <Content Include="Content\Images\Icon\Code-plus.gif" />
+    <Content Include="Content\Images\Icon\Code-tc.gif" />
+    <Content Include="Content\Images\Icon\Code-Wt.gif" />
+    <Content Include="Content\Images\Icon\down.gif" />
+    <Content Include="Content\Images\Icon\edit.gif" />
+    <Content Include="Content\Images\Icon\equa.gif" />
+    <Content Include="Content\Images\Icon\exell.gif" />
+    <Content Include="Content\Images\Icon\file.gif" />
+    <Content Include="Content\Images\Icon\GraIcB.png" />
+    <Content Include="Content\Images\Icon\GraIcR.png" />
+    <Content Include="Content\Images\Icon\graph.gif" />
+    <Content Include="Content\Images\Icon\han.gif" />
+    <Content Include="Content\Images\Icon\home-bul.gif" />
+    <Content Include="Content\Images\Icon\icn_tabIcn.gif" />
+    <Content Include="Content\Images\Icon\Magnifier.gif" />
+    <Content Include="Content\Images\Icon\mail.gif" />
+    <Content Include="Content\Images\Icon\main-util-bul.gif" />
+    <Content Include="Content\Images\Icon\n.gif" />
+    <Content Include="Content\Images\Icon\new.gif" />
+    <Content Include="Content\Images\Icon\office.gif" />
+    <Content Include="Content\Images\Icon\pdf.gif" />
+    <Content Include="Content\Images\Icon\Pg_Next.gif" />
+    <Content Include="Content\Images\Icon\Pg_Pre.gif" />
+    <Content Include="Content\Images\Icon\plus.gif" />
+    <Content Include="Content\Images\Icon\ppt.gif" />
+    <Content Include="Content\Images\Icon\print.gif" />
+    <Content Include="Content\Images\Icon\reply.gif" />
+    <Content Include="Content\Images\Icon\sortIcon.gif" />
+    <Content Include="Content\Images\Icon\sortIcon2.gif" />
+    <Content Include="Content\Images\Icon\Table-th-bar.gif" />
+    <Content Include="Content\Images\Icon\tons.png" />
+    <Content Include="Content\Images\Icon\Trash.gif" />
+    <Content Include="Content\Images\Icon\up.gif" />
+    <Content Include="Content\Images\Icon\word.gif" />
+    <Content Include="Content\Images\Main\ky-logo.gif" />
+    <Content Include="Content\Images\Main\kymain-copy.gif" />
+    <Content Include="Content\Images\Main\kymain-Enter.gif" />
+    <Content Include="Content\Images\Main\kymain-FID.gif" />
+    <Content Include="Content\Images\Main\kymain-Fpw.gif" />
+    <Content Include="Content\Images\Main\kymain-ID.gif" />
+    <Content Include="Content\Images\Main\kymain-login.gif" />
+    <Content Include="Content\Images\Main\kymain-PW.gif" />
+    <Content Include="Content\Images\Main\kymain-SL.gif" />
+    <Content Include="Content\Images\Main\kymain-tit.gif" />
+    <Content Include="Content\Images\Main\kymain_topbg.gif" />
+    <Content Include="Content\Keangnam.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KN.Board\KN.Board.csproj">
+      <Project>{8DD18E96-6F93-443A-A03C-4D25245C8872}</Project>
+      <Name>KN.Board</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Common.Base\KN.Common.Base.csproj">
+      <Project>{6B93A91A-C505-411C-833E-200118972603}</Project>
+      <Name>KN.Common.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Common.Method\KN.Common.Method.csproj">
+      <Project>{23B5E550-A2CC-4A30-8E66-5847A3ACBBD9}</Project>
+      <Name>KN.Common.Method</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Config\KN.Config.csproj">
+      <Project>{C626274F-E6EC-4687-B7A7-F1DE73539BE7}</Project>
+      <Name>KN.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Manage\KN.Manage.csproj">
+      <Project>{F521BA33-A655-447F-8ED7-102FDE781B73}</Project>
+      <Name>KN.Manage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Parking\KN.Parking.csproj">
+      <Project>{4540CD4F-7B18-4D07-AE90-07F538CA7DAA}</Project>
+      <Name>KN.Parking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Resident\KN.Resident.csproj">
+      <Project>{FD7D893D-0B59-468E-AA6C-F3FBB6EC1C28}</Project>
+      <Name>KN.Resident</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Settlement\KN.Settlement.csproj">
+      <Project>{C923A5CF-34F8-4D71-9F6C-DA74B684DACE}</Project>
+      <Name>KN.Settlement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\TopMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\LeftMenu.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>28492</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

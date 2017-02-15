@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="knTw">
+        <div class="kn-wrap">
+            <div class="knw">
+                <div class="knw-head">
+                    <div class="util">
+                        <a href="/Config/SiteMap/SiteMap.aspx">SITE MAP</a> <a href="/Common/Signup/LogOut.aspx">
+                            LOG OUT</a> <a href="/Main.aspx">HOME</a>
+                    </div>
+                    <div class="nav">
+                        <div class="logo">
+                            <img src="/Common/Images/Common/kn-logo.png" alt="keangnam" title="keangnam">
+                        </div>
+                            @{
+                                Html.RenderAction("TopMenu", "Home");
+                            }
+
+                        <div class="sun-nav-wp">
+                            <div class="sub-nav-lt">
+                                <div class="sub-nav-rt">
+                                    <div class="sub-nav-md">
+                                        <span class="Sn-hover CursorNon">Board</span> <a href="/Board/Memo/MemoReturn.aspx">
+                                        <span>Memo</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="top-tit">
+                            <img src="/Common/Images/Common/kn-titB.png" alt="자산관리 시스템" title="자산관리 시스템">
+                        </div>
+                    </div>
+                </div>
+                <!-- e/ knw-head  -->
+            </div>
+            <div class="knw-cont">
+<div class="left-nav">
+                        <p class="lenTit">Hello, <a href="/Config/Authority/PersonalMngView.aspx">admin</a>&nbsp;<a href="/Board/Memo/MemoReturn.aspx"><img src="/Common/Images/Icon/mail.gif" alt="Memo" align="absmiddle">(0)</a></p>
+                        <div class="lenBtbg">
+                            <p class="lenTit1">Board</p>
+                            <div class="lenTpbg">
+			                    
+			                    <ul class="lenDlist">
+			                                
+			                    <li><a href="/Board/Board/BoardReturn.aspx?BoardTy=0001&amp;BoardCd=0001">Notice</a></li>
+			                        
+			                    <li><a href="/Board/Board/BoardReturn.aspx?BoardTy=0002&amp;BoardCd=0001">Archives</a></li>			                        			                            			                       			                            
+			                        
+			                    </ul>			                        
+                            </div>
+                        </div>
+                    </div>
+                <!-- e/ left-nav  -->
+                <div class="content">
+                    <div class="cont-Btbg">
+                        <div class="cont-Tpbg">
+                            <div class="cont-Mid">
+                                <div class="cont-tit">
+                                    <div class="sub-util">
+                                        <span class="home">
+                                            <asp:literal id="ltHome" runat="server"></asp:literal>
+                                        </span>&gt;
+                                        <asp:literal id="ltDepth1" runat="server"></asp:literal>
+                                        &gt;
+                                        <asp:literal id="ltDepth2" runat="server"></asp:literal>
+                                    </div>
+                                    <div class="sub-tit">
+                                        SanHa IT</div>
+                                </div>
+                                <!-- e/ cont-tit  -->
+                                <div class="cont-wp" id="body">
+                                    @RenderSection("featured", required: false)
+                                    @RenderBody()
+                                </div>
+                                <!-- e/ cont-wp  -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <span>
+                            <img src="/Content/Images/Common/foot-copy.gif" alt="Copyright 2010 CHESTNUTVINA  ALL RIGHTS RESERVED."
+                                title="Copyright 2010 CHESTNUTVINA  ALL RIGHTS RESERVED." /></span>
+                    </div>
+                </div>
+                <!-- e/ content  -->
+            </div>
+            <!-- e/ knw-cont  -->
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
