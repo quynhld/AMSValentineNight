@@ -28,45 +28,64 @@ namespace KN.Web.Park
         {
 
         }
-        
-        private void importExcel()
-        {
 
+        private void importExcel(string cartype,string roomno,string carID,string cardID)
+        {
             try
             {
                 //LicensePlate_CarCard_RoomNumber_Price_PaymentMethod
+                DataTable dtExchangeRate = new DataTable();
+                TextBox hfRealBaseRate = new TextBox();
+                Literal ltRealBaseRate = new Literal();
+                HiddenField hfStartDt = new HiddenField();
+                string strNowDt = DateTime.Now.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                hfStartDt.Value = strNowDt;
+                dtExchangeRate = ExchangeMngBlo.WatchExchangeRateLastInfo(CommValue.RENTAL_VALUE_PARKING);
+                string strEndDt = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.DaysInMonth(DateTime.Now.Year,DateTime.Now.Month)).ToString(); //dtEndDate.AddMonths(Int32.Parse(ddlDuringMonth.SelectedValue)).AddDays(-1).ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                if (dtExchangeRate != null)
+                {
+                    if (dtExchangeRate.Rows.Count > 0)
+                    {
+                        if (!string.IsNullOrEmpty(dtExchangeRate.Rows[0]["DongToDollar"].ToString()))
+                        {
+                            string strDong = dtExchangeRate.Rows[0]["DongToDollar"].ToString();
+                            //ltRealBaseRate.Text = TextLib.MakeVietIntNo(double.Parse(strDong).ToString("###,##0") + "&nbsp;" + TextNm["DONG"].ToString());
+                            ltRealBaseRate.Text = TextLib.MakeVietIntNo(double.Parse(strDong).ToString("###,##0") + "&nbsp;") ;//+ TextNm["DONG"].ToString());
+                            hfRealBaseRate.Text = dtExchangeRate.Rows[0]["DongToDollar"].ToString();
+                        }
+                        else
+                        {
+                            ltRealBaseRate.Text = "-";
+                        }
+                    }
+                    else
+                    {
+                        ltRealBaseRate.Text = "-";
+                    }
+                }
+
                 #region define abc
                 string strInsMemIP = Request.ServerVariables["REMOTE_ADDR"].ToString();
                 string strDebitCreditCd = CommValue.DEBITNCREDIT_TYPE_VALUE_CREDIT;
                 string strDirectCd = CommValue.DIRECT_TYPE_VALUE_DIRECT;
                 string strItemCd = CommValue.ITEM_TYPE_VALUE_PARKINGCARDFEE;
                 string strParkingItemCd = CommValue.ITEM_TYPE_VALUE_PARKINGFEE;
-
-                
-                string strRentCd = string.Empty;
                 string strCardFee = string.Empty;
-                
-                string strRoomNo = string.Empty;// read from excel file
-                string strCarNo = string.Empty;// read from excel file
-                string strCarTy = string.Empty;
+                string strCarTy = cartype;
                 string strDuringMonth = string.Empty;// default 1
                 string strStartDt = string.Empty; // default from fist day of month
-                string strEndDt = string.Empty; // default end day of month
                 string strPaymentCd = string.Empty; // read from excel file
-                string strCardNo = string.Empty; // read from excel file
+                string strCardNo = cardID; // read from excel file
                 string strTagNo = string.Empty; // get from db ParkingTagListInfo
                 string strVatRatio = string.Empty;
-
                 string strPrintSeq = string.Empty;
                 string strPrintDetSeq = string.Empty;
                 string paymentDT = string.Empty;// default get from input day
-
                 string strCardCost = string.Empty;
-
-                DataTable dtUser = ParkingMngBlo.SelectUserSeqByRoomNo(strRoomNo);
+                DataTable dtUser = ParkingMngBlo.SelectUserSeqByRoomNo(roomno);
                 string strUserSeq = dtUser.Rows[0]["UserSeq"].ToString();
                 string strFloorNo = dtUser.Rows[0]["FloorNo"].ToString();
-                // lấy ra tài khoản ngân hàng sẽ sử dụng : cần check, mặc định để là tiền mặt. tạm thời rem lại
+                string rentCD = dtUser.Rows[0]["RentCd"].ToString();
                 //var bankcd = Int32.Parse(ddlTransfer.SelectedValue != "" ? ddlTransfer.SelectedValue : "0");
                 //var dbCardCost = double.Parse(txtCardFee.Text != "" ? txtCardFee.Text : "0");
 
@@ -78,10 +97,8 @@ namespace KN.Web.Park
                 #region get card tagno
                 if (string.IsNullOrEmpty(strTagNo) && !string.IsNullOrEmpty(strCardNo))
                 {
-                    // KN_USP_PRK_SELECT_PARKINGTAGLISTINFO_S02 -- check xem thẻ có tồn tại hay không : đoạn này có thể check sau
-                    // lấy ra thông tin tagno để sử dụng 
+                    // KN_USP_PRK_SELECT_PARKINGTAGLISTINFO_S02 
                     DataTable dtTagReturn = ParkingMngBlo.WatchExgistParkingTagListInfo(strCardNo, strCarTy);
-                    
                     if (dtTagReturn != null)
                     {
                         if (dtTagReturn.Rows.Count > CommValue.NUMBER_VALUE_0)
@@ -90,60 +107,43 @@ namespace KN.Web.Park
                         }
                     }
                 }
-                //if cardno, tagno, carno is not empty -> regist infomation
                 #endregion
                 #region create new car regist info
                 // có đủ thông tin, bắt đầu check chi tiết và insert vào các bảng
-                if (!string.IsNullOrEmpty(strCardNo) && !string.IsNullOrEmpty(strTagNo) && !string.IsNullOrEmpty(strCarNo))
+                if (!string.IsNullOrEmpty(strCardNo) && !string.IsNullOrEmpty(strTagNo) && !string.IsNullOrEmpty(carID))
                 {
-                    DateTime dtNowDate;
-                    string strNowDt = DateTime.Now.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                    DateTime dtNowDate = DateTime.Now ;
                     // KN_USP_PRK_SELECT_MONTHPARKINGINFO_S03
-                    //check card has regist
-                    DataTable dtReturn = ParkingMngBlo.SpreadExgistParkingCardInfo(strCardNo, strCarNo);
+                    DataTable dtReturn = ParkingMngBlo.SpreadExgistParkingCardInfo(strCardNo, carID);
                     DataTable dtUserParkingInfo = new DataTable();
                     //if exist - raise alert
                     if (dtReturn.Rows.Count > 0)
                     {
-                        StringBuilder sbWarning = new StringBuilder();
-                        sbWarning.Append("alert('");
-                        //sbWarning.Append(AlertNm["ALERT_ISSUED_CARD"]);
-                        sbWarning.Append("');");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Warning", sbWarning.ToString(), CommValue.AUTH_VALUE_TRUE);
-                        //ResetSearchControls();
-                    }//else begin insert
+                    }
                     else
                     {
                         //1. chua co thong tin thi insert vao bang userparkinginfo, update parkingtaglistinfo thanh issued - yes - co 1 list the san
                         // KN_USP_PRK_INSERT_USERPARKINGINFO_M00
                         #region insert part 1 KN_USP_PRK_INSERT_USERPARKINGINFO_M00
                         dtUserParkingInfo = ParkingMngBlo.RegistryUserParkingInfo(strUserSeq, strTagNo, strCardNo
-                            , strCarNo, "002", "001",
-                                                              Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, strRoomNo);
+                            , carID, "002", "001", Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, roomno);
                         if (dtUserParkingInfo.Rows.Count > 0)
                         {
                             //string strNowDay = hfStartDt.Value.Replace("-", "").Substring(6, 2);
                             string strNowDay = DateTime.Now.Date.ToString().Replace("-", "").Substring(6, 2);
                             string strEndDay = string.Empty;
                             //string strInsDt = hfStartDt.Value.Replace("-", "");
-                            string strInsDt = DateTime.Now.ToString() .Replace("-", "");
-                            double dblParkingFee = CommValue.NUMBER_VALUE_0_0;
+                            string strInsDt = DateTime.Now.ToString().Replace("-", "");
+                            double dblParkingFee = CommValue.NUMBER_VALUE_0_0;//read from excel
                             double dblMonthlyFee = CommValue.NUMBER_VALUE_0_0;
                             double dblPayedFee = CommValue.NUMBER_VALUE_0_0;
-                            int intLoopCnt = CommValue.NUMBER_VALUE_0;
+                            int intLoopCnt = 1;// CommValue.NUMBER_VALUE_0;
                             // KN_USP_MNG_SELECT_VATINFO_S00
                             DataTable dtVatRatio = VatMngBlo.WatchVatInfo(CommValue.ITEM_TYPE_VALUE_PARKINGFEE);
                             DataTable dtPrintOut = new DataTable();
                             DataTable dtLedgerDet = new DataTable();
-                            
-                            //if (Int32.Parse(rdobtnParkingDays.SelectedValue) > CommValue.NUMBER_VALUE_0)
-                            //    intLoopCnt = Int32.Parse(ddlDuringMonth.SelectedValue) + CommValue.NUMBER_VALUE_1;
-                            //else
-                            //    intLoopCnt = Int32.Parse(ddlDuringMonth.SelectedValue);
-
                             //if (!string.IsNullOrEmpty(txtParkingFee.Text))
                             //    dblParkingFee = double.Parse(txtParkingFee.Text.Replace(",", ""));
-
                             //if (!string.IsNullOrEmpty(txtHfMonthlyFee.Text))
                             //    dblMonthlyFee = double.Parse(txtHfMonthlyFee.Text);
                             //
@@ -155,39 +155,41 @@ namespace KN.Web.Park
                             int intPaymentSeq = CommValue.NUMBER_VALUE_0;
                             int intPaymentDetSeq = CommValue.NUMBER_VALUE_0;
                             int intItemSeq = CommValue.NUMBER_VALUE_0;
-                            //if (!string.IsNullOrEmpty(hfRealBaseRate.Text) && !string.IsNullOrEmpty(strCardFee))
-                            //{
-                            //    dblDongToDollar = double.Parse(hfRealBaseRate.Text);
-                            //    dblItemTotViAmt = double.Parse(strCardFee) + dblParkingFee;
+                            #region temp
+                            if (!string.IsNullOrEmpty(hfRealBaseRate.Text) && !string.IsNullOrEmpty(strCardFee))
+                            {
+                                dblDongToDollar = double.Parse(hfRealBaseRate.Text);
+                                dblItemTotViAmt = double.Parse(strCardFee) + dblParkingFee;
 
-                            //    if (dblDongToDollar > 0d)
-                            //        dblItemTotEnAmt = dblItemTotViAmt / dblDongToDollar;
-                            //}
-                            //if (dtVatRatio != null)
-                            //{
-                            //    if (dtVatRatio.Rows.Count > CommValue.NUMBER_VALUE_0)
-                            //    {
-                            //        strVatRatio = dtVatRatio.Rows[0]["VatRatio"].ToString();
-                            //        dblVatRatio = double.Parse(strVatRatio);
-                            //        dblUniPrime = dblItemTotViAmt * (100) / (100 + dblVatRatio);
-                            //    }
-                            //    else
-                            //    {
-                            //        dblVatRatio = CommValue.NUMBER_VALUE_0_0;
-                            //        dblUniPrime = dblItemTotViAmt;
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    dblVatRatio = CommValue.NUMBER_VALUE_0_0;
-                            //    dblUniPrime = dblItemTotViAmt;
-                            //}
+                                if (dblDongToDollar > 0d)
+                                    dblItemTotEnAmt = dblItemTotViAmt / dblDongToDollar;
+                            }
+                            if (dtVatRatio != null)
+                            {
+                                if (dtVatRatio.Rows.Count > CommValue.NUMBER_VALUE_0)
+                                {
+                                    strVatRatio = dtVatRatio.Rows[0]["VatRatio"].ToString();
+                                    dblVatRatio = double.Parse(strVatRatio);
+                                    dblUniPrime = dblItemTotViAmt * (100) / (100 + dblVatRatio);
+                                }
+                                else
+                                {
+                                    dblVatRatio = CommValue.NUMBER_VALUE_0_0;
+                                    dblUniPrime = dblItemTotViAmt;
+                                }
+                            }
+                            else
+                            {
+                                dblVatRatio = CommValue.NUMBER_VALUE_0_0;
+                                dblUniPrime = dblItemTotViAmt;
+                            }
+                            #endregion
                             string strPaymentDt = DateTime.Now.ToString().Replace("-", "").Replace(".", ""); //txtPayDt.Text.Replace("-", "").Replace(".", "");
                         #endregion
                             // 2. insert  LedgerInfo
                             #region Insert part 2 KN_USP_SET_INSERT_LEDGERINFO_S00
                             // KN_USP_SET_INSERT_LEDGERINFO_S00
-                            DataTable dtLedgerAccnt = BalanceMngBlo.RegistryLedgerInfo(strDebitCreditCd, strPaymentDt, CommValue.NUMBER_VALUE_0, strRentCd, strDirectCd, strParkingItemCd,
+                            DataTable dtLedgerAccnt = BalanceMngBlo.RegistryLedgerInfo(strDebitCreditCd, strPaymentDt, CommValue.NUMBER_VALUE_0,rentCD , strDirectCd, strParkingItemCd,
                                                                                        CommValue.NUMBER_VALUE_0, CommValue.USERTYCD_VALUE_PERSON_CLIENT, strUserSeq, string.Empty,
                                                                                        dblDongToDollar, dblItemTotEnAmt, dblItemTotViAmt, strPaymentCd, dblVatRatio,
                                                                                        Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
@@ -202,7 +204,6 @@ namespace KN.Web.Park
                                     if (strPaymentCd.Equals(CommValue.PAYMENT_TYPE_VALUE_TRANSFER))
                                     {
                                         // KN_USP_SET_INSERT_LEDGERINFO_S01
-                                        //BalanceMngBlo.RegistryLedgerAddonInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, ddlTransfer.SelectedValue);
                                         BalanceMngBlo.RegistryLedgerAddonInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, "0");
                                     }
                                 }
@@ -213,7 +214,6 @@ namespace KN.Web.Park
                             {
                                 if (intTmpI != CommValue.NUMBER_VALUE_0)
                                 {
-                                    #region luoi doc dai khai la ko phai phat dau tien
                                     dtNowDate = DateTime.ParseExact((TextLib.MakeDateEightDigit(hfStartDt.Value.Replace("-", ""))).Substring(0, 7) + "-01 00:00:00.000", "yyyy-MM-dd HH:mm:ss.fff", null);
                                     dtNowDate = dtNowDate.AddMonths(intTmpI);
                                     strStartDt = dtNowDate.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
@@ -228,14 +228,15 @@ namespace KN.Web.Park
                                         dblPayedFee = dblParkingFee;
                                         dblParkingFee = CommValue.NUMBER_VALUE_0_0;
                                     }
-                                    #endregion
                                 }
                                 else
                                 {
                                     #region lay thong tin shot thu 2 tro len tu bang MonthParkingFeeInfo
                                     // KN_USP_PRK_SELECT_MONTHPARKINGINFO_S02
                                     strStartDt = hfStartDt.Value.Replace("-", "");
-                                    DataTable dtParkReturn = ParkingMngBlo.SpreadParkingFeeInfoList(ddlRegRentCd.SelectedValue, ddlCarTy.SelectedValue, strStartDt);
+                                    string strRentCD = string.Empty;
+                                    string strCarTys = string.Empty;
+                                    DataTable dtParkReturn = ParkingMngBlo.SpreadParkingFeeInfoList(strRentCD, strCarTys, strStartDt);
                                     dblPayedFee = double.Parse(TextLib.MakeRoundDownThousand(double.Parse(dtParkReturn.Rows[0]["ParkingFee"].ToString())).ToString());
                                     if (dblParkingFee > dblPayedFee)
                                     {
@@ -250,7 +251,7 @@ namespace KN.Web.Park
                                 }
                                 if (intTmpI + CommValue.NUMBER_VALUE_1 == intLoopCnt)
                                 {
-                                    strEndDt = hfEndDt.Value.Replace("-", "");
+                                    strEndDt = dtNowDate.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
                                 }
                                 else
                                 {
@@ -259,20 +260,20 @@ namespace KN.Web.Park
                                     strEndDt = dtNowDate.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
                                 }
                                 // KN_USP_PRK_INSERT_PARKINGFEEINFO_M00
-                                ParkingMngBlo.RegistryUserParkingCardFeeInfo(strRentCd, strCardNo, Int32.Parse(strFloorNo), strRoomNo, strTagNo,
-                                                                             strCarNo, strCarTy, double.Parse(strCardFee), dblPayedFee, strPaymentCd,
+                                ParkingMngBlo.RegistryUserParkingCardFeeInfo(rentCD, strCardNo, Int32.Parse(strFloorNo), roomno, strTagNo,
+                                                                             carID, strCarTy, double.Parse(strCardFee), dblPayedFee, strPaymentCd,
                                                                              strStartDt, strEndDt, Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, strPaymentDt);
                                 //6.1-- Insert HoaDonParkingAPT ---- Add by phuongtv
                                 //KN_USP_PRK_INSERT_HOADONPARKING_APT_I00
-                                ParkingMngBlo.RegistryHoaDonParkingApt(strRentCd, strTagNo, strStartDt, strEndDt);
+                                ParkingMngBlo.RegistryHoaDonParkingApt(rentCD, strTagNo, strStartDt, strEndDt);
                                 if (intTmpI == CommValue.NUMBER_VALUE_0 && !strCardFee.Equals(CommValue.NUMBER_VALUE_ZERO))
                                 {
                                     dblUniPrime = double.Parse(strCardFee) * (100) / (100 + dblVatRatio);
                                     // KN_USP_SET_INSERT_LEDGERDETINFO_S00
-                                    dtLedgerDet = BalanceMngBlo.RegistryLedgerDetInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, CommValue.NUMBER_VALUE_0, strRentCd,
+                                    dtLedgerDet = BalanceMngBlo.RegistryLedgerDetInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, CommValue.NUMBER_VALUE_0, rentCD,
                                                                                       strDirectCd, strItemCd, intItemSeq, CommValue.NUMBER_VALUE_0, string.Empty, string.Empty, string.Empty, string.Empty,
                                                                                       CommValue.NUMBER_VALUE_1, CommValue.SCALE_TYPE_VALUE_SINGLEITEM, dblUniPrime, dblUniPrime, double.Parse(strCardFee), double.Parse(strCardFee),
-                                                                                      CommValue.NUMBER_VALUE_0, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), txtParkingCardNo.Text, dblVatRatio, CommValue.CONCLUSION_TYPE_TEXT_YES,
+                                                                                      CommValue.NUMBER_VALUE_0, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), cardID, dblVatRatio, CommValue.CONCLUSION_TYPE_TEXT_YES,
                                                                                       Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
                                     if (dtLedgerDet != null)
                                     {
@@ -280,9 +281,9 @@ namespace KN.Web.Park
                                             intPaymentDetSeq = Int32.Parse(dtLedgerDet.Rows[0]["PaymentDetSeq"].ToString());
                                     }
                                     // KN_USP_SET_INSERT_PRINTINFO_S00
-                                    dtPrintOut = ReceiptMngBlo.RegistryPrintReciptList(strPrintSeq, CommValue.ITEM_TYPE_VALUE_PARKINGFEE, CommValue.DOCUMENT_VALUE_RECEIT, strRentCd,
-                                                                                      Int32.Parse(strFloorNo), strRoomNo, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), strPaymentCd, strUserSeq,
-                                                                                      Session["MemNo"].ToString(), strCarNo + " Parking Card Fee ( " + strCardNo + " )",
+                                    dtPrintOut = ReceiptMngBlo.RegistryPrintReciptList(strPrintSeq, CommValue.ITEM_TYPE_VALUE_PARKINGFEE, CommValue.DOCUMENT_VALUE_RECEIT, rentCD,
+                                                                                      Int32.Parse(strFloorNo), roomno, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), strPaymentCd, strUserSeq,
+                                                                                      Session["MemNo"].ToString(), carID + " Parking Card Fee ( " + strCardNo + " )",
                                                                                       double.Parse(strCardFee), double.Parse(hfRealBaseRate.Text),
                                                                                       Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, strDebitCreditCd, strNowDt, intPaymentSeq, intPaymentDetSeq);
                                     if (!string.IsNullOrEmpty(dtPrintOut.Rows[0]["PrintSeq"].ToString()))
@@ -299,21 +300,21 @@ namespace KN.Web.Park
                                 }
                                 dblUniPrime = dblPayedFee * (100) / (100 + dblVatRatio);
                                 // KN_USP_SET_INSERT_LEDGERDETINFO_S00
-                                dtLedgerDet = BalanceMngBlo.RegistryLedgerDetInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, CommValue.NUMBER_VALUE_0, strRentCd,
+                                dtLedgerDet = BalanceMngBlo.RegistryLedgerDetInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, CommValue.NUMBER_VALUE_0, rentCD,
                                                                                    strDirectCd, strParkingItemCd, intItemSeq, CommValue.NUMBER_VALUE_0, string.Empty, string.Empty, string.Empty, string.Empty,
                                                                                    CommValue.NUMBER_VALUE_1, CommValue.SCALE_TYPE_VALUE_MONTH, dblUniPrime, dblUniPrime, dblPayedFee, dblPayedFee,
-                                                                                   CommValue.NUMBER_VALUE_0, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), txtCarNo.Text, dblVatRatio, CommValue.CONCLUSION_TYPE_TEXT_YES,
+                                                                                   CommValue.NUMBER_VALUE_0, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), carID, dblVatRatio, CommValue.CONCLUSION_TYPE_TEXT_YES,
                                                                                    Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
                                 //---------------Add by BaoTV-------------------
-                                //KN_USP_MNG_INSERT_RENOVATIONINFO_M00
-                                if (string.IsNullOrEmpty(strCardCost))
-                                {
-                                    strCardCost = txtCardFee.Text;
-                                    if (dbCardCost > 0)
-                                    {
-                                        var objReturn = MngPaymentBlo.InsertRenovationInfoApt(strPaymentCd, bankcd, txtRegRoomNo.Text, "0007", strPaymentDt, "0", "", dbCardCost, Session["MemNo"].ToString(), strInsMemIP, strCardNo);
-                                    }
-                                }
+                                //KN_USP_MNG_INSERT_RENOVATIONINFO_M00 -- chưa tính tiền
+                                //if (string.IsNullOrEmpty(strCardCost))
+                                //{
+                                //    strCardCost = txtCardFee.Text;
+                                //    if (dbCardCost > 0)
+                                //    {
+                                //        var objReturn = MngPaymentBlo.InsertRenovationInfoApt(strPaymentCd, bankcd, txtRegRoomNo.Text, "0007", strPaymentDt, "0", "", dbCardCost, Session["MemNo"].ToString(), strInsMemIP, strCardNo);
+                                //    }
+                                //}
                                 //-----------------------------------------------
                                 if (dtLedgerDet != null)
                                 {
@@ -323,9 +324,9 @@ namespace KN.Web.Park
                                     }
                                 }
                                 // KN_USP_SET_INSERT_PRINTINFO_S00
-                                dtPrintOut = ReceiptMngBlo.RegistryPrintReciptList(strPrintSeq, CommValue.ITEM_TYPE_VALUE_PARKINGFEE, CommValue.DOCUMENT_VALUE_RECEIT, strRentCd,
-                                                                                   Int32.Parse(strFloorNo), strRoomNo, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), strPaymentCd, strUserSeq,
-                                                                                   Session["MemNo"].ToString(), strStartDt.Substring(0, 4) + " / " + strStartDt.Substring(4, 2) + " Parking Fee ( " + txtCarNo.Text + " )",
+                                dtPrintOut = ReceiptMngBlo.RegistryPrintReciptList(strPrintSeq, CommValue.ITEM_TYPE_VALUE_PARKINGFEE, CommValue.DOCUMENT_VALUE_RECEIT, rentCD,
+                                                                                   Int32.Parse(strFloorNo), roomno, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), strPaymentCd, strUserSeq,
+                                                                                   Session["MemNo"].ToString(), strStartDt.Substring(0, 4) + " / " + strStartDt.Substring(4, 2) + " Parking Fee ( " + carID + " )",
                                                                                    dblPayedFee, double.Parse(hfRealBaseRate.Text),
                                                                                    Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, strDebitCreditCd, strNowDt, intPaymentSeq, intPaymentDetSeq);
                                 if (!string.IsNullOrEmpty(dtPrintOut.Rows[0]["PrintSeq"].ToString()))
@@ -341,31 +342,7 @@ namespace KN.Web.Park
                                 ReceiptMngBlo.RegistryMoneyInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, intPaymentDetSeq);
                             }
                             #endregion
-                            // 12.주차카드 관리 업체에 등록
-                            if (rbMoneyFree.SelectedValue == "Y")
-                            {
-                                dblItemTotViAmt = 875000.0;
-                            }
-                            if (!string.IsNullOrEmpty(hfGateList.Value))
-                            {
-                                intGateCnt = Int32.Parse(hfGateList.Value);
-                            }
-                            if (intGateCnt >= Int32.Parse(CommValue.GATE_VALUE_MOTORBIKE))
-                            {
-                                intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_MOTORBIKE);
-                            }
-                            if (intGateCnt >= Int32.Parse(CommValue.GATE_VALUE_OFFICERETAIL))
-                            {
-                                // KN_USP_PRK_UPDATE_PARKINGFEEINFO_M01
-                                ParkingMngBlo.ModifyORParkingSystemInfo(strCardNo, hfStartDt.Value.Replace("-", "").Replace("/", ""), hfEndDt.Value.Replace("-", "").Replace("/", ""), dblItemTotViAmt, intLoopCnt);
-                                intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_OFFICERETAIL);
-                            }
-                            if (intGateCnt >= Int32.Parse(CommValue.GATE_VALUE_APARTMENT))
-                            {
-                                // KN_USP_PRK_UPDATE_PARKINGFEEINFO_M00
-                                ParkingMngBlo.ModifyParkingSystemInfo(strCardNo, hfStartDt.Value.Replace("-", "").Replace("/", ""), hfEndDt.Value.Replace("-", "").Replace("/", ""), dblItemTotViAmt, intLoopCnt);
-                                intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_APARTMENT);
-                            }
+                            // 12. update thông tin hệ thống carparking
                         }
                     }
                 }
@@ -417,6 +394,37 @@ namespace KN.Web.Park
                 grdExcelContent.DataBind();
             }
             #endregion
+        }
+
+        protected void btnImport_Click(object sender, EventArgs e)
+        {
+            ExcelReaderLib dsd = new ExcelReaderLib();
+            if (excelFileLoad.HasFile)
+            {
+                string fileUplName = excelFileLoad.FileName;
+                string fullPathUpload = Path.Combine(Server.MapPath(" "), fileUplName);
+                excelFileLoad.SaveAs(fullPathUpload);
+
+                DataTable dtb = dsd.ExtractDataTable(fullPathUpload);
+                for (int x = 0; x < dtb.Rows.Count; x++)
+                {
+                    if (!string.IsNullOrEmpty(dtb.Rows[x].ItemArray[0].ToString()))
+                    {
+                        string cartype = "0001";//0001 oto,0002 xe may
+                        string roomno = dtb.Rows[x].ItemArray[5].ToString() ;
+                        string carID = dtb.Rows[x].ItemArray[2].ToString() ;
+                        string cardID = dtb.Rows[x].ItemArray[3].ToString() ;
+                        importExcel(cartype, roomno, carID, cardID);
+
+                        //importExcel(dtb.Rows[x].ItemArray[2].ToString(),5,3,
+                    }
+                }
+                dtlRecortUploaded.DataSource = dtb;
+                dtlRecortUploaded.DataBind();
+
+                grdExcelContent.DataSource = dtb;
+                grdExcelContent.DataBind();
+            }
         }
 
         #region temp close
@@ -541,6 +549,417 @@ namespace KN.Web.Park
         }
          * */
         #endregion
+
+        protected void RegistMonthly(string cartype, string roomno, string carID, string cardID,string cardFee,string paymentCD,string cardCost)
+        {
+            try
+            {
+                // 세션체크
+                AuthCheckLib.CheckSession();
+                string strInsMemIP = Request.ServerVariables["REMOTE_ADDR"].ToString();
+                string strDebitCreditCd = CommValue.DEBITNCREDIT_TYPE_VALUE_CREDIT;
+                string strDirectCd = CommValue.DIRECT_TYPE_VALUE_DIRECT;
+                string strItemCd = CommValue.ITEM_TYPE_VALUE_PARKINGCARDFEE;
+                string strParkingItemCd = CommValue.ITEM_TYPE_VALUE_PARKINGFEE;
+                //user info
+                DataTable dtUser = ParkingMngBlo.SelectUserSeqByRoomNo(roomno);
+                string strUserSeq = dtUser.Rows[0]["UserSeq"].ToString();
+                string strFloorNo = dtUser.Rows[0]["FloorNo"].ToString();
+                string strRentCd = dtUser.Rows[0]["RentCd"].ToString();
+                string strRoomNo = roomno;
+                string strCarNo = carID;
+                string strCarTy = cartype;
+                string strDuringMonth = "1";
+                //date info
+                string strStartDt = DateTime.Now.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                string strEndDt = DateTime.ParseExact(DateTime.Now.ToString("s").Substring(0, 7).ToString() + "-01 00:00:00.000", "yyyy-MM-dd HH:mm:ss.fff", null).AddMonths(Int32.Parse("1")).AddDays(-1).ToString("s").Substring(0, 10).Replace("/", "").Replace("-", ""); ;
+                string paymentDT = TextLib.MakeDateEightDigit(strStartDt);
+                //card info
+                
+                string strCardNo = cardID;
+                string strCardFee = string.Empty;
+                string strTagNo = string.Empty;
+                string strVatRatio = string.Empty;
+                string strCardCost = cardCost;
+                var dbCardCost = double.Parse(strCardFee != "" ? strCardFee : "0");
+                //payment info
+                string strPaymentCd = string.Empty;
+                switch (paymentCD)
+                {
+                    case "1":
+                        strPaymentCd = "0001";
+                        break;
+                    case "2":
+                        strPaymentCd = "0002";
+                        break;
+                    case "3":
+                        strPaymentCd = "0003";
+                        break;
+                };//0001 card;0002 cash;0003 transfer
+                var bankcd = 0;// Int32.Parse(ddlTransfer.SelectedValue != "" ? ddlTransfer.SelectedValue : "0");
+                
+                string strPrintSeq = string.Empty;
+                string strPrintDetSeq = string.Empty;
+                int intGateCnt = CommValue.NUMBER_VALUE_1;
+
+                if (string.IsNullOrEmpty(cardFee))
+                {
+                    strCardFee = "0";
+                }
+                else
+                {
+                    strCardFee = cardFee;
+                }
+
+                if (string.IsNullOrEmpty(strTagNo) && !string.IsNullOrEmpty(strCardNo))
+                {
+                    // KN_USP_PRK_SELECT_PARKINGTAGLISTINFO_S02
+                    DataTable dtTagReturn = ParkingMngBlo.WatchExgistParkingTagListInfo(strCardNo, strCarTy);
+                    if (dtTagReturn != null)
+                    {
+                        if (dtTagReturn.Rows.Count > CommValue.NUMBER_VALUE_0)
+                        {
+                            strTagNo = dtTagReturn.Rows[0]["TagNo"].ToString();
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(strCardNo) && !string.IsNullOrEmpty(strTagNo) && !string.IsNullOrEmpty(strCarNo))
+                {
+                    DateTime dtNowDate;
+                    string strNowDt = DateTime.Now.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                    string strPaymentDt = txtPayDt.Text.Replace("-", "").Replace(".", "");
+                    string strNowDay = hfStartDt.Value.Replace("-", "").Substring(6, 2);
+                    string strEndDay = string.Empty;
+                    string strInsDt = hfStartDt.Value.Replace("-", "");
+                    double dblParkingFee = CommValue.NUMBER_VALUE_0_0;
+                    double dblMonthlyFee = CommValue.NUMBER_VALUE_0_0;
+                    double dblPayedFee = CommValue.NUMBER_VALUE_0_0;
+                    int intLoopCnt = 1;//1 tháng 1
+
+                    // KN_USP_MNG_SELECT_VATINFO_S00
+                    DataTable dtVatRatio = VatMngBlo.WatchVatInfo(CommValue.ITEM_TYPE_VALUE_PARKINGFEE);
+                    DataTable dtPrintOut = new DataTable();
+                    DataTable dtLedgerDet = new DataTable();
+
+                    DataTable dtAccPrkMonthInfo = new DataTable();
+                    DataTable dtHoaDonParkingAPTReturn = new DataTable();
+                    
+                    if (!string.IsNullOrEmpty(txtParkingFee.Text))
+                    {
+                        dblParkingFee = double.Parse(txtParkingFee.Text.Replace(",", ""));
+                    }
+                    
+                    if (!string.IsNullOrEmpty(txtHfMonthlyFee.Text))
+                    {
+                        dblMonthlyFee = double.Parse(txtHfMonthlyFee.Text);
+                    }
+                    
+                    double dblItemTotEnAmt = CommValue.NUMBER_VALUE_0_0;
+                    double dblItemTotViAmt = CommValue.NUMBER_VALUE_0_0;
+                    double dblDongToDollar = CommValue.NUMBER_VALUE_0_0;
+                    double dblUniPrime = CommValue.NUMBER_VALUE_0_0;
+                    double dblVatRatio = CommValue.NUMBER_VALUE_0_0;
+                    int intPaymentSeq = CommValue.NUMBER_VALUE_0;
+                    int intPaymentDetSeq = CommValue.NUMBER_VALUE_0;
+                    int intItemSeq = CommValue.NUMBER_VALUE_0;
+
+
+                    if (!string.IsNullOrEmpty(hfRealBaseRate.Text) && !string.IsNullOrEmpty(strCardFee))
+                    {
+                        dblDongToDollar = double.Parse(hfRealBaseRate.Text);
+                        dblItemTotViAmt = double.Parse(strCardFee) + dblParkingFee;
+
+                        if (dblDongToDollar > 0d)
+                        {
+                            dblItemTotEnAmt = dblItemTotViAmt / dblDongToDollar;
+                        }
+                    }
+
+                    if (dtVatRatio != null)
+                    {
+                        if (dtVatRatio.Rows.Count > CommValue.NUMBER_VALUE_0)
+                        {
+                            strVatRatio = dtVatRatio.Rows[0]["VatRatio"].ToString();
+                            dblVatRatio = double.Parse(strVatRatio);
+                            dblUniPrime = dblItemTotViAmt * (100) / (100 + dblVatRatio);
+                        }
+                        else
+                        {
+                            dblVatRatio = CommValue.NUMBER_VALUE_0_0;
+                            dblUniPrime = dblItemTotViAmt;
+                        }
+                    }
+                    else
+                    {
+                        dblVatRatio = CommValue.NUMBER_VALUE_0_0;
+                        dblUniPrime = dblItemTotViAmt;
+                    }
+
+                    strStartDt = hfStartDt.Value.Replace("-", "");
+                    dtAccPrkMonthInfo = ParkingMngBlo.SelectExsistAccMonthPrkInfo(strCardNo, strRoomNo, strStartDt, strEndDt);
+
+                    if (dtAccPrkMonthInfo.Rows.Count > 0)
+                    {
+                    }
+                    else
+                    {
+                        // KN_USP_SET_INSERT_LEDGERINFO_S00
+                        DataTable dtLedgerAccnt = BalanceMngBlo.RegistryLedgerInfo(strDebitCreditCd, strPaymentDt, CommValue.NUMBER_VALUE_0, strRentCd, strDirectCd, strParkingItemCd,
+                                                                                   CommValue.NUMBER_VALUE_0, CommValue.USERTYCD_VALUE_PERSON_CLIENT, hfUserSeq.Value, string.Empty,
+                                                                                   dblDongToDollar, dblItemTotEnAmt, dblItemTotViAmt, strPaymentCd, dblVatRatio,
+                                                                                   Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
+                        if (dtLedgerAccnt != null)
+                        {
+                            if (dtLedgerAccnt.Rows.Count > CommValue.NUMBER_VALUE_0)
+                            {
+                                intPaymentSeq = Int32.Parse(dtLedgerAccnt.Rows[0]["PaymentSeq"].ToString());
+                                intItemSeq = Int32.Parse(dtLedgerAccnt.Rows[0]["ItemSeq"].ToString());
+                                if (strPaymentCd.Equals(CommValue.PAYMENT_TYPE_VALUE_TRANSFER))
+                                {
+                                    // KN_USP_SET_INSERT_LEDGERINFO_S01
+                                    BalanceMngBlo.RegistryLedgerAddonInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, ddlTransfer.SelectedValue);
+                                }
+                            }
+                        }
+                        
+                        for (int intTmpI = 0; intTmpI < intLoopCnt; intTmpI++)
+                        {
+                            // 시작일자에 따른 처리
+                            // 첫 Loop를 제외한 나머지는 매월 1일로 시작해야 함.
+                            if (intTmpI != CommValue.NUMBER_VALUE_0)
+                            {
+                                dtNowDate = DateTime.ParseExact((TextLib.MakeDateEightDigit(hfStartDt.Value.Replace("-", ""))).Substring(0, 7) + "-01 00:00:00.000", "yyyy-MM-dd HH:mm:ss.fff", null);
+                                dtNowDate = dtNowDate.AddMonths(intTmpI);
+                                strStartDt = dtNowDate.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                                strCardFee = CommValue.NUMBER_VALUE_ZERO;
+
+                                // 월정 주차 금액 처리
+                                if (dblParkingFee > dblMonthlyFee)
+                                {
+                                    dblParkingFee = dblParkingFee - dblMonthlyFee;
+                                    dblPayedFee = dblMonthlyFee;
+                                }
+                                else
+                                {
+                                    dblPayedFee = dblParkingFee;
+                                    dblParkingFee = CommValue.NUMBER_VALUE_0_0;
+                                }
+                            }
+                            else
+                            {
+                                // KN_USP_PRK_SELECT_MONTHPARKINGINFO_S02
+                                strStartDt = hfStartDt.Value.Replace("-", "");
+                                DataTable dtParkReturn = ParkingMngBlo.SpreadParkingFeeInfoList(txtHfRentCd.Text, txtHfCarTy.Text, strStartDt);
+
+                                dblPayedFee = double.Parse(TextLib.MakeRoundDownThousand(double.Parse(dtParkReturn.Rows[0]["ParkingFee"].ToString())).ToString());
+
+                                // 월정 주차 금액 처리
+                                if (dblParkingFee > dblPayedFee)
+                                {
+                                    dblParkingFee = dblParkingFee - dblPayedFee;
+                                }
+                                else
+                                {
+                                    dblPayedFee = dblParkingFee;
+                                    dblParkingFee = CommValue.NUMBER_VALUE_0_0;
+                                }
+                            }
+
+                            // 마지막 Loop에서 추가일수에 따른 처리
+                            // 마지막 일자에 대한 처리
+                            if (intTmpI + CommValue.NUMBER_VALUE_1 == intLoopCnt)
+                            {
+                                strEndDt = hfEndDt.Value.Replace("-", "");
+                            }
+                            else
+                            {
+                                dtNowDate = DateTime.ParseExact((TextLib.MakeDateEightDigit(hfStartDt.Value.Replace("-", ""))).Substring(0, 7) + "-01 00:00:00.000", "yyyy-MM-dd HH:mm:ss.fff", null);
+                                dtNowDate = (dtNowDate.AddMonths(intTmpI + CommValue.NUMBER_VALUE_1)).AddDays(-1);
+                                strEndDt = dtNowDate.ToString("s").Substring(0, 10).Replace("/", "").Replace("-", "");
+                            }
+
+                            // 5. 월정주차목록에 등록
+                            // 6. 월정주차 캘린더 생성
+                            // KN_USP_PRK_INSERT_PARKINGFEEINFO_M00
+                            ParkingMngBlo.RegistryUserParkingCardFeeInfo(strRentCd, strCardNo, Int32.Parse(strFloorNo), strRoomNo, strTagNo,
+                                                                         strCarNo, strCarTy, double.Parse(strCardFee), dblPayedFee, strPaymentCd,
+                                                                         strStartDt, strEndDt, Session["CompCd"].ToString(), Session["MemNo"].ToString(),
+                                                                         strInsMemIP, strPaymentDt);
+
+                            //6.1-- Insert HoaDonParkingAPT ---- Add by phuongtv
+                            //KN_USP_PRK_INSERT_HOADONPARKING_APT_I00
+                            ParkingMngBlo.RegistryHoaDonParkingApt(strRentCd, strTagNo, strStartDt, strEndDt);
+
+                            // KN_USP_PRK_SELECT_DEL_HoaDonParkingAPTReturn_S01
+                            dtHoaDonParkingAPTReturn = ParkingMngBlo.SelectExsistHoaDonParkingAPTReturn(strCardNo, strRoomNo, strStartDt, strEndDt);
+
+                            if (dtHoaDonParkingAPTReturn.Rows.Count > 0)
+                            {
+                                // KN_USP_PRK_DELETE_HoaDonParkingAPTReturn_M01
+                                ParkingMngBlo.DeleteHoaDonParkingAPTReturn(strCardNo, strRoomNo, strStartDt, strEndDt);
+                            }
+
+                            // 7. 원장 상세 테이블 처리
+                            // 주차카드비 처리
+                            if (intTmpI == CommValue.NUMBER_VALUE_0 && !strCardFee.Equals(CommValue.NUMBER_VALUE_ZERO))
+                            {
+                                dblUniPrime = double.Parse(strCardFee) * (100) / (100 + dblVatRatio);
+
+                                // KN_USP_SET_INSERT_LEDGERDETINFO_S00
+                                dtLedgerDet = BalanceMngBlo.RegistryLedgerDetInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, CommValue.NUMBER_VALUE_0, strRentCd,
+                                                                                 strDirectCd, strItemCd, intItemSeq, CommValue.NUMBER_VALUE_0, string.Empty, string.Empty, string.Empty, string.Empty,
+                                                                                 CommValue.NUMBER_VALUE_1, CommValue.SCALE_TYPE_VALUE_SINGLEITEM, dblUniPrime, dblUniPrime, double.Parse(strCardFee), double.Parse(strCardFee),
+                                                                                 CommValue.NUMBER_VALUE_0, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), txtHfParkingCardNo.Text, dblVatRatio, CommValue.CONCLUSION_TYPE_TEXT_YES,
+                                                                                 Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
+
+                                if (dtLedgerDet != null)
+                                {
+                                    if (dtLedgerDet.Rows.Count > CommValue.NUMBER_VALUE_0)
+                                    {
+                                        intPaymentDetSeq = Int32.Parse(dtLedgerDet.Rows[0]["PaymentDetSeq"].ToString());
+                                    }
+                                }
+
+                                //---------------Add by BaoTV-------------------
+                                //KN_USP_MNG_INSERT_RENOVATIONINFO_M00
+                                //if (string.IsNullOrEmpty(strCardCost))
+                                //{
+                                //    strCardCost = txtCardFee.Text;
+                                //    if (dbCardCost > 0)
+                                //    {
+                                //        var objReturn = MngPaymentBlo.InsertRenovationInfoApt(strPaymentCd, bankcd, txtRegRoomNo.Text, "0007", strPaymentDt, "0", "", dbCardCost, Session["MemNo"].ToString(), strInsMemIP, strCardNo);
+                                //    }
+                                //}
+
+                                // 8. 출력 테이블에 등록
+                                // KN_USP_SET_INSERT_PRINTINFO_S00
+                                dtPrintOut = ReceiptMngBlo.RegistryPrintReciptList(strPrintSeq, CommValue.ITEM_TYPE_VALUE_PARKINGFEE, CommValue.DOCUMENT_VALUE_RECEIT, strRentCd,
+                                                                                  Int32.Parse(strFloorNo), strRoomNo, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), strPaymentCd, strUserSeq,
+                                                                                  Session["MemNo"].ToString(), strCarNo + " Parking Card Fee ( " + strCardNo + " )",
+                                                                                  double.Parse(strCardFee), double.Parse(hfRealBaseRate.Text),
+                                                                                  Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, strDebitCreditCd, strNowDt, intPaymentSeq, intPaymentDetSeq);
+
+                                if (!string.IsNullOrEmpty(dtPrintOut.Rows[0]["PrintSeq"].ToString()))
+                                {
+                                    strPrintSeq = dtPrintOut.Rows[0]["PrintSeq"].ToString();
+                                    strPrintDetSeq = dtPrintOut.Rows[0]["PrintDetSeq"].ToString();
+
+                                    // 9. 출력 정보 원장상세 테이블에 등록
+                                    // KN_USP_SET_UPDATE_LEDGERDETINFO_M00
+                                    BalanceMngBlo.ModifyLedgerDetInfoForPrint(strDebitCreditCd, strPaymentDt, intPaymentSeq, intPaymentDetSeq, strPrintSeq, Int32.Parse(strPrintDetSeq));
+
+                                    // 10. 출력자 테이블에 등록
+                                    // KN_USP_SET_INSERT_PRINTINFO_S01
+                                    ReceiptMngBlo.RegistryPrintAddonList(strPrintSeq, Int32.Parse(strPrintDetSeq), Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
+                                }
+
+                                // 11.금액 로그 테이블 처리
+                                // KN_USP_SET_INSERT_MONEYINFO_M00
+                                ReceiptMngBlo.RegistryMoneyInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, intPaymentDetSeq);
+                            }
+
+                            dblUniPrime = dblPayedFee * (100) / (100 + dblVatRatio);
+
+                            // 7. 원장 상세 테이블 처리
+                            // 주차비 처리
+                            // KN_USP_SET_INSERT_LEDGERDETINFO_S00
+                            dtLedgerDet = BalanceMngBlo.RegistryLedgerDetInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, CommValue.NUMBER_VALUE_0, strRentCd,
+                                                                               strDirectCd, strParkingItemCd, intItemSeq, CommValue.NUMBER_VALUE_0, string.Empty, string.Empty, string.Empty, string.Empty,
+                                                                               CommValue.NUMBER_VALUE_1, CommValue.SCALE_TYPE_VALUE_MONTH, dblUniPrime, dblUniPrime, dblPayedFee, dblPayedFee,
+                                                                               CommValue.NUMBER_VALUE_0, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), ddlCarNo.SelectedValue, dblVatRatio, CommValue.CONCLUSION_TYPE_TEXT_YES,
+                                                                               Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
+
+                            if (dtLedgerDet != null)
+                            {
+                                if (dtLedgerDet.Rows.Count > CommValue.NUMBER_VALUE_0)
+                                {
+                                    intPaymentDetSeq = Int32.Parse(dtLedgerDet.Rows[0]["PaymentDetSeq"].ToString());
+                                }
+                            }
+
+                            // 8. 출력 테이블에 등록
+                            // KN_USP_SET_INSERT_PRINTINFO_S00
+                            dtPrintOut = ReceiptMngBlo.RegistryPrintReciptList(strPrintSeq, CommValue.ITEM_TYPE_VALUE_PARKINGFEE, CommValue.DOCUMENT_VALUE_RECEIT, strRentCd,
+                                                                               Int32.Parse(strFloorNo), strRoomNo, strStartDt.Substring(0, 4), strStartDt.Substring(4, 2), strPaymentCd, strUserSeq,
+                                                                               Session["MemNo"].ToString(), strStartDt.Substring(0, 4) + " / " + strStartDt.Substring(4, 2) + " Parking Fee ( " + ddlCarNo.SelectedValue + " )",
+                                                                               dblPayedFee, double.Parse(hfRealBaseRate.Text),
+                                                                               Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP, strDebitCreditCd, strNowDt, intPaymentSeq, intPaymentDetSeq);
+
+                            if (!string.IsNullOrEmpty(dtPrintOut.Rows[0]["PrintSeq"].ToString()))
+                            {
+                                strPrintSeq = dtPrintOut.Rows[0]["PrintSeq"].ToString();
+                                strPrintDetSeq = dtPrintOut.Rows[0]["PrintDetSeq"].ToString();
+
+                                // 9. 출력 정보 원장상세 테이블에 등록
+                                // KN_USP_SET_UPDATE_LEDGERDETINFO_M00
+                                BalanceMngBlo.ModifyLedgerDetInfoForPrint(strDebitCreditCd, strPaymentDt, intPaymentSeq, intPaymentDetSeq, strPrintSeq, Int32.Parse(strPrintDetSeq));
+
+                                // 10. 출력자 테이블에 등록
+                                // KN_USP_SET_INSERT_PRINTINFO_S01
+                                ReceiptMngBlo.RegistryPrintAddonList(strPrintSeq, Int32.Parse(strPrintDetSeq), Session["CompCd"].ToString(), Session["MemNo"].ToString(), strInsMemIP);
+                            }
+
+                            // 11.금액 로그 테이블 처리
+                            // KN_USP_SET_INSERT_MONEYINFO_M00
+                            ReceiptMngBlo.RegistryMoneyInfo(strDebitCreditCd, strPaymentDt, intPaymentSeq, intPaymentDetSeq);
+                        }
+
+                        //=================Get Price for Free====================
+                        if (dblItemTotViAmt == 0)
+                        {
+                            dblItemTotViAmt = 875000.0;
+                        }
+
+                        //=======================================================
+
+                        // 12.주차카드 관리 업체에 등록
+                        if (!string.IsNullOrEmpty(hfGateList.Value))
+                        {
+                            intGateCnt = Int32.Parse(hfGateList.Value);
+                        }
+
+                        // 오토바이 게이트 등록요청 여부 체크
+                        if (intGateCnt >= Int32.Parse(CommValue.GATE_VALUE_MOTORBIKE))
+                        {
+                            // KN_USP_PRK_UPDATE_PARKINGFEEINFO_M03
+                            //ParkingMngBlo.ModifyAUTOParkingSystemInfo(strCardNo, hfStartDt.Value.Replace("-", "").Replace("/", ""), hfEndDt.Value.Replace("-", "").Replace("/", ""), dblItemTotViAmt, intLoopCnt);
+                            // 차감
+                            intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_MOTORBIKE);
+                        }
+
+                        // 오피스 리테일 게이트 등록요청 여부 체크
+                        if (intGateCnt >= Int32.Parse(CommValue.GATE_VALUE_OFFICERETAIL))
+                        {
+                            // KN_USP_PRK_UPDATE_PARKINGFEEINFO_M01
+                            ParkingMngBlo.ModifyORParkingSystemInfo(strCardNo, hfStartDt.Value.Replace("-", "").Replace("/", ""), hfEndDt.Value.Replace("-", "").Replace("/", ""), dblItemTotViAmt, intLoopCnt);
+                            // 차감
+                            intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_OFFICERETAIL);
+                        }
+
+                        // 아파트 게이트 등록요청 여부 체크
+                        if (intGateCnt >= Int32.Parse(CommValue.GATE_VALUE_APARTMENT))
+                        {
+                            // KN_USP_PRK_UPDATE_PARKINGFEEINFO_M00
+                            ParkingMngBlo.ModifyParkingSystemInfo(strCardNo, hfStartDt.Value.Replace("-", "").Replace("/", ""), hfEndDt.Value.Replace("-", "").Replace("/", ""), dblItemTotViAmt, intLoopCnt);
+                            // 차감
+                            intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_APARTMENT);
+                        }
+
+                        // chú ý: in ra tính sau
+                        //StringBuilder sbList = new StringBuilder();
+                        //sbList.Append("window.open('/Common/RdPopup/RDPopupReciptParkingFee.aspx?Datum0=" + strPrintSeq + "&Datum1=0" + "&Datum2=" + paymentDT + "&Datum3=&Datum4=', 'ParkingFee', 'status=no, resizable=no, width=740, height=700, left=100,top=100, scrollbars=no, menubar=no, toolbar=no, location=no');");
+
+                        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "ParkingFee", sbList.ToString(), CommValue.AUTH_VALUE_TRUE);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrLogger.MakeLogger(ex);
+            }
+        }
+
     }
     public class ParkingInfo
     {

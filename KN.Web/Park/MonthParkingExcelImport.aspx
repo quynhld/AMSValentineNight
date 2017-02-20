@@ -15,6 +15,8 @@
             <asp:FileUpload ID="excelFileLoad" runat="server" />
             <asp:Button ID="btnReadFile" runat="server" onclick="btnReadFile_Click" 
                 Text="Read data" Width="140px" />
+            <asp:Button ID="btnImport" runat="server" onclick="btnImport_Click" 
+                Text="Import Data" Width="140px" />
         </td>
       </tr>  
   <tr>
