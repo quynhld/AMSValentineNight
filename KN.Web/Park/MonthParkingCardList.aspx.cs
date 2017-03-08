@@ -17,6 +17,10 @@ using KN.Resident.Biz;
 using KN.Settlement.Biz;
 using KN.Manage.Biz;
 
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Configuration;
+
 namespace KN.Web.Park
 {
     public partial class MonthParkingCardList : BasePage
@@ -1214,6 +1218,88 @@ namespace KN.Web.Park
                                 // 차감
                                 intGateCnt = intGateCnt - Int32.Parse(CommValue.GATE_VALUE_APARTMENT);
                             }
+
+//                            #region brecus
+//                            string brecusConn = ConfigurationManager.ConnectionStrings["BrecusParkDB"].ConnectionString;
+//                            string Insert_tbl_customer = @"
+//                                                              insert into PerfectParking.dbo.tbl_customer 
+//                                                              ([CustomerCode]
+//                                                              ,[CustomerName]
+//                                                              ,[Address]
+//                                                              ,[TaxCode]
+//                                                              ,[Gender]
+//                                                              ,[Phone]
+//                                                              ,[CreateDate])
+//                                                     Values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}')";
+//                            string Insert_tbl_cardholder = @"insert into PerfectParking.[dbo].[Tbl_CardHolder]
+//                                                                                 ( [CardID],
+//                                                                                [TagNo],
+//                                                                                [CardTypeID],
+//                                                                                [CustomerID],
+//                                                                                [IssueDate],
+//                                                                                [ExpiryDate],
+//                                                                                [CreateDate] )
+//                                                                                Values ('{0}','{1}','{2}',(select ID from tbl_customer where customercode= '{3}'),'{4}','{5}','{6}')";
+//                            string Insert_Tbl_CustomerVehicle = @"insert into [PerfectParking].[dbo].[Tbl_CustomerVehicle]
+//                                                                         (
+//	                                                                        [CustomerID],
+//	                                                                        [VehicleType],
+//	                                                                        [VehicleLPN]
+//                                                                         )
+//                                                                         Values ((select ID from tbl_customer where customercode= '{0}'),'{1}','{2}')";
+//                            string SelectCustomerExists = "select * from tbl_customer where customercode = '{0}'";
+//                            SqlConnection sqlconn = new SqlConnection(brecusConn);
+//                            SqlCommand cmd = new SqlCommand();
+//                            try
+//                            {
+//                                sqlconn.Open();
+//                                //insert into tbl_customer
+//                                cmd.Connection = sqlconn;
+//                                string stgender = "0";
+//                                cmd.CommandText = string.Format(SelectCustomerExists, strUserSeq);
+//                                var x = cmd.ExecuteScalar();
+//                                if (x == null)
+//                                {
+//                                    switch (strUserGender)
+//                                    {
+//                                        case "M":
+//                                            stgender = "0";
+//                                            break;
+//                                        case "F":
+//                                            stgender = "1";
+//                                            break;
+//                                    }
+//                                    cmd.CommandText = string.Format(Insert_tbl_customer, strUserSeq, strUserNm, strUserAddress, strUserTaxcd, stgender, strUserPhoneNo, DateTime.Now.ToString());
+//                                    cmd.ExecuteNonQuery();
+//                                }
+
+//                                //insert into tbl_cardholder
+//                                string selectCardExists = "select * from [dbo].[Tbl_CardHolder] where tagno='{1}'";
+//                                string enddtIns = DateTime.ParseExact(strEndDt, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).ToShortDateString();
+//                                cmd.CommandText = string.Format(selectCardExists, cardID, strTagNo);
+//                                var cardexists = cmd.ExecuteScalar();
+//                                if (cardexists == null)
+//                                {
+//                                    cmd.CommandText = string.Format(Insert_tbl_cardholder, cardID, strTagNo, cartype, strUserSeq, strStartDt, enddtIns, DateTime.Now.ToString());
+//                                    cmd.ExecuteNonQuery();
+//                                }
+//                                else
+//                                {
+//                                    string updateExpireDate = "update [dbo].[Tbl_CardHolder] set [ExpiryDate] = '{0}' where tagno='{1}'";
+//                                    cmd.CommandText = string.Format(updateExpireDate, enddtIns, strTagNo);
+//                                    cmd.ExecuteNonQuery();
+//                                }
+
+//                                //insert into [Tbl_CustomerVehicle]
+//                                cmd.CommandText = string.Format(Insert_Tbl_CustomerVehicle, strUserSeq, cartype, carID);
+//                                cmd.ExecuteNonQuery();
+//                            }
+//                            catch (Exception ex)
+//                            {
+
+//                            }
+//                            #endregion
+
 
                             ResetSearchControls();
 

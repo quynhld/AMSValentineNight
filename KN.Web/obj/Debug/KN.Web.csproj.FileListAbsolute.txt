@@ -1,4 +1,3 @@
-E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\obj\Debug\KN.Web.csprojResolveAssemblyReference.cache
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Web.dll
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Web.pdb
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Config.dll
@@ -11,9 +10,8 @@ E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Manage.pdb
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Resident.pdb
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Settlement.pdb
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Stock.pdb
-E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Board.pdb
-E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Parking.pdb
-E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\obj\Debug\KN.Web.dll
-E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\obj\Debug\KN.Web.pdb
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Common.Base.pdb
 E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\bin\KN.Common.Method.pdb
+E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\obj\Debug\KN.Web.csprojResolveAssemblyReference.cache
+E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\obj\Debug\KN.Web.dll
+E:\working\AMSValentine\AMSValentineNight\trunk\KN.Web\obj\Debug\KN.Web.pdb

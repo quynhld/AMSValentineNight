@@ -20,7 +20,22 @@
         </td>
       </tr>  
   <tr>
-        <td>Chọn tháng nộp </td>
+        <td>Chọn tháng
+            <asp:DropDownList ID="ddlMonth" runat="server" Height="18px" Width="54px">
+                <asp:ListItem Value="01">1</asp:ListItem>
+                <asp:ListItem Value="02">2</asp:ListItem>
+                <asp:ListItem Value="03">3</asp:ListItem>
+                <asp:ListItem Value="04">4</asp:ListItem>
+                <asp:ListItem Value="05">5</asp:ListItem>
+                <asp:ListItem Value="06">6</asp:ListItem>
+                <asp:ListItem Value="07">7</asp:ListItem>
+                <asp:ListItem Value="08">8</asp:ListItem>
+                <asp:ListItem Value="09">9</asp:ListItem>
+                <asp:ListItem>10</asp:ListItem>
+                <asp:ListItem>11</asp:ListItem>
+                <asp:ListItem>12</asp:ListItem>
+            </asp:DropDownList>
+        </td>
        
     </tr>
     <tr>
