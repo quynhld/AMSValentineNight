@@ -24,6 +24,7 @@ namespace KN.Web.Common.RdPopup
         public string REQ_DT = string.Empty;
         public string PAY_TYPE = string.Empty;
         public string ROOM_NO = string.Empty;
+        public string INVOICE_NO = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -97,6 +98,11 @@ namespace KN.Web.Common.RdPopup
                 if (!string.IsNullOrEmpty(Request.Params["Datum1"].ToString()))
                 {
                     ROOM_NO = Request.Params["Datum1"].ToString();                   
+                }
+
+                if (!string.IsNullOrEmpty(Request.Params["Datum2"].ToString()))
+                {
+                    INVOICE_NO = Request.Params["Datum2"].ToString();
                 }
                
                 isReturnOk = CommValue.AUTH_VALUE_TRUE;

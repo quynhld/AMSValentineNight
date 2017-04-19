@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="/Common/Css/keangnam.css"/>
         <script language="javascript" type="text/javascript" src="/Common/Javascript/jquery-1.8.3.min.js"></script>
         <script language="javascript" type="text/javascript" src="/Common/Javascript/Global.js"></script>
+        
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="height:800px; width:100%;">
         <form id="form1" runat="server"> 
@@ -101,8 +102,8 @@
         <script language="javascript" id="clientEventHandlersJS" type="text/javascript">
             Rdviewer.AutoAdjust = false;
             Rdviewer.ZoomRatio = 300;
-            Rdviewer.HideToolbar();
-            Rdviewer.FileOpen('<%=NOW_DOMAIN%>/Common/Mrd/<%=strMRDFile%>', '/rv TempDocNo[<%=DOC_NO%>]');
+
+            Rdviewer.FileOpen('<%=NOW_DOMAIN%>/Common/Mrd/<%=strMRDFile%>', '/rv TempDocNo[<%=DOC_NO%>] invoiceNo[<%=INVOICE_NO %>]');
         </script>
         <asp:TextBox ID="txtHfDocNo" runat="server" Visible="false"></asp:TextBox>        
     </body>

@@ -19,6 +19,8 @@ using KN.Settlement.Biz;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace KN.Web.Management.Manage
 {
@@ -832,7 +834,9 @@ namespace KN.Web.Management.Manage
             {
                 var reft= txthfrefSerialNo.Value;
                 var refPrintBundleNo = reft;
+                //fk get billcd in hoadoninfo table - 
                 var strRoomNo = ((Literal)lvRentalMngList.Items[0].FindControl("ltInsRoomNo")).Text;
+                var invoiceNo = ((Literal)lvRentalMngList.Items[0].FindControl("ltInvoiceNo")).Text;
                 if (lvRentalMngList.Items.Count <= 0)
                 {
                     return;
@@ -848,7 +852,7 @@ namespace KN.Web.Management.Manage
                 //=============================Print=============================
                 if (dtreturn.Rows.Count > CommValue.NUMBER_VALUE_0)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "PreviewPrint", "fnOccupantList('" + refPrintBundleNo + "','" + strRoomNo + "');", CommValue.AUTH_VALUE_TRUE);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "PreviewPrint", "fnOccupantList('" + refPrintBundleNo + "','" + strRoomNo + "','" + invoiceNo + "');", CommValue.AUTH_VALUE_TRUE);
                 }            
             }
              catch (Exception ex)

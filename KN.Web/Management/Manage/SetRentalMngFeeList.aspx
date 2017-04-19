@@ -67,8 +67,8 @@
             return false;
         }
 
-        function fnOccupantList(strSeq,strRoomNo) {            
-            window.open("/Common/RdPopup/RDPopupReprintHoaDon.aspx?Datum0=" + strSeq + "&Datum1=" + strRoomNo, "ReprintInvoice", "status=no, resizable=yes, width=1100, height=900, left=100,top=100, scrollbars=no, menubar=no, toolbar=no, location=no",false);
+        function fnOccupantList(strSeq,strRoomNo,strInvoice) {            
+            window.open("/Common/RdPopup/RDPopupReprintHoaDon.aspx?Datum0=" + strSeq + "&Datum1=" + strRoomNo + "&Datum2=" + strInvoice, "ReprintInvoice", "status=no, resizable=yes, width=1100, height=900, left=100,top=100, scrollbars=no, menubar=no, toolbar=no, location=no",false);
             document.getElementById("<%=txtsendTempDocNo.ClientID%>").value = strSeq;            
         }
           $(document).ready(function () {
