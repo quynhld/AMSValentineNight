@@ -105,7 +105,8 @@
 
             Rdviewer.FileOpen('<%=NOW_DOMAIN%>/Common/Mrd/<%=strMRDFile%>', '/rv TempDocNo[<%=DOC_NO%>] invoiceNo[<%=INVOICE_NO %>]');
         </script>
-        <asp:TextBox ID="txtHfDocNo" runat="server" Visible="false"></asp:TextBox>        
+        <asp:TextBox ID="txtHfDocNo" runat="server" Visible="false"></asp:TextBox>   
+        <asp:TextBox ID="txtHfInvoiceNo" runat="server" Visible="false"></asp:TextBox>      
     </body>
 </html>
 

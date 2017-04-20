@@ -848,7 +848,7 @@ namespace KN.Web.Management.Manage
                 //=======Update PRINT_BUNDLE_NO = REF_SERIAL_NO =================
                 InvoiceMngBlo.UpdatelHoadonReprintList(hfRentCd.Value, reft, refPrintBundleNo);
           
-                 var dtreturn = InvoiceMngBlo.SelectReprintHoadon(reft);                
+                 var dtreturn = InvoiceMngBlo.SelectReprintHoadon(reft,invoiceNo);                
                 //=============================Print=============================
                 if (dtreturn.Rows.Count > CommValue.NUMBER_VALUE_0)
                 {

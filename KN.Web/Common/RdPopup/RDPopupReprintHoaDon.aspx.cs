@@ -103,6 +103,7 @@ namespace KN.Web.Common.RdPopup
                 if (!string.IsNullOrEmpty(Request.Params["Datum2"].ToString()))
                 {
                     INVOICE_NO = Request.Params["Datum2"].ToString();
+                    txtHfInvoiceNo.Text = Request.Params["Datum2"].ToString();
                 }
                
                 isReturnOk = CommValue.AUTH_VALUE_TRUE;

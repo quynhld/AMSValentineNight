@@ -105,6 +105,19 @@ namespace KN.Settlement.Dac
             return dtReturn;
         }
 
+        public static DataTable SelectReprintHoadon(string refPrintBundleNo,string invoiceNo)
+        {
+            DataTable dtReturn = new DataTable();
+            object[] objParam = new object[2];
+
+            objParam[0] = TextLib.MakeNullToEmpty(refPrintBundleNo);
+            objParam[1] = TextLib.MakeNullToEmpty(invoiceNo);
+
+            dtReturn = SPExecute.ExecReturnSingle("KN_RPT_SELECT_INVOICE_REPRINT_LIST", objParam);
+
+            return dtReturn;
+        }
+
         public static DataTable SelectReprintInvoiceNo(string compNo)
         {
             DataTable dtReturn = new DataTable();

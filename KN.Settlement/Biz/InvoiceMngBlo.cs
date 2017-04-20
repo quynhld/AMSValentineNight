@@ -75,6 +75,15 @@ namespace KN.Settlement.Biz
              dtReturn = InvoiceMngDao.SelectReprintHoadon(refPrintBundleNo);
              return dtReturn;
          }
+
+         public static DataTable SelectReprintHoadon(string refPrintBundleNo, string invoiceNo)
+         {
+             DataTable dtReturn = new DataTable();
+
+             dtReturn = InvoiceMngDao.SelectReprintHoadon(refPrintBundleNo,invoiceNo);
+             return dtReturn;
+         }
+
          public static DataTable SelectReprintInvoiceNo(string compNo)
          {
              DataTable dtReturn = new DataTable();
