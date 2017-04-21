@@ -115,7 +115,7 @@
             Rdviewer.AutoAdjust = false;
             Rdviewer.ZoomRatio = 100;
             Rdviewer.HideToolbar();
-            Rdviewer.FileOpen('<%=NOW_DOMAIN%>/Common/Mrd/<%=strMRDFile%>', '/rv TempDocNo[<%=DOC_NO%>] BillNo=[<%=Bill_NO %>]');
+            Rdviewer.FileOpen('<%=NOW_DOMAIN%>/Common/Mrd/<%=strMRDFile%>', '/rv TempDocNo[<%=DOC_NO%>] billCD[<%=Bill_NO %>]');
         </script>
         <asp:TextBox ID="txtHfDocNo" runat="server" Visible="false"></asp:TextBox>
     </body>
