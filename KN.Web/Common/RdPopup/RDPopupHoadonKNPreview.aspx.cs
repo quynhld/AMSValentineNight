@@ -16,6 +16,7 @@ namespace KN.Web.Common.RdPopup
         public string strMRDFile = string.Empty;
         public string NOW_DOMAIN = string.Empty;
         public string DOC_NO = string.Empty;
+        public string Bill_NO = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -69,7 +70,10 @@ namespace KN.Web.Common.RdPopup
                     DOC_NO = Request.Params["Datum0"].ToString();
                     txtHfDocNo.Text = Request.Params["Datum0"].ToString();
                 }
-
+                if (!string.IsNullOrEmpty(Request.Params["Datum1"].ToString()))
+                {
+                    Bill_NO = Request.Params["Datum1"].ToString();
+                }
                 isReturnOk = CommValue.AUTH_VALUE_TRUE;
             }
             else
@@ -85,7 +89,7 @@ namespace KN.Web.Common.RdPopup
             try
             {
                 // KN_USP_SET_INSERT_INVOICEFORTEMP_S01 & Update InvoieNo
-                InvoiceMngBlo.InsertTempHoadonForConfirm(txtHfDocNo.Text);
+                InvoiceMngBlo.InsertTempHoadonForConfirm(txtHfDocNo.Text,Bill_NO);
 
                 StringBuilder sbNoSelection = new StringBuilder();
 

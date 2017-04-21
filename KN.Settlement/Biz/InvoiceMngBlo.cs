@@ -147,10 +147,10 @@ namespace KN.Settlement.Biz
         /// <param name="rentCd"></param>
         /// <param name="PrintBundleNo"></param>
         /// <returns></returns>
-        public static DataTable UpdatingInvoiceNoForHoadon(string contractType, string refSerialNo, string monthAmtNo, string rentCd, string PrintBundleNo)
+        public static DataTable UpdatingInvoiceNoForHoadon(string contractType, string refSerialNo, string monthAmtNo, string rentCd, string PrintBundleNo,string billCD)
         {
 
-            var dtreturn = InvoiceMngDao.UpdatingInvoiceNoForHoadon(contractType, refSerialNo, monthAmtNo, rentCd, PrintBundleNo);
+            var dtreturn = InvoiceMngDao.UpdatingInvoiceNoForHoadon(contractType, refSerialNo, monthAmtNo, rentCd, PrintBundleNo,billCD);
 
             return dtreturn;
         }
@@ -1214,11 +1214,11 @@ namespace KN.Settlement.Biz
         /// </summary>
         /// <param name="strTempDocNo">임시문서번호</param>
         /// <returns>object[]</returns>
-        public static object[] InsertTempHoadonForConfirm(string strTempDocNo)
+        public static object[] InsertTempHoadonForConfirm(string strTempDocNo,string billCD)
         {
             object[] objReturn = new object[2];
 
-            objReturn = InvoiceMngDao.InsertTempHoadonForConfirm(strTempDocNo);
+            objReturn = InvoiceMngDao.InsertTempHoadonForConfirm(strTempDocNo, billCD);
 
             return objReturn;
         }

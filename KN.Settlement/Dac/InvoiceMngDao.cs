@@ -234,15 +234,16 @@ namespace KN.Settlement.Dac
         /// <param name="rentCd"></param>
         /// <param name="printBundleNo"></param>
         /// <returns></returns>
-        public static DataTable UpdatingInvoiceNoForHoadon(string contractType, string refSerialNo, string monthAmtNo, string rentCd, string printBundleNo)
+        public static DataTable UpdatingInvoiceNoForHoadon(string contractType, string refSerialNo, string monthAmtNo, string rentCd, string printBundleNo,string billcd)
         {
-            var objParam = new object[5];
+            var objParam = new object[6];
 
             objParam[0] = TextLib.MakeNullToEmpty(rentCd);
             objParam[1] = TextLib.MakeNullToEmpty(refSerialNo);
             objParam[2] = TextLib.MakeNullToEmpty(printBundleNo);
             objParam[3] = double.Parse(monthAmtNo.Replace(".", ""));
             objParam[4] = TextLib.MakeNullToEmpty(contractType);
+            objParam[5] = TextLib.MakeNullToEmpty(billcd);
 
             var dtReturn = SPExecute.ExecReturnSingle("KN_USP_UPDATE_HOADON_INFO_U00", objParam);
 
@@ -1247,13 +1248,14 @@ namespace KN.Settlement.Dac
         /// </summary>
         /// <param name="strTempDocNo">임시문서번호</param>
         /// <returns>object[]</returns>
-        public static object[] InsertTempHoadonForConfirm(string strTempDocNo)
+        public static object[] InsertTempHoadonForConfirm(string strTempDocNo,string billCD)
         {
             object[] objReturn = new object[2];
-            object[] objParams = new object[1];
+            object[] objParams = new object[2];
 
             objParams[0] = strTempDocNo;
-
+            objParams[1] = billCD;
+            
             objReturn = SPExecute.ExecReturnNo("KN_USP_SET_INSERT_INVOICEFORTEMP_S01", objParams);
 
             return objReturn;

@@ -401,7 +401,7 @@ namespace KN.Web.Settlement.Balance
                 var intCheckRow = CommValue.NUMBER_VALUE_0;
 
                 var refPrintBundleNo = string.Empty;
-
+                var vBillCD = string.Empty;
                 if (lvPrintoutList.Items.Count <= 0)
                 {   
                     return;
@@ -414,12 +414,13 @@ namespace KN.Web.Settlement.Balance
                     var contractType = ((TextBox)lvPrintoutList.Items[i].FindControl("txtHfContractType")).Text;
                     var refSerialNo = ((TextBox)lvPrintoutList.Items[i].FindControl("txtHfRefSerialNo")).Text;
                     var monthAmtNo = ((Literal)lvPrintoutList.Items[i].FindControl("ltViAmount")).Text;
+                    vBillCD = ((TextBox)lvPrintoutList.Items[i].FindControl("txtHfBillCd")).Text;
                     if (string.IsNullOrEmpty(refPrintBundleNo))
                     {
                         refPrintBundleNo = ((TextBox)lvPrintoutList.Items[i].FindControl("txtHfRefSerialNo")).Text;
                     }
                     //Set same print no to all checked invoice        
-                    InvoiceMngBlo.UpdatingInvoiceNoForHoadon(contractType, refSerialNo, monthAmtNo,hfRentCd.Value, refPrintBundleNo);
+                    InvoiceMngBlo.UpdatingInvoiceNoForHoadon(contractType, refSerialNo, monthAmtNo, hfRentCd.Value, refPrintBundleNo, vBillCD);
 
                     intCheckRow++;
                 }
@@ -441,8 +442,8 @@ namespace KN.Web.Settlement.Balance
                         InvoiceMngBlo.UpdatingInvoiceSpecialIssueDt(refPrintBundleNo,txtIssueDt.Text.Replace("-","").Trim());
                     }
                     var sbPrintOut = new StringBuilder();
-
-                    sbPrintOut.Append("CloseLoading();window.open(\"/Common/RdPopup/RDPopupHoadonKNPreview.aspx?Datum0=" + refPrintBundleNo + "\", \"Hoadon\", \"status=no, resizable=no, width=740, height=700, left=100,top=100, scrollbars=no, menubar=no, toolbar=no, location=no\");");
+                    
+                    sbPrintOut.Append("CloseLoading();window.open(\"/Common/RdPopup/RDPopupHoadonKNPreview.aspx?Datum0=" + refPrintBundleNo + "&Datum1=" + vBillCD + "\", \"Hoadon\", \"status=no, resizable=no, width=740, height=700, left=100,top=100, scrollbars=no, menubar=no, toolbar=no, location=no\");");
 
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "PreviewPrint", sbPrintOut.ToString(), CommValue.AUTH_VALUE_TRUE);  
                 }
