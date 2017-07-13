@@ -1296,7 +1296,7 @@ namespace KN.Web.Resident.Contract
                     riDs.LandloadCompNm = string.Empty;
                     riDs.LandloadNm = txtLandloadNm.Text;
                 }
-
+                riDs.AdditionArea = 0;
                 riDs.ContStepCd = ddlContStep.SelectedValue;
                 riDs.ContractNo = txtContNo.Text;
                 riDs.LandloadAddr = txtLandloadAddr.Text;
@@ -1406,6 +1406,7 @@ namespace KN.Web.Resident.Contract
                 riDs.ExtRoomNo = txtExtRoomNo.Text.ToUpper();
                 riDs.FloorNo = Int32.Parse(txtFloor.Text);
                 riDs.RentLeasingArea = double.Parse(txtRentLeasingArea.Text);
+                riDs.AdditionArea = 0; 
                 riDs.M_E_USING_DATE = txtSMEndDate.Text.Replace("-", "");
                 riDs.R_E_USING_DATE = txtSREndDate.Text.Replace("-", "");
                 // 임대비용

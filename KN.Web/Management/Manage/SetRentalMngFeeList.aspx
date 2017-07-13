@@ -60,10 +60,11 @@
                 return false;
             }
         }
-        function fnDetailView(refSerialNo)
+        function fnDetailView(refSerialNo,InvoiceNo)
         {
             document.getElementById("<%=txthfrefSerialNo.ClientID%>").value = refSerialNo;
-            <%=Page.GetPostBackEventReference(imgbtnDetailview)%>;
+            document.getElementById("<%=txthfInvoice.ClientID%>").value = InvoiceNo;
+            <%=Page.GetPostBackEventReference(imgbtnDetailview)%>; 
             return false;
         }
 
@@ -209,18 +210,19 @@
                         </table>
                     </LayoutTemplate>
                     <ItemTemplate>
-                        <tr style="background-color:#FFFFFF;cursor:pointer;" onmouseover="this.style.backgroundColor='#E4EEF5'" onmouseout="this.style.backgroundColor='#FFFFFF'"  onclick="javascript:return fnDetailView('<%#Eval("REF_SERIAL_NO")%>')">                          
+                        <tr style="background-color:#FFFFFF;cursor:pointer;" onmouseover="this.style.backgroundColor='#E4EEF5'" onmouseout="this.style.backgroundColor='#FFFFFF'"  onclick="javascript:return fnDetailView('<%#Eval("REF_SERIAL_NO")%>','<%#Eval("InvoiceNo") %>')">                          
                             <td class="Bd-Lt TbTxtCenter">
                                 <asp:Literal ID="ltInvoiceNoP" runat="server"></asp:Literal>
                                 <asp:TextBox ID="txtHfrefSerialNoP" runat="server" Visible="false"></asp:TextBox>
                                 <asp:TextBox ID="txtHfPrintDetSeqP" runat="server" Visible="false"></asp:TextBox>
                                 <asp:TextBox ID="txtHfUserSeqP" runat="server" Visible="false"></asp:TextBox>
                                 <asp:TextBox ID="txtHfInvoiceNoP" runat="server" Visible="false"></asp:TextBox>
+                                <asp:TextBox ID="txtHfBillNoCdP" runat="server" Visible="false"></asp:TextBox>
                             </td>                            
                             <td class="Bd-Lt TbTxtCenter"><asp:Literal ID="ltInsRoomNoP" runat="server"></asp:Literal></td>
                             <td class="Bd-Lt TbTxtCenter"><asp:Literal ID="ltInsFeeNameP" runat="server"></asp:Literal></td>
                             <td class="Bd-Lt TbTxtCenter"><asp:Literal ID="ltInsUserNmP" runat="server"></asp:Literal></td>
-                             <td class="Bd-Lt TbTxtCenter"> <asp:Literal ID="ltInsUPriceP" runat="server"></asp:Literal></td>
+                            <td class="Bd-Lt TbTxtCenter"><asp:Literal ID="ltInsUPriceP" runat="server"></asp:Literal></td>
                             <td class="Bd-Lt TbTxtCenter"><asp:Literal ID="ltVATAmt" runat="server"></asp:Literal></td>
                             <td class="Bd-Lt TbTxtRight"><asp:Literal ID="ltInsAmtViNoP" runat="server"></asp:Literal></td>
                             <td class="Bd-Lt TbTxtRight"><asp:Literal ID="ltnsIssDtP" runat="server"></asp:Literal></td>
@@ -243,7 +245,9 @@
                 </asp:ListView>
             </div>
             <asp:HiddenField ID="txthfrefSerialNo" runat="server" />
+            <asp:HiddenField ID="txthfInvoice" runat="server" />
             <asp:HiddenField ID="txtsendTempDocNo" runat="server" />
+            <asp:HiddenField ID="txthfBillNoCD" runat="server" />
     </div> 
      </ContentTemplate>
     </asp:UpdatePanel>       

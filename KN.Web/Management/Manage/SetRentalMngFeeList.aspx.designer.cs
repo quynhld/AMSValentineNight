@@ -256,6 +256,15 @@ namespace KN.Web.Management.Manage {
         protected global::System.Web.UI.WebControls.HiddenField txthfrefSerialNo;
         
         /// <summary>
+        /// txthfInvoice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField txthfInvoice;
+        
+        /// <summary>
         /// txtsendTempDocNo control.
         /// </summary>
         /// <remarks>
@@ -263,6 +272,15 @@ namespace KN.Web.Management.Manage {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtsendTempDocNo;
+        
+        /// <summary>
+        /// txthfBillNoCD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField txthfBillNoCD;
         
         /// <summary>
         /// UpdatePanel2 control.

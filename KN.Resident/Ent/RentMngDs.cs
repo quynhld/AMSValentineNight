@@ -262,6 +262,8 @@
                 set;
             }
 
+            public double AdditionArea { get; set; }
+
             public string HandOverDt
             {
                 get;

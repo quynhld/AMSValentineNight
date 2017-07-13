@@ -681,6 +681,7 @@ namespace KN.Web.Resident.Contract
                 rsDs.ContDt = hfCommencingDt.Value.Replace("-","");
                 rsDs.ResaleDt = hfExpiringDt.Value.Replace("-","");
                 rsDs.LeasingArea = double.Parse(txtLeasingArea.Text);
+                
                 rsDs.DongToDollar = double.Parse(txtHfExchangeRate.Text);
                 rsDs.LastKeyDt = hfLastKeyDt.Value.Replace("-","");
 

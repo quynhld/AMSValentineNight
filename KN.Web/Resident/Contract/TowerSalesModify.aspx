@@ -281,7 +281,7 @@
         return true;
     }
     
-        function getListFeeMng() {
+    function getListFeeMng() {
         var strListFee = "";
         $('#tblListFee tbody tr input').each(function (){                    
             if($(this).val()!="|") {
@@ -327,7 +327,6 @@
         window.open("<%=Master.PAGE_POPUP2%>?NowRate=" + strNowRate + "&ReturnBox1=" + strReturnBox1 + "&ReturnBox2=" + strReturnBox2, 'TmpExchange', 'status=no, resizable=no, width=320, height=80, left=100,top=100, scrollbars=no, menubar=no, toolbar=no, location=no');
         return false;
     }
-    
     function fnCheckRentalFee(strData1, strData2, strData3, strData4, strData5, strText)
     {
         var strRentalFeeStartDt = document.getElementById(strData1);
@@ -362,7 +361,6 @@
             
         return true;
     }
-    
     function fnCheckItems(strData1, strData2, strData3, strData4, strData5, strData6, strText)
     {
         var strDepositExpDt = document.getElementById(strData1);
@@ -418,14 +416,11 @@
             
         return true;
     }
-    
     function fnResetCurrency()
     {
         <%=Page.GetPostBackEventReference(imgbtnResetCurrency)%>;
         return false;
     }
-    
-
     function chkCCChange(a) {
        
         var chkCc = document.getElementById("<%= chkCC.ClientID %>");
@@ -455,7 +450,7 @@
 //        });
     }
     
-        function fnApplyFee() {
+    function fnApplyFee() {
             if($("#<%=isApplyFeeMn.ClientID %>").is(':checked')) {
                 $("#<%=listFitOutFee.ClientID %>").show("slow"); // checked0
                 $("#<%=hfApplyFeeMn.ClientID %>").val("Y");
@@ -466,9 +461,8 @@
                 $('#<%=lineRow.ClientID %>').attr("style", "");            
             }
         } 
-    
-
- function loadCalendar() {
+   
+    function loadCalendar() {
   
 
     $( "#txtFeeStartDt" ).datepicker();
@@ -476,6 +470,11 @@
      
     $("#txtFitFeeStartDt").datepicker();
     $("#txtFitFeeEndDt" ).datepicker();
+
+    $("#txtAddFeeStartDt").datepicker();
+    $("#txtAddFeeEndDt" ).datepicker();
+    
+
     $("#<%=txtRSPayDate.ClientID %>").datepicker();
     $("#<%=txtMSPayDate.ClientID %>").datepicker();         
     $("#<%=txtRSUsingDt.ClientID %>").datepicker();
@@ -612,6 +611,52 @@
         $('#txtFeeExpAmt').val("");
     }
     
+    //AddAdditionAreaFee()
+    var additionAreaFee =0;
+    function AddAdditionAreaFee(){
+        
+        if(!isValidateFee('#txtAddFeeStartDt','#txtAddFeeEndDt','#txtAddFeeExcRate','#txtAddFeeExpAmt')) return; 
+        var stSDate = $('#txtAddFeeStartDt').val();
+        var stEDate = $('#txtAddFeeEndDt').val();
+        var vndFee = $('#txtAddFeeExcRate').val();
+        var usdFee = $('#txtAddFeeExpAmt').val();
+        var feeNo = $('#AddfeeID').val();
+        if (feeNo!="") {
+            $("#additionAreaFee" + feeNo + " :text").eq(0).val(stSDate);
+            $("#additionAreaFee" + feeNo + " :text").eq(1).val(stEDate);
+            $("#additionAreaFee" + feeNo + " :text").eq(2).val(vndFee);
+            $("#additionAreaFee" + feeNo + " :text").eq(3).val(usdFee);
+            $("#additionAreaFee" + feeNo + " :hidden").eq(0).val("Y");
+            $('#AddfeeID').val("");
+            
+        } else {
+
+            $('#tblAdditionAreaFee tbody').append(''+
+                '<tr id="additionAreaFee'+additionAreaFee+'" >' +
+                '<input type="hidden" id="isNew" value="Y"/>'+
+                '<input type="hidden" id="feeSeq" value=""/>'+
+                '<td align="left" class="P0"><input name="" type="text" maxlength="10" readonly="readonly" id="" class="grBg bgType1" style="width:70px;margin-left: 48px;" value="'+stSDate+'">' +
+                '</td>'+
+                '<td align="left" class="P0">'+
+                ' <input name="" type="text" maxlength="10" readonly="readonly" id="" class="grBg bgType1" style="width:70px;margin-left: 48px;" value="'+stEDate+'">'+               
+                '</td>'+
+                '<td align="center" class="P0">'+
+                '<input name="" type="text"  maxlength="18" id="" style="width:70px;" value="'+vndFee+'" readonly="readonly">&nbsp;VND</td>'+
+                '<td align="center" class="P0"><input name="" type="text" maxlength="18" id="" style="width:70px;" value="'+usdFee+'" readonly="readonly">&nbsp;$</td>'+
+                '<td align="center" class="P0">'+
+                '<span><image type="image" name="" id="" src="../../Common/Images/Icon/edit.gif"  style="border-width:0px;" onclick="editAddFee('+additionAreaFee+')"></span>'+
+                '<span><image type="image" name="" id="" src="../../Common/Images/Icon/Trash.gif" style="border-width:0px;" onclick="deleteAddFee('+additionAreaFee+')"></span>'+
+                '</td><input type="hidden" id="" value="|"/></tr>'        
+            );
+            additionAreaFee++;              
+        }
+       
+        $('#txtAddFeeStartDt').val("");
+        $('#txtAddFeeEndDt').val("");
+        $('#txtAddFeeExcRate').val("");
+        $('#txtAddFeeExpAmt').val("");
+    }
+
     var fitFeeNum = 0;
     function AddFitOutFee(){
         if(!isValidateFee('#txtFitFeeStartDt','#txtFitFeeEndDt','#txtFitFeeExcRate','#txtFitFeeExpAmt')) return; 
@@ -699,9 +744,7 @@
         $('#txtRentalFeeExcRate').val("");
         $('#txtRentalFeeExpAmt').val("");
     }
-    
-    
-
+   
     function editMngFee(feeNum) {    
         $('#txtFeeStartDt').val($("#feeNum" + feeNum + " :text").eq(0).val());
         $('#txtFeeEndDt').val($("#feeNum" + feeNum + " :text").eq(1).val());
@@ -710,6 +753,16 @@
         $('#feeID').val(feeNum);
         
     }
+
+    function editAddFee(feeNum) {    
+        $('#txtAddFeeStartDt').val($("#additionAreaFee" + feeNum + " :text").eq(0).val());
+        $('#txtAddFeeEndDt').val($("#additionAreaFee" + feeNum + " :text").eq(1).val());
+        $('#txtAddFeeExcRate').val($("#additionAreaFee" + feeNum + " :text").eq(2).val());
+        $('#txtAddFeeExpAmt').val($("#additionAreaFee" + feeNum + " :text").eq(3).val());
+        $('#AddfeeID').val(feeNum);
+        
+    }
+
     function editFitFee(feeNum) {    
         $('#txtFitFeeStartDt').val($("#fitfeeNum" + feeNum + " :text").eq(0).val());
         $('#txtFitFeeEndDt').val($("#fitfeeNum" + feeNum + " :text").eq(1).val());
@@ -769,8 +822,21 @@
         $('#txtFeeExpAmt').val("");        
     }    
 
+    function deleteAddFee(thisFee) {
+           if ($("#additionAreaFee" + thisFee + " :hidden").eq(1).val()!='') {
+                $('#<%=hfFeeSeqDel.ClientID %>').val($("#additionAreaFee" + thisFee + " :hidden").eq(1).val());
+                <%=Page.GetPostBackEventReference(imgDeleteFee)%>;
+                $('#<%=hfFeeSeqDel.ClientID %>').val("");
+            } 
+         $('tr#additionAreaFee' + thisFee).remove();
+        $('#AddfeeID').val("");
+        $('#txtAddFeeStartDt').val("");
+        $('#txtAddFeeEndDt').val("");
+        $('#txtAddFeeExcRate').val("");
+        $('#txtAddFeeExpAmt').val("");        
+    }  
     
- function isValidateFee(sdate,edate,vnd,usd) {
+    function isValidateFee(sdate,edate,vnd,usd) {
 
 
             if ($(sdate).val()=="") {
@@ -798,7 +864,7 @@
             return true;
  } 
  
- function isValidateFitFee() {
+    function isValidateFitFee() {
 
 
      if ($('#txtFitFeeStartDt').val()=="") {
@@ -826,14 +892,12 @@
      return true;
  }
  
-
- $(document).ready(function() {
+    $(document).ready(function() {
      loadCalendar();
      fnApplyFee();
  });
 //-->  
-
- function VNDtoUSD() {
+    function VNDtoUSD() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
             var num2 = $("#txtFeeExcRate").val();
@@ -846,7 +910,7 @@
         $("#txtFeeExcRate").val(parseFloat(num2).toFixed(2));
  }
 
- function USDtoVND() {
+    function USDtoVND() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
             var num2 = $("#txtFeeExpAmt").val();
@@ -859,8 +923,7 @@
         $("#txtFeeExpAmt").val(parseFloat(num2).toFixed(2));
  }
 
-
- function fitVNDtoUSD() {
+    function fitVNDtoUSD() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
             var num2 = $("#txtFitFeeExcRate").val();
@@ -873,7 +936,7 @@
      $("#txtFitFeeExcRate").val(parseFloat(num2).toFixed(2));
  }
 
- function fitUSDtoVND() {
+    function fitUSDtoVND() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
             var num2 = $("#txtFitFeeExpAmt").val();
@@ -886,7 +949,7 @@
      $("#txtFitFeeExpAmt").val(parseFloat(num2).toFixed(2));
  }
  
- function rentVNDtoUSD() {
+    function rentVNDtoUSD() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
             var num2 = $("#txtRentalFeeExcRate").val();
@@ -899,7 +962,7 @@
      $("#txtRentalFeeExcRate").val(parseFloat(num2).toFixed(2));
  }
 
- function rentUSDtoVND() {
+    function rentUSDtoVND() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
             var num2 = $("#txtRentalFeeExpAmt").val();
@@ -911,12 +974,42 @@
         $('#txtRentalFeeExcRate').val(result.toFixed(2));  
      $("#txtRentalFeeExpAmt").val(parseFloat(num2).toFixed(2));
  }
+
+    function addVNDtoUSD() {
+           var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
+           
+            var num2 = $("#txtAddFeeExcRate").val();
+           if (num2=="") {
+               return; 
+           }   
+       var result = parseFloat(num2, 10) / parseFloat(currentFc, 10);
+        
+        $('#txtAddFeeExpAmt').val(result.toFixed(2)); 
+     $("#txtAddFeeExcRate").val(parseFloat(num2).toFixed(2));
+ }
+
+    function addUSDtoVND() {
+           var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
+           
+            var num2 = $("#txtAddFeeExpAmt").val();
+           if (num2=="") {
+               return; 
+           }
+       var result = parseFloat(num2, 10) * parseFloat(currentFc, 10);
+        
+        $('#txtAddFeeExcRate').val(result.toFixed(2));  
+     $("#txtAddFeeExpAmt").val(parseFloat(num2).toFixed(2));
+ }
 //-->        
     </script>
     <style>
         .cont-Mid .cont-wp
         {
             width: 855px;
+        }
+        .style1
+        {
+            width: 206px;
         }
     </style>
     <asp:UpdatePanel ID="upBasicInfo" runat="server">
@@ -1217,8 +1310,8 @@
                 <asp:Literal ID="ltRoomInfo" runat="server"></asp:Literal></div>
             <table cellspacing="0" class="TbCel-Type2-A">
                 <colgroup>
-                    <col width="147px" />
-                    <col width="178px" />
+                    <col />
+                    <col />
                     <col width="80px" />
                     <col width="435px" />
                     <tbody>
@@ -1226,11 +1319,11 @@
                             <th>
                                 <asp:Literal ID="ltFloor" runat="server"></asp:Literal>
                             </th>
-                            <td>
+                            <td class="iw250">
                                 <asp:TextBox ID="txtFloor" runat="server" MaxLength="3" AutoPostBack="true" CssClass="bgType2"
                                     OnTextChanged="txtFloor_TextChanged"></asp:TextBox>
                             </td>
-                            <th class="lebd">
+                            <th class="style1">
                                 <asp:Literal ID="ltRoomNo" runat="server"></asp:Literal>
                             </th>
                             <td>
@@ -1243,15 +1336,21 @@
                             <th>
                                 <asp:Literal ID="ltRentLeasingArea" runat="server"></asp:Literal>
                             </th>
-                            <td colspan="3">
+                            <td class="iw250">
                                 <asp:TextBox ID="txtRentLeasingArea" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>&nbsp;㎡
+                            </td>
+                            <th class="style1">
+                                <asp:Literal ID="AdditionArea" runat="server" Text="Addition Area"></asp:Literal>
+                            </th>
+                            <td>
+                                <asp:TextBox ID="txtAdditionRentAreaMod" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>&nbsp;㎡
                             </td>
                         </tr>
                     </tbody>
                 </colgroup>
             </table>
             <div class="Tb-Tp-tit">
-                Exchange Rate</asp:Literal></div>
+                Exchange Rate</div>
             <table cellspacing="0" class="TbCel-Type2-A">
                 <colgroup>
                     <col width="147px" />
@@ -1639,9 +1738,9 @@
                         Current Using Date
                     </th>
                     <td>
-                        <asp:TextBox ID="txtMSUsingDt" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
-                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSUsingDt.ClientID %>')"
-                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                        <asp:TextBox ID="txtMSUsingDt" runat="server" MaxLength="18" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtMSUsingDt')" src="/Common/Images/Common/calendar.gif"
+                            style="cursor: pointer;" value="" />
                     </td>
                     <th>
                         Payment Cycle
@@ -1667,7 +1766,7 @@
                     <td>
                         <asp:TextBox ID="txtMSPayDate" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
                         <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSPayDate.ClientID %>')"
-                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
                     </td>
                 </tr>
                 <tr>
@@ -1788,6 +1887,173 @@
             </colgroup>
         </table>
     </div>
+    <!-- quynhld modify addition area !-->
+    <div id="Div1" runat="server" class="lineRow">
+    </div>
+    <div class="Tb-Tp-tit">
+        <asp:Literal ID="Literal16" Text="Addition Area Fee" runat="server"></asp:Literal></div>
+        <table cellspacing="0" class="TbCel-Type2-A">
+        <colgroup>
+            <col width="147px" />
+            <col width="178px" />
+            <col width="147px" />
+            <col width="178px" />
+            <tbody>
+                <tr>
+                    <th>
+                        Current Using Date
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox2" runat="server" MaxLength="18" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtMSUsingDt')" src="/Common/Images/Common/calendar.gif"
+                            style="cursor: pointer;" value="" />
+                    </td>
+                    <th>
+                        Payment Cycle
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox3" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                        <asp:Literal ID="Literal17" runat="server" Text="Month(s)"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Payment Cycle Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="DropDownList1" runat="server">
+                            <asp:ListItem Text="B" Value="M">By Monthly</asp:ListItem>
+                            <asp:ListItem Text="O" Value="Q">Make Round Monthy</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        <asp:Literal ID="Literal18" runat="server" Text="Current Pay Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox4" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSPayDate.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Isue Date Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="DropDownList2" runat="server" Width="110px">
+                            <asp:ListItem Value="E">End Of month</asp:ListItem>
+                            <asp:ListItem Value="A">By Perior Date</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        Isue Date Adjust
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox5" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>&nbsp;Day(s)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <asp:Literal ID="Literal19" runat="server" Text="Special End Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox6" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtSMEndDate.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
+                    </td>
+                    <td colspan="2">
+                        <asp:Literal ID="Literal20" runat="server" Text="If you apply this date period using will be Current Using Date ~ Special End Date. After make debit this date will auto reset"></asp:Literal>
+                    </td>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
+    <div id="ListAdditionAreaFee" runat="server">
+        <table class="TbCel-Type4-A">
+            <colgroup>
+                <col width="185px" />
+                <col width="185px" />
+                <col width="185px" />
+                <col width="185px" />
+                <col width="80px" />
+                <tbody>
+                    <tr>
+                        <th align="center" class="P0">
+                            Apply Start Date
+                        </th>
+                        <th align="center" class="P0">
+                            Appl End Date
+                        </th>
+                        <th align="center" class="P0">
+                            VND
+                        </th>
+                        <th align="center" class="P0">
+                            USD
+                        </th>
+                        <th align="center" class="P0">
+                        </th>
+                    </tr>
+                </tbody>
+            </colgroup>
+        </table>
+        <table class="TbCel-Type4-A" id="tblAdditionAreaFee">
+            <colgroup>
+                <col width="185px">
+                <col width="185px">
+                <col width="185px">
+                <col width="185px">
+                <col width="80px">
+            </colgroup>
+            <tbody>
+                <div id="displayAdditionAreaFee" runat="server">
+                </div>
+            </tbody>
+        </table>
+        <table cellspacing="0" class="TbCel-Type2-A">
+            <colgroup>
+                <col width="185px" />
+                <col width="185px" />
+                <col width="185px" />
+                <col width="185px" />
+                <col width="80px" />
+                <tbody>
+                    <tr>
+                        <td align="center" class="P0">
+                            <input type="hidden" id="Hidden2" value="" />
+                            <input type="text" id="txtAddFeeStartDt" name="txtFeeStartDt" class="grBg bgType2"
+                                maxlength="10" style="width: 70px" />
+                            <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtAddFeeStartDt')"
+                                src="/Common/Images/Common/calendar.gif" style="cursor: pointer; align: absmiddle;" />
+                        </td>
+                        <td align="center" class="P0">
+                            <input type="text" id="txtAddFeeEndDt" class="grBg bgType2" maxlength="10" style="width: 70px"
+                                readonly="true" />
+                            <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtAddFeeEndDt')" src="/Common/Images/Common/calendar.gif"
+                                style="cursor: pointer; align: absmiddle;" />
+                        </td>
+                        <td align="center" class="P0">
+                            <input type="text" id="txtAddFeeExcRate" maxlength="18" style="width: 70px" onblur="addVNDtoUSD()"
+                                onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                            VND
+                        </td>
+                        <td align="center" class="P0">
+                            <input type="text" id="txtAddFeeExpAmt" maxlength="18" style="width: 70px" onblur="addUSDtoVND();"
+                                onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                            $
+                        </td>
+                        <td align="center" class="P0">
+                            <span>
+                                <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
+                                <img style="border-width: 0px;" id="btnAdditionAreaFee" src="../../Common/Images/Icon/plus.gif"
+                                    type="image" onclick="AddAdditionAreaFee()" alt="Add Addition Area Fee"></span>
+                            <input type="hidden" id="AddfeeID" value="" />
+                        </td>
+                    </tr>
+                </tbody>
+            </colgroup>
+        </table>
+    </div>
+    <!-- end quynhld modify addition area !-->
     <asp:UpdatePanel ID="upDeposit" runat="server">
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="imgbtnRegist" EventName="Click" />
@@ -1964,7 +2230,7 @@
     </asp:UpdatePanel>
     <asp:UpdatePanel ID="upInterior" runat="server">
         <Triggers>
-        <asp:PostBackTrigger ControlID="lnkbtnModify" />
+            <asp:PostBackTrigger ControlID="lnkbtnModify" />
         </Triggers>
         <ContentTemplate>
             <div class="Tb-Tp-tit">
@@ -2121,8 +2387,7 @@
                                 <asp:Literal ID="Literal15" runat="server" Text="Import Contract Files"></asp:Literal>
                             </th>
                             <td>
-                                <asp:FileUpload ID="fileUpl" runat="server" 
-                                     CssClass="bgType3"  />
+                                <asp:FileUpload ID="fileUpl" runat="server" CssClass="bgType3" />
                             </td>
                         </tr>
                     </tbody>

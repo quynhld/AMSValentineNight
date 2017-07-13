@@ -109,10 +109,12 @@ namespace KN.Web.Management.Manage
             if (dtMaster.Rows.Count > CommValue.NUMBER_VALUE_0)
             {
                 var reftSeq = ((TextBox)lvPrintoutList.Items[0].FindControl("txtHfrefSerialNoP")).Text;
+                var tmInvoice = ((Literal)lvPrintoutList.Items[0].FindControl("ltInvoiceNoP")).Text;
                 if (!string.IsNullOrEmpty((reftSeq)))
                 {
                     txthfrefSerialNo.Value = reftSeq;
-                    LoadDetails((reftSeq));
+                    txthfInvoice.Value = tmInvoice;
+                    //LoadDetails((reftSeq));
                 }
 
                 if (ddlInvoiceYN.SelectedValue == "Y")
@@ -223,8 +225,6 @@ namespace KN.Web.Management.Manage
             ddlInvoiceYN.Items.Add(new ListItem("No", "N"));
 
         }
-
-       
 
         protected void lvRentalMngList_LayoutCreated(object sender, EventArgs e)
         {
@@ -577,11 +577,8 @@ namespace KN.Web.Management.Manage
 
         protected void lvPrintoutList_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            
-
             var iTem = (ListViewDataItem)e.Item;
             var drView = (DataRowView)iTem.DataItem;
-
 
             if (!e.Item.ItemType.Equals(ListViewItemType.DataItem)) return;
             var ltInvoiceNoP = (Literal)iTem.FindControl("ltInvoiceNoP");
@@ -656,12 +653,11 @@ namespace KN.Web.Management.Manage
         protected void lvPrintoutList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             txthfrefSerialNo.Value = ((Label)e.Item.FindControl("txtHfrefSerialNo1")).Text;
+            txthfInvoice.Value = ((Label)e.Item.FindControl("ltInvoiceNoP")).Text;
         }
 
         protected void lvPrintoutList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            
+        {            
         }
 
         protected void imgbtnDetailview_Click(object sender, ImageClickEventArgs e)
@@ -669,30 +665,50 @@ namespace KN.Web.Management.Manage
             lvRentalMngList.DataSource = null;
             lvRentalMngList.DataBind();
             var reft = txthfrefSerialNo.Value;
-            LoadDetails(reft);
+            var tmmpInvoice = txthfInvoice.Value;
+            var tmpBillCd = string.Empty;
+            LoadDetails(reft,tmmpInvoice);
 
-            if (ddlInvoiceYN.SelectedValue == "Y")
-            {
+            //if (ddlInvoiceYN.SelectedValue == "Y")
+            //{
 
-                ((Literal)lvRentalMngList.Items[0].FindControl("ltnnInvoiceChoice")).Visible = false;
-                ((DropDownList)lvRentalMngList.Items[0].FindControl("ddlInvoiceChoice")).Visible = false;
+            //    ((Literal)lvRentalMngList.Items[0].FindControl("ltnnInvoiceChoice")).Visible = false;
+            //    ((DropDownList)lvRentalMngList.Items[0].FindControl("ddlInvoiceChoice")).Visible = false;
 
-            }
-            else
-            {
-                ((Literal)lvRentalMngList.Items[0].FindControl("ltnnInvoiceChoice")).Visible = true;
-                ((DropDownList)lvRentalMngList.Items[0].FindControl("ddlInvoiceChoice")).Visible = true;
+            //}
+            //else
+            //{
+            //    ((Literal)lvRentalMngList.Items[0].FindControl("ltnnInvoiceChoice")).Visible = true;
+            //    ((DropDownList)lvRentalMngList.Items[0].FindControl("ddlInvoiceChoice")).Visible = true;
 
-            }
+            //}
 
         }
+        protected void LoadDetails(string refSeq,string billcd,string empty)
+        {
+            lvRentalMngList.DataSource = null;
+            lvRentalMngList.DataBind();
+            var  dtDetail = InvoiceMngBlo.SelectHoadonListDetail(refSeq,billcd,string.Empty);
+            lvRentalMngList.DataSource = dtDetail;
+            lvRentalMngList.DataBind();        
+        }
+
         protected void LoadDetails(string refSeq)
         {
             lvRentalMngList.DataSource = null;
             lvRentalMngList.DataBind();
-            var  dtDetail = InvoiceMngBlo.SelectHoadonListDetail(refSeq);
+            var dtDetail = InvoiceMngBlo.SelectHoadonListDetail(refSeq);
             lvRentalMngList.DataSource = dtDetail;
-            lvRentalMngList.DataBind();        
+            lvRentalMngList.DataBind();
+        }
+
+        protected void LoadDetails(string refSeq,string tmpInvoiceNo)
+        {
+            lvRentalMngList.DataSource = null;
+            lvRentalMngList.DataBind();
+            var dtDetail = InvoiceMngBlo.SelectHoadonListDetail(refSeq,tmpInvoiceNo);
+            lvRentalMngList.DataSource = dtDetail;
+            lvRentalMngList.DataBind();
         }
 
         protected void lnkbtnUpdate_Click(object sender, EventArgs e)

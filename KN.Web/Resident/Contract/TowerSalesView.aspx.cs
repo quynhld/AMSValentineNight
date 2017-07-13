@@ -482,6 +482,11 @@ namespace KN.Web.Resident.Contract
                             ltContRentLeasingArea.Text = double.Parse(dr["RentLeasingArea"].ToString()).ToString("###,##0.##");
                         }
 
+                        if (!string.IsNullOrEmpty(dr["AdditionArea"].ToString()))
+                        {
+                            ltContAdditionalRentArea.Text = double.Parse(dr["AdditionArea"].ToString()).ToString("###,##0.##");
+                        }
+
                         if (!string.IsNullOrEmpty(dr["DongToDollar"].ToString()))
                         {
                             ltContExchangeRate.Text = double.Parse(dr["DongToDollar"].ToString()).ToString("###,##0.##");

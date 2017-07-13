@@ -1555,7 +1555,7 @@ namespace KN.Resident.Dac
         /// <returns></returns>
         public static object[] UpdateRentInfo(RentMngDs.RentInfo riDs)
         {
-            var objParams = new object[99];
+            var objParams = new object[100];
 
             objParams[0] = TextLib.MakeNullToEmpty(riDs.RentCd);
             objParams[1] = riDs.RentSeq;
@@ -1656,7 +1656,8 @@ namespace KN.Resident.Dac
             objParams[96] = riDs.IndustryCd;
             objParams[97] = riDs.NatCd;
             objParams[98] = riDs.RenewDt;
-
+            //quynhld modify for ms quynhanh addition area to caculate managementfee
+            objParams[99] = riDs.AdditionArea;
             var objReturn = SPExecute.ExecReturnNo("KN_USP_RES_UPDATE_RENTINFO_M00", objParams);
 
             return objReturn;

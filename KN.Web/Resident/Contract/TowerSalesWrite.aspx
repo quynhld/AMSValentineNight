@@ -1250,6 +1250,15 @@
                             </th>
  
                         </tr>
+                        <tr>
+                            <th>
+                                <asp:Literal ID="Literal16" runat="server"></asp:Literal>
+                            </th>
+                            <td>
+                                <asp:TextBox ID="txtAdditionRentArea" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>㎡
+                            </td>
+ 
+                        </tr>
                     </tbody>
                 </colgroup>
             </table>

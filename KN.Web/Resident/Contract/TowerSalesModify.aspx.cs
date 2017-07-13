@@ -112,6 +112,7 @@ namespace KN.Web.Resident.Contract
             ltFloor.Text = TextNm["FLOOR"];
             ltRentLeasingArea.Text = TextNm["LEASINGAREA"];
 
+
             ltRetalFee.Text = TextNm["RENTALFEE"];
             ltExchangeRate.Text = TextNm["EXCHANGERATE"];
             ltExchangeUnit.Text = TextNm["DONG"];
@@ -611,6 +612,11 @@ namespace KN.Web.Resident.Contract
                         if (!string.IsNullOrEmpty(dr["RentLeasingArea"].ToString()))
                         {
                             txtRentLeasingArea.Text = dr["RentLeasingArea"].ToString();
+                        }
+                        //addition area
+                        if (!string.IsNullOrEmpty(dr["AdditionArea"].ToString()))
+                        {
+                            txtAdditionRentAreaMod.Text = dr["AdditionArea"].ToString();
                         }
 
                         if (!string.IsNullOrEmpty(dr["DongToDollar"].ToString()))
@@ -1962,6 +1968,14 @@ namespace KN.Web.Resident.Contract
                 riDs.ExtRoomNo = txtExtRoomNo.Text.ToUpper();
                 riDs.FloorNo = Int32.Parse(txtFloor.Text);
                 riDs.RentLeasingArea = double.Parse(txtRentLeasingArea.Text);
+                if (!string.IsNullOrEmpty(txtAdditionRentAreaMod.Text))
+                {
+                    riDs.AdditionArea = double.Parse(txtAdditionRentAreaMod.Text);
+                }
+                else
+                {
+                    riDs.AdditionArea = 0;
+                }
                 riDs.CONTRACT_TYPE = rbContractType.SelectedValue;
                 riDs.PAYMENT_TYPE = ddlPaymentType.SelectedValue;
                 riDs.CPI = double.Parse(txtCPI.Text);
@@ -2155,7 +2169,6 @@ namespace KN.Web.Resident.Contract
 
                         fileUpl.SaveAs(Server.MapPath("~//ContractPDF//") + pdfFile);
 
-                        //mo connection insert vao bang pdf contract
 
                     }
                     catch (Exception ex)

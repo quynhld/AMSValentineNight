@@ -81,14 +81,41 @@ namespace KN.Settlement.Dac
             return dtReturn;
         }
 
+        public static DataTable SelectHoadonListDetail(string refSerialNo,string billCD,string empty)
+        {
+            DataTable dtReturn = new DataTable();
+            object[] objParam = new object[1];
+
+            objParam[0] = TextLib.MakeNullToEmpty(refSerialNo);
+            objParam[0] = TextLib.MakeNullToEmpty(billCD);
+
+            dtReturn = SPExecute.ExecReturnSingle("KN_SCR_SELECT_INVOICE_DETAIL_LIST", objParam);
+
+            return dtReturn;
+        }
+
         public static DataTable SelectHoadonListDetail(string refSerialNo)
         {
             DataTable dtReturn = new DataTable();
             object[] objParam = new object[1];
 
             objParam[0] = TextLib.MakeNullToEmpty(refSerialNo);
+            
 
             dtReturn = SPExecute.ExecReturnSingle("KN_SCR_SELECT_INVOICE_DETAIL_LIST", objParam);
+
+            return dtReturn;
+        }
+
+        public static DataTable SelectHoadonListDetail(string refSerialNo,string tmpInvoiceNo)
+        {
+            DataTable dtReturn = new DataTable();
+            object[] objParam = new object[2];
+
+            objParam[0] = TextLib.MakeNullToEmpty(refSerialNo);
+            objParam[1] = TextLib.MakeNullToEmpty(tmpInvoiceNo);
+
+            dtReturn = SPExecute.ExecReturnSingle("KN_SCR_SELECT_INVOICE_DETAIL_LIST1", objParam);
 
             return dtReturn;
         }

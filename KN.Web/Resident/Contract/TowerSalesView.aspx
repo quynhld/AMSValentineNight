@@ -386,8 +386,14 @@
                             <th>
                                 <asp:Literal ID="ltRentLeasingArea" runat="server"></asp:Literal>
                             </th>
-                            <td colspan="3">
+                            <td >
                                 <asp:Literal ID="ltContRentLeasingArea" runat="server"></asp:Literal>&nbsp;㎡
+                            </td>
+                                                        <th>
+                                <asp:Literal ID="ltAdditionalRentArea" runat="server" Text="Addition Area"></asp:Literal>
+                            </th>
+                            <td colspan="3">
+                                <asp:Literal ID="ltContAdditionalRentArea" runat="server"></asp:Literal>&nbsp;㎡
                             </td>
                         </tr>
                     </tbody>
@@ -831,6 +837,54 @@
         </table>
     </div>
     <div id="lineRow1" runat="server" class="lineRow">
+    <!-- quynhld modify addition area fee -->
+    </div>
+        <div class="Tb-Tp-tit">
+        <asp:Literal ID="Literal12" Text="Addition Area Fee" runat="server"></asp:Literal></div>
+        <div id="lstAdditionAreaFee" runat="server">
+        <table class="TbCel-Type4-A">
+            <colgroup>
+                <col width="185px" />
+                <col width="185px" />
+                <col width="185px" />
+                <col width="185px" />
+                <col width="80px" />
+                <tbody>
+                    <tr>
+                        <th align="center" class="P0">
+                            Apply Start Date
+                        </th>
+                        <th align="center" class="P0">
+                            Appl End Date
+                        </th>
+                        <th align="center" class="P0">
+                            VND
+                        </th>
+                        <th align="center" class="P0">
+                            USD
+                        </th>
+                        <th align="center" class="P0">
+                        </th>
+                    </tr>
+                </tbody>
+            </colgroup>
+        </table>
+        <table cellspacing="0" class="TbCel-Type2-A" id="Table2">
+            <colgroup>
+                <col width="185px">
+                <col width="185px">
+                <col width="185px">
+                <col width="185px">
+                <col width="80px">
+                <tbody>
+                    <div id="divDisplayAdditionFee" runat="server">
+                    </div>
+                </tbody>
+            </colgroup>
+        </table>
+    </div>
+    <!-- end modify -->
+    <div id="Div3" runat="server" class="lineRow">
     </div>
     <table cellspacing="0" class="TbCel-Type2-A" style="display: none">
         <colgroup>

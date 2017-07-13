@@ -796,6 +796,24 @@ namespace KN.Web.Resident.Contract {
         protected global::System.Web.UI.WebControls.Literal Literal7;
         
         /// <summary>
+        /// Literal16 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal16;
+        
+        /// <summary>
+        /// txtAdditionRentArea control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAdditionRentArea;
+        
+        /// <summary>
         /// ltExchangeRate control.
         /// </summary>
         /// <remarks>

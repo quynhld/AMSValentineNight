@@ -61,6 +61,14 @@ namespace KN.Settlement.Biz
             return dtReturn;
         }
 
+        public static DataTable SelectHoadonListDetail(string refSerialNo,string billCD,string empty)
+        {
+            DataTable dtReturn = new DataTable();
+
+            dtReturn = InvoiceMngDao.SelectHoadonListDetail(refSerialNo,billCD,string.Empty);
+            return dtReturn;
+        }
+
         public static DataTable SelectHoadonListDetail(string refSerialNo)
         {
             DataTable dtReturn = new DataTable();
@@ -68,6 +76,15 @@ namespace KN.Settlement.Biz
             dtReturn = InvoiceMngDao.SelectHoadonListDetail(refSerialNo);
             return dtReturn;
         }
+
+        public static DataTable SelectHoadonListDetail(string refSerialNo,string tmpInvoiceNo)
+        {
+            DataTable dtReturn = new DataTable();
+
+            dtReturn = InvoiceMngDao.SelectHoadonListDetail(refSerialNo,tmpInvoiceNo);
+            return dtReturn;
+        }
+
          public static DataTable SelectReprintHoadon(string refPrintBundleNo)
          {
              DataTable dtReturn = new DataTable();
