@@ -1,4 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Template/MainFrame.Master" AutoEventWireup="true" CodeBehind="TowerSalesWrite.aspx.cs" Inherits="KN.Web.Resident.Contract.TowerSalesWrite" ValidateRequest="false" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Template/MainFrame.Master"
+    AutoEventWireup="true" CodeBehind="TowerSalesWrite.aspx.cs" Inherits="KN.Web.Resident.Contract.TowerSalesWrite"
+    ValidateRequest="false" %>
+
 <%@ MasterType VirtualPath="~/Common/Template/MainFrame.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphContent" runat="server">
     <script language="javascript" type="text/javascript">
@@ -406,7 +409,6 @@
         return false;
     }
     //-->
-    
     function chkCCChange(a) {
         var chkCc = document.getElementById("<%= chkCC.ClientID %>");
         var cc = true;
@@ -437,8 +439,7 @@
         }
     }
     
-
- function loadCalendar() {
+    function loadCalendar() {
   
 
     $( "#txtFeeStartDt" ).datepicker();
@@ -720,7 +721,7 @@
         $('#feeID').val(feeNum);
     }
     
-        function isValidateFee(sdate,edate,vnd,usd) {
+    function isValidateFee(sdate,edate,vnd,usd) {
 
 
             if ($(sdate).val()=="") {
@@ -748,7 +749,7 @@
             return true;
         } 
  
- function isValidateFitFee() {
+    function isValidateFitFee() {
 
 
      if ($('#txtFitFeeStartDt').val()=="") {
@@ -808,7 +809,6 @@
         $("#txtFeeExpAmt").val(parseFloat(num2).toFixed(2));
  }
  
-
  function VNDtoUSDDeposit() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
            
@@ -834,7 +834,6 @@
         $('#<%=txtSumDepositVNDNo.ClientID %>').val(result.toFixed(2)); 
         $("#<%=txtSumDepositUSDNo.ClientID %>").val(parseFloat(num2).toFixed(2));
  }
-
 
  function fitVNDtoUSD() {
            var currentFc = $('#<%= txtExchangeRate.ClientID %>').val();
@@ -888,18 +887,21 @@
      $("#txtRentalFeeExpAmt").val(parseFloat(num2).toFixed(2));
  }
 
-</script>
+    </script>
     <style type="text/css">
-    .Tab-wp .TabM li.title {
-        width: 180px;
-    }
-    .Tab-wp .TabM li.Over {
-        width: 180px;
-    } 
-    .cont-Mid .cont-wp {
-        width: 855px;
-    }
-</style>
+        .Tab-wp .TabM li.title
+        {
+            width: 180px;
+        }
+        .Tab-wp .TabM li.Over
+        {
+            width: 180px;
+        }
+        .cont-Mid .cont-wp
+        {
+            width: 855px;
+        }
+    </style>
     <asp:UpdatePanel ID="upBasicInfo" runat="server" UpdateMode="Conditional">
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="txtRoomNo" EventName="TextChanged" />
@@ -907,13 +909,11 @@
         </Triggers>
         <ContentTemplate>
             <div class="Tb-Tp-tit">
-                
                 <asp:Literal ID="ltBasicInfo" runat="server"></asp:Literal>
                 (<asp:Literal ID="ltIncharge" runat="server"></asp:Literal>
                 :
                 <asp:TextBox ID="txtInchage" runat="server" MaxLength="20" Width="100px" CssClass="bgType3"></asp:TextBox>)
             </div>
-
             <table cellspacing="0" class="TbCel-Type2-A">
                 <colgroup>
                     <col width="147px" />
@@ -924,29 +924,27 @@
                             <col width="147px" />
                             <col width="178px" />
                             <tbody>
-                               <tr>
+                                <tr>
                                     <th>
                                         Contract Type
                                     </th>
                                     <td colspan="2">
-                                        <asp:RadioButtonList ID="rbContractType" runat="server" 
-                                            RepeatDirection="Horizontal">
+                                        <asp:RadioButtonList ID="rbContractType" runat="server" RepeatDirection="Horizontal">
                                             <asp:ListItem Value="VND">VND</asp:ListItem>
                                             <asp:ListItem Value="USD" Selected="True">USD</asp:ListItem>
-                                        </asp:RadioButtonList>      
+                                        </asp:RadioButtonList>
                                         <asp:TextBox ID="TextBox1" runat="server" Visible="false"></asp:TextBox>
                                     </td>
                                     <td>
                                         <asp:CheckBox ID="chkSpecialContract" runat="server" Text="Is Special Contract" />
                                     </td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <th>
                                         <asp:Literal ID="ltPodium" runat="server"></asp:Literal>
                                     </th>
                                     <td colspan="3">
-                                        <asp:DropDownList ID="ddlPodium" runat="server" AutoPostBack="true" 
-                                            OnSelectedIndexChanged="ddlPodium_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlPodium" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPodium_SelectedIndexChanged">
                                             <asp:ListItem Text="Y" Value="Y"></asp:ListItem>
                                             <asp:ListItem Text="N" Value="N"></asp:ListItem>
                                         </asp:DropDownList>
@@ -958,11 +956,10 @@
                                         <asp:Literal ID="ltLandloadNm" runat="server"></asp:Literal>
                                     </th>
                                     <td colspan="3">
-                                        <asp:DropDownList ID="ddlPersonal" runat="server" AutoPostBack="true" 
-                                            OnSelectedIndexChanged="ddlPersonal_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlPersonal" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPersonal_SelectedIndexChanged">
                                         </asp:DropDownList>
-                                        <asp:TextBox ID="txtLandloadNm" runat="server" CssClass="bgType2" 
-                                            MaxLength="245" Width="480"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadNm" runat="server" CssClass="bgType2" MaxLength="245"
+                                            Width="480"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -972,11 +969,10 @@
                                     <td colspan="3">
                                         <asp:DropDownList ID="ddlContStep" runat="server">
                                         </asp:DropDownList>
-                                        <asp:DropDownList ID="ddlTerm" runat="server" AutoPostBack="true" 
-                                            OnSelectedIndexChanged="ddlTerm_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlTerm" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlTerm_SelectedIndexChanged">
                                         </asp:DropDownList>
-                                        <asp:TextBox ID="txtContNo" runat="server" CssClass="grBg bgType1" 
-                                            MaxLength="20" ReadOnly="true" Width="150"></asp:TextBox>
+                                        <asp:TextBox ID="txtContNo" runat="server" CssClass="grBg bgType1" MaxLength="20"
+                                            ReadOnly="true" Width="150"></asp:TextBox>
                                         <asp:HiddenField ID="hfContNo" runat="server" />
                                     </td>
                                 </tr>
@@ -1001,14 +997,14 @@
                                         <asp:Literal ID="ltLandloadAddr" runat="server"></asp:Literal>
                                     </th>
                                     <td colspan="3">
-                                        <asp:TextBox ID="txtLandloadAddr" runat="server" CssClass="bgType2" 
-                                            MaxLength="255" Width="480"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadAddr" runat="server" CssClass="bgType2" MaxLength="255"
+                                            Width="480"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <asp:TextBox ID="txtLandloadDetAddr" runat="server" CssClass="bgType3" 
-                                            MaxLength="255" Width="480"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadDetAddr" runat="server" CssClass="bgType3" MaxLength="255"
+                                            Width="480"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1016,16 +1012,17 @@
                                         <asp:Literal ID="ltLandloadCorpCert" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadCorpCert" runat="server" CssClass="grBg bgType2" 
-                                            MaxLength="15" Width="150"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadCorpCert" runat="server" CssClass="grBg bgType2" MaxLength="15"
+                                            Width="150"></asp:TextBox>
                                     </td>
                                     <th>
                                         <asp:Literal ID="ltIssueDt" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtIssueDt" runat="server" CssClass="grBg bgType1" 
-                                            MaxLength="10" ReadOnly="true" Width="70"></asp:TextBox>
-                                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtIssueDt.ClientID%>')" src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
+                                        <asp:TextBox ID="txtIssueDt" runat="server" CssClass="grBg bgType1" MaxLength="10"
+                                            ReadOnly="true" Width="70"></asp:TextBox>
+                                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtIssueDt.ClientID%>')"
+                                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
                                         <asp:HiddenField ID="hfIssueDt" runat="server" />
                                     </td>
                                 </tr>
@@ -1034,23 +1031,23 @@
                                         <asp:Literal ID="ltLandloadTelNo" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadTelFrontNo" runat="server" CssClass="grBg bgType2" 
+                                        <asp:TextBox ID="txtLandloadTelFrontNo" runat="server" CssClass="grBg bgType2" MaxLength="4"
+                                            Width="35"></asp:TextBox>
+                                        -&nbsp;<asp:TextBox ID="txtLandloadTelMidNo" runat="server" CssClass="grBg bgType2"
                                             MaxLength="4" Width="35"></asp:TextBox>
-                                        -&nbsp;<asp:TextBox ID="txtLandloadTelMidNo" runat="server" CssClass="grBg bgType2" 
-                                            MaxLength="4" Width="35"></asp:TextBox>
-                                        -&nbsp;<asp:TextBox ID="txtLandloadTelRearNo" runat="server" CssClass="grBg bgType2" 
+                                        -&nbsp;<asp:TextBox ID="txtLandloadTelRearNo" runat="server" CssClass="grBg bgType2"
                                             MaxLength="4" Width="35"></asp:TextBox>
                                     </td>
                                     <th>
                                         <asp:Literal ID="ltLandloadMobileNo" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadMobileFrontNo" runat="server" 
-                                            CssClass="grBg bgType3" MaxLength="4" Width="35"></asp:TextBox>
-                                        -&nbsp;<asp:TextBox ID="txtLandloadMobileMidNo" runat="server" 
-                                            CssClass="grBg bgType3" MaxLength="4" Width="35"></asp:TextBox>
-                                        -&nbsp;<asp:TextBox ID="txtLandloadMobileRearNo" runat="server" 
-                                            CssClass="grBg bgType3" MaxLength="4" Width="35"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadMobileFrontNo" runat="server" CssClass="grBg bgType3"
+                                            MaxLength="4" Width="35"></asp:TextBox>
+                                        -&nbsp;<asp:TextBox ID="txtLandloadMobileMidNo" runat="server" CssClass="grBg bgType3"
+                                            MaxLength="4" Width="35"></asp:TextBox>
+                                        -&nbsp;<asp:TextBox ID="txtLandloadMobileRearNo" runat="server" CssClass="grBg bgType3"
+                                            MaxLength="4" Width="35"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1058,21 +1055,21 @@
                                         <asp:Literal ID="ltLandloadFAX" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadFAXFrontNo" runat="server" CssClass="grBg bgType3" 
+                                        <asp:TextBox ID="txtLandloadFAXFrontNo" runat="server" CssClass="grBg bgType3" MaxLength="4"
+                                            Width="35"></asp:TextBox>
+                                        -&nbsp;<asp:TextBox ID="txtLandloadFAXMidNo" runat="server" CssClass="grBg bgType3"
                                             MaxLength="4" Width="35"></asp:TextBox>
-                                        -&nbsp;<asp:TextBox ID="txtLandloadFAXMidNo" runat="server" CssClass="grBg bgType3" 
-                                            MaxLength="4" Width="35"></asp:TextBox>
-                                        -&nbsp;<asp:TextBox ID="txtLandloadFAXRearNo" runat="server" CssClass="grBg bgType3" 
+                                        -&nbsp;<asp:TextBox ID="txtLandloadFAXRearNo" runat="server" CssClass="grBg bgType3"
                                             MaxLength="4" Width="35"></asp:TextBox>
                                     </td>
                                     <th>
                                         <asp:Literal ID="ltLandloadEmail" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadEmailID" runat="server" CssClass="grBg bgType3" 
+                                        <asp:TextBox ID="txtLandloadEmailID" runat="server" CssClass="grBg bgType3" MaxLength="50"
+                                            Width="80"></asp:TextBox>
+                                        @&nbsp;<asp:TextBox ID="txtLandloadEmailServer" runat="server" CssClass="grBg bgType3"
                                             MaxLength="50" Width="80"></asp:TextBox>
-                                        @&nbsp;<asp:TextBox ID="txtLandloadEmailServer" runat="server" 
-                                            CssClass="grBg bgType3" MaxLength="50" Width="80"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1080,15 +1077,15 @@
                                         <asp:Literal ID="ltLandloadRepNm" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadRepNm" runat="server" CssClass="grBg bgType3" 
-                                            MaxLength="255" Width="150"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadRepNm" runat="server" CssClass="grBg bgType3" MaxLength="255"
+                                            Width="150"></asp:TextBox>
                                     </td>
                                     <th>
                                         <asp:Literal ID="ltLandloadTaxCd" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtLandloadTaxCd" runat="server" CssClass="grBg bgType3" 
-                                            MaxLength="20" Width="150"></asp:TextBox>
+                                        <asp:TextBox ID="txtLandloadTaxCd" runat="server" CssClass="grBg bgType3" MaxLength="20"
+                                            Width="150"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1097,14 +1094,13 @@
                                         &nbsp;(For Tax)
                                     </th>
                                     <td colspan="3">
-                                        <asp:TextBox ID="txtRentAddr" runat="server" CssClass="bgType2" MaxLength="255" 
-                                            Width="480"></asp:TextBox>
+                                        <asp:TextBox ID="txtRentAddr" runat="server" CssClass="bgType2" MaxLength="255" Width="480"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <asp:TextBox ID="txtRentDetAddr" runat="server" CssClass="bgType3" 
-                                            MaxLength="255" Width="480"></asp:TextBox>
+                                        <asp:TextBox ID="txtRentDetAddr" runat="server" CssClass="bgType3" MaxLength="255"
+                                            Width="480"></asp:TextBox>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1173,7 +1169,7 @@
                             <th>
                                 <asp:Literal ID="ltFeeRentMonth" runat="server"></asp:Literal>
                             </th>
-                            <td >
+                            <td>
                                 <asp:TextBox ID="txtFreeRentMonth" runat="server" CssClass="grBg bgType2" MaxLength="2"
                                     Width="70"></asp:TextBox>
                                 <asp:Literal ID="ltMonthUnit" runat="server"></asp:Literal>
@@ -1198,7 +1194,6 @@
                             </td>
                         </tr>
                         <tr style="display: none">
-
                             <th class="lebd">
                                 <asp:Literal ID="ltHandOverDt" runat="server"></asp:Literal>
                             </th>
@@ -1234,7 +1229,8 @@
                                 <asp:Literal ID="ltRoomNo" runat="server"></asp:Literal>
                             </th>
                             <td>
-                                <asp:TextBox ID="txtRoomNo" runat="server" MaxLength="10" AutoPostBack="true" CssClass="bgType2" OnTextChanged="txtRoomNo_TextChanged"></asp:TextBox>
+                                <asp:TextBox ID="txtRoomNo" runat="server" MaxLength="10" AutoPostBack="true" CssClass="bgType2"
+                                    OnTextChanged="txtRoomNo_TextChanged"></asp:TextBox>
                                 <asp:TextBox ID="txtExtRoomNo" runat="server" MaxLength="255" CssClass="bgType3"></asp:TextBox>
                             </td>
                         </tr>
@@ -1248,7 +1244,6 @@
                             <th class="lebd" colspan="2">
                                 <asp:Literal ID="Literal7" runat="server" Text="Please input room no follow format :O1506 , PK001 , O1506-1, 1F001"></asp:Literal>
                             </th>
- 
                         </tr>
                         <tr>
                             <th>
@@ -1257,12 +1252,10 @@
                             <td>
                                 <asp:TextBox ID="txtAdditionRentArea" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>㎡
                             </td>
- 
                         </tr>
                     </tbody>
                 </colgroup>
             </table>
-
             <div class="Tb-Tp-tit">
                 Exchange Rate</div>
             <table cellspacing="0" class="TbCel-Type2-A">
@@ -1272,223 +1265,225 @@
                     <col width="178px" />
                     <tbody>
                         <tr>
-                            <th><asp:Literal ID="ltExchangeRate" runat="server"></asp:Literal></th>
-
-                             <td colspan="2" style="width: 157px">
+                            <th>
+                                <asp:Literal ID="ltExchangeRate" runat="server"></asp:Literal>
+                            </th>
+                            <td colspan="2" style="width: 157px">
                                 <asp:TextBox ID="txtExchangeRate" runat="server" CssClass="bgType2" MaxLength="10"></asp:TextBox>
-                                <asp:CheckBox ID="chkCC" runat="server" Text="Current Currency" Checked="True"  AutoPostBack="False"/>
-                               <asp:HiddenField ID="hfCCtype" runat="server" Value="CC" />
-                               <asp:HiddenField ID="hfExchangeRate" runat="server" />
-                            </td> 
-                            <th><asp:Label ID="lblFloat" runat="server" Text="Inflation(%)"></asp:Label></th>                   
-                            <td>
-                                
-                                <asp:TextBox ID="txtFloation" runat="server" AutoPostBack="true" MaxLength="3" 
-                                    Width="67px">0.1</asp:TextBox>
+                                <asp:CheckBox ID="chkCC" runat="server" Text="Current Currency" Checked="True" AutoPostBack="False" />
+                                <asp:HiddenField ID="hfCCtype" runat="server" Value="CC" />
+                                <asp:HiddenField ID="hfExchangeRate" runat="server" />
                             </td>
-                        </tr>  
+                            <th>
+                                <asp:Label ID="lblFloat" runat="server" Text="Inflation(%)"></asp:Label>
+                            </th>
+                            <td>
+                                <asp:TextBox ID="txtFloation" runat="server" AutoPostBack="true" MaxLength="3" Width="67px">0.1</asp:TextBox>
+                            </td>
+                        </tr>
                         <tr>
-                            <th>Payment Type</th>
-
-                             <td colspan="2" style="width: 157px">
-                                <asp:DropDownList ID="ddlPaymentType" runat="server" >
+                            <th>
+                                Payment Type
+                            </th>
+                            <td colspan="2" style="width: 157px">
+                                <asp:DropDownList ID="ddlPaymentType" runat="server">
                                     <asp:ListItem Value="USD">USD</asp:ListItem>
                                     <asp:ListItem Value="VND">VND</asp:ListItem>
                                 </asp:DropDownList>
                             </td>
-                               <th>CPI(%)</th>                                               
-                            <td>                               
-                                <asp:TextBox ID="txtCPI" runat="server" AutoPostBack="true" MaxLength="3" 
-                                    Width="67px">0.1</asp:TextBox>
-                            </td>
-                        </tr>                                                 
-                    </tbody>
-                    </colgroup>                
-            </table>
-<asp:UpdatePanel ID="upDeposit" runat="server">
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="imgbtnRegist" EventName="Click" />
-        </Triggers>
-        <ContentTemplate>
-            <div class="Tb-Tp-tit">
-                <asp:Literal ID="ltDeposit" runat="server"></asp:Literal></div>
-            <table cellspacing="0" class="TbCel-Type2-A">
-                <colgroup>
-                    <col width="147px" />
-                    <col width="178px" />
-                    <col width="147px" />
-                    <col width="178px" />
-                    <tbody>
-                        <tr>
                             <th>
-                                <asp:Literal ID="ltSumDepositVNDNo" runat="server"></asp:Literal>
+                                CPI(%)
                             </th>
                             <td>
-                                <asp:TextBox ID="txtSumDepositVNDNo" runat="server" MaxLength="18" Width="100" CssClass="bgType3" ></asp:TextBox>
-                                <asp:Literal ID="ltDepositSumVNDNoUnit" runat="server"></asp:Literal>
-                                <asp:Literal ID="ltSumDepositVNDEn" runat="server"></asp:Literal>
-                                <asp:HiddenField ID="hfSumDepositVNDEn" runat="server" />
-                            </td>
-                            <th class="lebd">
-                                <asp:Literal ID="ltSumDepositUSDNo" runat="server"></asp:Literal>
-                            </th>
-                            <td>
-                                <asp:TextBox ID="txtSumDepositUSDNo" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
-                                <asp:Literal ID="ltDepositSumUSDNoUnit" runat="server"></asp:Literal>
-                                <asp:Literal ID="ltSumDepositUSDEn" runat="server"></asp:Literal>
-                                <asp:HiddenField ID="hfSumDepositUSDEn" runat="server" />
+                                <asp:TextBox ID="txtCPI" runat="server" AutoPostBack="true" MaxLength="3" Width="67px">0.1</asp:TextBox>
                             </td>
                         </tr>
                     </tbody>
                 </colgroup>
             </table>
-            <table class="TbCel-Type4-A" >
-                <colgroup>
-                    <col width="164px" />
-                    <col width="164px" />
-                    <col width="104px" />
-                    <col width="164px" />
-                    <col width="164px" />
-                    <col width="60px" />
-                    <tbody>
-                        <tr>
-                            <th>
-                                <asp:Literal ID="ltDepositExpDt" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="ltDepositExpAmt" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="ltDepositExcRate" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="ltDepositPayDt" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="ltDepositPayAmt" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                &nbsp;
-                            </th>
-                        </tr>
-                    </tbody>
-                </colgroup>
-            </table>
-            <asp:ListView ID="lvDepositList" runat="server" ItemPlaceholderID="iphItemPlaceHolderID"
-                OnItemDataBound="lvDepositList_ItemDataBound" OnItemCreated="lvDepositList_ItemCreated"
-                OnItemUpdating="lvDepositList_ItemUpdating" OnItemDeleting="lvDepositList_ItemDeleting" >
-                <LayoutTemplate>
-                    <table class="TbCel-Type4-A">
-                        <col width="160px" />
-                        <col width="160px" />
-                        <col width="100px" />
-                        <col width="160px" />
-                        <col width="160px" />
-                        <col width="80px" />
-                        <tbody>
-                            <tr id="iphItemPlaceHolderID" runat="server">
-                            </tr>
-                        </tbody>
+            <asp:UpdatePanel ID="upDeposit" runat="server">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="imgbtnRegist" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="Tb-Tp-tit">
+                        <asp:Literal ID="ltDeposit" runat="server"></asp:Literal></div>
+                    <table cellspacing="0" class="TbCel-Type2-A">
+                        <colgroup>
+                            <col width="147px" />
+                            <col width="178px" />
+                            <col width="147px" />
+                            <col width="178px" />
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <asp:Literal ID="ltSumDepositVNDNo" runat="server"></asp:Literal>
+                                    </th>
+                                    <td>
+                                        <asp:TextBox ID="txtSumDepositVNDNo" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                                        <asp:Literal ID="ltDepositSumVNDNoUnit" runat="server"></asp:Literal>
+                                        <asp:Literal ID="ltSumDepositVNDEn" runat="server"></asp:Literal>
+                                        <asp:HiddenField ID="hfSumDepositVNDEn" runat="server" />
+                                    </td>
+                                    <th class="lebd">
+                                        <asp:Literal ID="ltSumDepositUSDNo" runat="server"></asp:Literal>
+                                    </th>
+                                    <td>
+                                        <asp:TextBox ID="txtSumDepositUSDNo" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                                        <asp:Literal ID="ltDepositSumUSDNoUnit" runat="server"></asp:Literal>
+                                        <asp:Literal ID="ltSumDepositUSDEn" runat="server"></asp:Literal>
+                                        <asp:HiddenField ID="hfSumDepositUSDEn" runat="server" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </colgroup>
                     </table>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <tr>
-                        <td align="center" class="P0">
-                            <asp:TextBox ID="txtDepositExpDt" runat="server" CssClass="grBg bgType1" MaxLength="10"
-                                Width="70" ReadOnly="true" AutoPostBack="False"></asp:TextBox>
-                            <asp:Literal ID="ltExpCalendar" runat="server"></asp:Literal>
-                            <asp:HiddenField ID="hfDepositExpDt" runat="server" />
-                            <asp:TextBox ID="txtDepositTmpSeq" runat="server" Visible="false"></asp:TextBox>
-                            <asp:TextBox ID="txtDepositSeq" runat="server" Visible="false"></asp:TextBox>
-                        </td>
-                        <td align="center" class="P0">
-                            <asp:TextBox ID="txtDepositExpAmt" runat="server" MaxLength="18" Width="70" AutoPostBack="False"></asp:TextBox>
-                            <asp:Literal ID="ltDepositExpAmtUnit" runat="server"></asp:Literal>
-                        </td>
-                        <td align="center" class="P0">
-                            <asp:TextBox ID="txtDepositExcRate" runat="server" MaxLength="18" Width="70"></asp:TextBox>
-                            <asp:Literal ID="ltDepositExcRateUnit" runat="server"></asp:Literal>
-                        </td>
-                        <td align="center" class="P0">
-                            <asp:TextBox ID="txtDepositPayDt" runat="server" CssClass="grBg bgType1" MaxLength="10"
-                                Width="70" ReadOnly="true"></asp:TextBox>
-                            <asp:Literal ID="ltPayCalendar" runat="server"></asp:Literal>
-                            <asp:HiddenField ID="hfDepositPayDt" runat="server" />
-                        </td>
-                        <td align="center" class="P0">
-                            <asp:TextBox ID="txtDepositPayAmt" runat="server" MaxLength="18" Width="70"></asp:TextBox>
-                            <asp:Literal ID="ltDepositPayAmtUnit" runat="server"></asp:Literal>
-                        </td>
-                        <td align="center" class="P0">
-                            <span>
-                                <asp:ImageButton ID="imgbtnModify" CommandName="Update" runat="server" ImageUrl="~/Common/Images/Icon/edit.gif" /></span>
-                            <span>
-                                <asp:ImageButton ID="imgbtnDelete" CommandName="Delete" runat="server" ImageUrl="~/Common/Images/Icon/Trash.gif" /></span>
-                        </td>
-                    </tr>
-                </ItemTemplate>
-                <EmptyDataTemplate>
                     <table class="TbCel-Type4-A">
-                        <tbody>
+                        <colgroup>
+                            <col width="164px" />
+                            <col width="164px" />
+                            <col width="104px" />
+                            <col width="164px" />
+                            <col width="164px" />
+                            <col width="60px" />
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <asp:Literal ID="ltDepositExpDt" runat="server"></asp:Literal>
+                                    </th>
+                                    <th>
+                                        <asp:Literal ID="ltDepositExpAmt" runat="server"></asp:Literal>
+                                    </th>
+                                    <th>
+                                        <asp:Literal ID="ltDepositExcRate" runat="server"></asp:Literal>
+                                    </th>
+                                    <th>
+                                        <asp:Literal ID="ltDepositPayDt" runat="server"></asp:Literal>
+                                    </th>
+                                    <th>
+                                        <asp:Literal ID="ltDepositPayAmt" runat="server"></asp:Literal>
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </colgroup>
+                    </table>
+                    <asp:ListView ID="lvDepositList" runat="server" ItemPlaceholderID="iphItemPlaceHolderID"
+                        OnItemDataBound="lvDepositList_ItemDataBound" OnItemCreated="lvDepositList_ItemCreated"
+                        OnItemUpdating="lvDepositList_ItemUpdating" OnItemDeleting="lvDepositList_ItemDeleting">
+                        <LayoutTemplate>
+                            <table class="TbCel-Type4-A">
+                                <col width="160px" />
+                                <col width="160px" />
+                                <col width="100px" />
+                                <col width="160px" />
+                                <col width="160px" />
+                                <col width="80px" />
+                                <tbody>
+                                    <tr id="iphItemPlaceHolderID" runat="server">
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </LayoutTemplate>
+                        <ItemTemplate>
                             <tr>
-                                <td colspan="6" align="center">
-                                    <asp:Literal ID="ltINFO_HAS_NO_DATA" runat="server"></asp:Literal>
+                                <td align="center" class="P0">
+                                    <asp:TextBox ID="txtDepositExpDt" runat="server" CssClass="grBg bgType1" MaxLength="10"
+                                        Width="70" ReadOnly="true" AutoPostBack="False"></asp:TextBox>
+                                    <asp:Literal ID="ltExpCalendar" runat="server"></asp:Literal>
+                                    <asp:HiddenField ID="hfDepositExpDt" runat="server" />
+                                    <asp:TextBox ID="txtDepositTmpSeq" runat="server" Visible="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtDepositSeq" runat="server" Visible="false"></asp:TextBox>
+                                </td>
+                                <td align="center" class="P0">
+                                    <asp:TextBox ID="txtDepositExpAmt" runat="server" MaxLength="18" Width="70" AutoPostBack="False"></asp:TextBox>
+                                    <asp:Literal ID="ltDepositExpAmtUnit" runat="server"></asp:Literal>
+                                </td>
+                                <td align="center" class="P0">
+                                    <asp:TextBox ID="txtDepositExcRate" runat="server" MaxLength="18" Width="70"></asp:TextBox>
+                                    <asp:Literal ID="ltDepositExcRateUnit" runat="server"></asp:Literal>
+                                </td>
+                                <td align="center" class="P0">
+                                    <asp:TextBox ID="txtDepositPayDt" runat="server" CssClass="grBg bgType1" MaxLength="10"
+                                        Width="70" ReadOnly="true"></asp:TextBox>
+                                    <asp:Literal ID="ltPayCalendar" runat="server"></asp:Literal>
+                                    <asp:HiddenField ID="hfDepositPayDt" runat="server" />
+                                </td>
+                                <td align="center" class="P0">
+                                    <asp:TextBox ID="txtDepositPayAmt" runat="server" MaxLength="18" Width="70"></asp:TextBox>
+                                    <asp:Literal ID="ltDepositPayAmtUnit" runat="server"></asp:Literal>
+                                </td>
+                                <td align="center" class="P0">
+                                    <span>
+                                        <asp:ImageButton ID="imgbtnModify" CommandName="Update" runat="server" ImageUrl="~/Common/Images/Icon/edit.gif" /></span>
+                                    <span>
+                                        <asp:ImageButton ID="imgbtnDelete" CommandName="Delete" runat="server" ImageUrl="~/Common/Images/Icon/Trash.gif" /></span>
                                 </td>
                             </tr>
-                        </tbody>
+                        </ItemTemplate>
+                        <EmptyDataTemplate>
+                            <table class="TbCel-Type4-A">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6" align="center">
+                                            <asp:Literal ID="ltINFO_HAS_NO_DATA" runat="server"></asp:Literal>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </EmptyDataTemplate>
+                    </asp:ListView>
+                    <table>
+                        <colgroup>
+                            <col width="164px" />
+                            <col width="164px" />
+                            <col width="104px" />
+                            <col width="164px" />
+                            <col width="164px" />
+                            <col width="60px" />
+                            <tbody>
+                                <tr>
+                                    <td align="center" class="P0">
+                                        <asp:TextBox ID="txtDepositExpDt" runat="server" CssClass="grBg bgType2" MaxLength="8"
+                                            ReadOnly="true" Width="70"></asp:TextBox>
+                                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtDepositExpDt.ClientID%>')"
+                                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
+                                        <asp:HiddenField ID="hfDepositExpDt" runat="server" />
+                                    </td>
+                                    <td align="center" class="P0">
+                                        <asp:TextBox ID="txtDepositExpAmt" runat="server" MaxLength="18" Width="70"></asp:TextBox>
+                                        <asp:Literal ID="ltDepositExpAmtUnit" runat="server"></asp:Literal>
+                                    </td>
+                                    <td align="center" class="P0">
+                                        <asp:TextBox ID="txtDepositExcRate" runat="server" MaxLength="8" Width="70"></asp:TextBox>
+                                        <asp:Literal ID="ltDepositExcRateUnit" runat="server"></asp:Literal>
+                                    </td>
+                                    <td align="center" class="P0">
+                                        <asp:TextBox ID="txtDepositPayDt" runat="server" CssClass="grBg bgType2" MaxLength="8"
+                                            ReadOnly="true" Width="70"></asp:TextBox>
+                                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtDepositPayDt.ClientID%>')"
+                                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                                        <asp:HiddenField ID="hfDepositPayDt" runat="server" />
+                                    </td>
+                                    <td align="center" class="P0">
+                                        <asp:TextBox ID="txtDepositPayAmt" runat="server" MaxLength="18" Width="70"></asp:TextBox>
+                                        <asp:Literal ID="ltDepositPayAmtUnit" runat="server"></asp:Literal>
+                                    </td>
+                                    <td align="center" class="P0">
+                                        <span>
+                                            <asp:ImageButton ID="imgbtnRegist" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"
+                                                OnClick="imgbtnRegist_Click" /></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </colgroup>
                     </table>
-                </EmptyDataTemplate>
-            </asp:ListView>
-            <table >
-                <colgroup>
-                    <col width="164px" />
-                    <col width="164px" />
-                    <col width="104px" />
-                    <col width="164px" />
-                    <col width="164px" />
-                    <col width="60px" />
-                    <tbody>
-                        <tr>
-                            <td align="center" class="P0">
-                                <asp:TextBox ID="txtDepositExpDt" runat="server" CssClass="grBg bgType2" MaxLength="8"
-                                    ReadOnly="true" Width="70"></asp:TextBox>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtDepositExpDt.ClientID%>')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
-                                <asp:HiddenField ID="hfDepositExpDt" runat="server" />
-                            </td>
-                            <td align="center" class="P0">
-                                <asp:TextBox ID="txtDepositExpAmt" runat="server" MaxLength="18" Width="70"></asp:TextBox>
-                                <asp:Literal ID="ltDepositExpAmtUnit" runat="server"></asp:Literal>
-                            </td>
-                            <td align="center" class="P0">
-                                <asp:TextBox ID="txtDepositExcRate" runat="server" MaxLength="8" Width="70"></asp:TextBox>
-                                <asp:Literal ID="ltDepositExcRateUnit" runat="server"></asp:Literal>
-                            </td>
-                            <td align="center" class="P0">
-                                <asp:TextBox ID="txtDepositPayDt" runat="server" CssClass="grBg bgType2" MaxLength="8"
-                                    ReadOnly="true" Width="70"></asp:TextBox>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtDepositPayDt.ClientID%>')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;"  />
-                                <asp:HiddenField ID="hfDepositPayDt" runat="server" />
-                            </td>
-                            <td align="center" class="P0">
-                                <asp:TextBox ID="txtDepositPayAmt" runat="server" MaxLength="18" Width="70"></asp:TextBox>
-                                <asp:Literal ID="ltDepositPayAmtUnit" runat="server"></asp:Literal>
-                            </td>
-                            <td align="center" class="P0">
-                                <span>
-                                    <asp:ImageButton ID="imgbtnRegist" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"
-                                        OnClick="imgbtnRegist_Click" /></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </colgroup>
-            </table>
-            <asp:TextBox ID="txtHfDepositTmpSeq" runat="server" Visible="false"></asp:TextBox>
-            <asp:TextBox ID="txtHfDepositSeq" runat="server" Visible="false"></asp:TextBox>
-        </ContentTemplate>
-    </asp:UpdatePanel>
-
+                    <asp:TextBox ID="txtHfDepositTmpSeq" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="txtHfDepositSeq" runat="server" Visible="false"></asp:TextBox>
+                </ContentTemplate>
+            </asp:UpdatePanel>
             <div class="Tb-Tp-tit">
                 <asp:Literal ID="ltRetalFee" runat="server"></asp:Literal></div>
             <table cellspacing="0" class="TbCel-Type2-A">
@@ -1505,7 +1500,7 @@
                             <td>
                                 <asp:TextBox ID="txtPayStartYYYYMM" runat="server" MaxLength="6" Width="100" CssClass="bgType2"></asp:TextBox>
                                 <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtPayStartYYYYMM.ClientID %>')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />                                
+                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
                             </td>
                             <th class="lebd">
                                 <asp:Literal ID="ltPayTermMonth" runat="server"></asp:Literal>
@@ -1519,49 +1514,46 @@
                             <th>
                                 <asp:Literal ID="Literal1" runat="server" Text="Start Pay Date"></asp:Literal>
                             </th>
-                            <td >
-                                <asp:TextBox ID="txtRSPayDate" runat="server" MaxLength="10" Width="100" 
-                                    CssClass="bgType2" ></asp:TextBox>                                     
+                            <td>
+                                <asp:TextBox ID="txtRSPayDate" runat="server" MaxLength="10" Width="100" CssClass="bgType2"></asp:TextBox>
                                 <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtRSPayDate.ClientID %>')"
                                     src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
                             </td>
                             <th>
-                                 <asp:Literal ID="Literal3" runat="server" Text="Pay Cycle Type"></asp:Literal>
+                                <asp:Literal ID="Literal3" runat="server" Text="Pay Cycle Type"></asp:Literal>
                             </th>
                             <td>
                                 <asp:DropDownList ID="ddlRPaymentCycle" runat="server" AutoPostBack="False">
                                     <asp:ListItem Text="B" Value="M">By Monthly</asp:ListItem>
                                     <asp:ListItem Text="O" Value="Q">Make Round Monthy</asp:ListItem>
-                                </asp:DropDownList>                                 
+                                </asp:DropDownList>
                             </td>
-                            
                         </tr>
                         <tr>
                             <th>
                                 <asp:Literal ID="Literal4" runat="server" Text="Isue Date Type"></asp:Literal>
                             </th>
-                            <td >
+                            <td>
                                 <asp:DropDownList ID="ddlRIsueDateType" runat="server" AutoPostBack="False">
-                                    <asp:ListItem  Value="E">End Of month</asp:ListItem>
-                                    <asp:ListItem  Value="A">By Perior Date</asp:ListItem>
-                                </asp:DropDownList>                                                                  
+                                    <asp:ListItem Value="E">End Of month</asp:ListItem>
+                                    <asp:ListItem Value="A">By Perior Date</asp:ListItem>
+                                </asp:DropDownList>
                             </td>
                             <th>
-                                 <asp:Literal ID="Literal5" runat="server" Text="Isue Date Adjust"></asp:Literal>
+                                <asp:Literal ID="Literal5" runat="server" Text="Isue Date Adjust"></asp:Literal>
                             </th>
                             <td>
-
-                                 <asp:TextBox ID="txtRAdjustDate" runat="server" MaxLength="4" Width="100" 
-                                    CssClass="bgType2"  Text="0" ></asp:TextBox>                                     
+                                <asp:TextBox ID="txtRAdjustDate" runat="server" MaxLength="4" Width="100" CssClass="bgType2"
+                                    Text="0"></asp:TextBox>
                             </td>
-                            
                         </tr>
                         <!--// 임대료 (총임대료) //-->
                         <tr>
-                            <th><asp:Literal ID="ltSREndDate" runat="server" Text="Special End Date"></asp:Literal></th>
+                            <th>
+                                <asp:Literal ID="ltSREndDate" runat="server" Text="Special End Date"></asp:Literal>
+                            </th>
                             <td>
-                                <asp:TextBox ID="txtSREndDate" runat="server" MaxLength="2" Width="100" 
-                                    CssClass="bgType2" ></asp:TextBox>                                     
+                                <asp:TextBox ID="txtSREndDate" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
                                 <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtSREndDate.ClientID %>')"
                                     src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
                             </td>
@@ -1598,7 +1590,7 @@
                                     </th>
                                     <th align="center" class="P0">
                                         <asp:Literal ID="ltTopRentalFeeRate" runat="server" Visible="False"></asp:Literal>
-                                        <asp:Literal ID="Literal6" runat="server" Text="VND" ></asp:Literal>
+                                        <asp:Literal ID="Literal6" runat="server" Text="VND"></asp:Literal>
                                     </th>
                                     <th align="center" class="P0">
                                         <asp:Literal ID="ltTopRentalFeeAmt" runat="server" Text="Payment (Per Cycle (US$ / 1 Cycle))"></asp:Literal>
@@ -1610,17 +1602,16 @@
                         </colgroup>
                     </table>
                     <table class="TbCel-Type4-A" id="tblListRentFee">
-                    <colgroup>
-                        <col width="185px">
-                        <col width="185px">
-                        <col width="185px">
-                        <col width="185px">
-                        <col width="80px">
-       
-                        <tbody>                                                            
-                        </tbody>
-                    </colgroup>
-                    </table>                    
+                        <colgroup>
+                            <col width="185px">
+                            <col width="185px">
+                            <col width="185px">
+                            <col width="185px">
+                            <col width="80px">
+                            <tbody>
+                            </tbody>
+                        </colgroup>
+                    </table>
                     <table cellspacing="0" class="TbCel-Type2-A">
                         <colgroup>
                             <col width="185px" />
@@ -1630,36 +1621,35 @@
                             <col width="80px" />
                             <tbody>
                                 <tr>
-                                    <input type="hidden" id="rentfeeID" value=""/>
+                                    <input type="hidden" id="rentfeeID" value="" />
                                     <td align="center" class="P0">
-                                        <input id="txtRentalFeeStartDt" class="grBg bgType2" maxlength="10"
-                                           style="width:70px;" ></input>
+                                        <input id="txtRentalFeeStartDt" class="grBg bgType2" maxlength="10" style="width: 70px;"></input>
                                         <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtRentalFeeStartDt')"
                                             src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
                                         <asp:HiddenField ID="hfRentalFeeStartDt" runat="server" />
                                     </td>
                                     <td align="center" class="P0">
-                                        <input id="txtRentalFeeEndDt"  class="grBg bgType2" maxlength="15"
-                                            style="width:70px;" ></input>
+                                        <input id="txtRentalFeeEndDt" class="grBg bgType2" maxlength="15" style="width: 70px;"></input>
                                         <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtRentalFeeEndDt')"
                                             src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
                                         <asp:HiddenField ID="hfRentalFeeEndDt" runat="server" />
                                     </td>
                                     <td align="center" class="P0">
-                                        <input id="txtRentalFeeExcRate"  maxlength="18"  style="width:70px;" onblur="rentVNDtoUSD()" onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"></input>
+                                        <input id="txtRentalFeeExcRate" maxlength="18" style="width: 70px;" onblur="rentVNDtoUSD()"
+                                            onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"></input>
                                         <asp:Literal ID="ltRentalFeeExcRateUnit" runat="server"></asp:Literal>
                                     </td>
                                     <td align="center" class="P0">
-                                        <input id="txtRentalFeeExpAmt"  maxlength="18"  style="width:70px;" onblur="rentUSDtoVND()" onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"></input>                                       
+                                        <input id="txtRentalFeeExpAmt" maxlength="18" style="width: 70px;" onblur="rentUSDtoVND()"
+                                            onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"></input>
                                         <asp:Literal ID="ltRentalFeeAmtUnit" runat="server"></asp:Literal>
                                     </td>
-                                <td align="center" class="P0">
-                                    <span>
-                                        <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
-                                        <img style="border-width: 0px;" id="btnAddRentFee" 
-                                        src="../../Common/Images/Icon/plus.gif" type="image" onclick="AddRentFee()" 
-                                        alt="Add Fit Out Fee"></span>
-                                </td>
+                                    <td align="center" class="P0">
+                                        <span>
+                                            <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
+                                            <img style="border-width: 0px;" id="btnAddRentFee" src="../../Common/Images/Icon/plus.gif"
+                                                type="image" onclick="AddRentFee()" alt="Add Fit Out Fee"></span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </colgroup>
@@ -1696,14 +1686,18 @@
             <asp:TextBox ID="txtHfRentFeeSeq" runat="server" Visible="false"></asp:TextBox>
         </ContentTemplate>
     </asp:UpdatePanel>
-        <div class="Tb-Tp-tit">Fit Out Fee Management 
-            <div style="float: right" id="chkUsingMnFee">
-           <input type="checkbox" onclick="fnApplyFee()" id="isApplyFeeMn" checked="checked"/>Apply Fit Out Fee Management </div>
-           <input type="hidden" id="hfIsApplyFeeMn" value="Y"/>
+    <div class="Tb-Tp-tit">
+        Fit Out Fee Management
+        <div style="float: right" id="chkUsingMnFee">
+            <input type="checkbox" onclick="fnApplyFee()" id="isApplyFeeMn" checked="checked" />Apply
+            Fit Out Fee Management
         </div>
-        <div id="lineRow" style="display: none"></div>
-        <div id="listFitOutFee">
-             <table class="TbCel-Type4-A">
+        <input type="hidden" id="hfIsApplyFeeMn" value="Y" />
+    </div>
+    <div id="lineRow" style="display: none">
+    </div>
+    <div id="listFitOutFee">
+        <table class="TbCel-Type4-A">
             <colgroup>
                 <col width="185px" />
                 <col width="185px" />
@@ -1731,143 +1725,17 @@
             </colgroup>
         </table>
         <table class="TbCel-Type4-A" id="tblListFitFee">
-        <colgroup>
-            <col width="185px">
-            <col width="185px">
-            <col width="185px">
-            <col width="185px">
-            <col width="80px">
-       
-            <tbody>                                                            
-            </tbody>
-        </colgroup>
+            <colgroup>
+                <col width="185px">
+                <col width="185px">
+                <col width="185px">
+                <col width="185px">
+                <col width="80px">
+                <tbody>
+                </tbody>
+            </colgroup>
         </table>
-         
-         <table cellspacing="0" class="TbCel-Type2-A">
-                <colgroup>
-                    <col width="185px" />
-                    <col width="185px" />
-                    <col width="185px" />
-                    <col width="185px" />
-                    <col width="80px" />
-                    <tbody>
-                        <tr>
-                            <td align="center" class="P0">
-                                <input type="hidden" id="fitfeeID" value=""/>
-                                <input type="text" id="txtFitFeeStartDt" name="txtFitFeeStartDt" 
-                                    class="grBg bgType2" maxlength="10" style="width: 70px"/>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFitFeeStartDt')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;align: absmiddle;"  />                                    
-                              
-                            </td>
-                            <td align="center" class="P0">                                
-                                 <input type="text" id="txtFitFeeEndDt" class="grBg bgType2" maxlength="10"  
-                                     style="width: 70px" ReadOnly="true"/>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFitFeeEndDt')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;align: absmiddle;"  /> 
-                              
-                            </td>
-                            <td align="center" class="P0">                              
-                                <input type="text" id="txtFitFeeExcRate"  maxlength="18" style="width: 70px" 
-                                    onblur="fitVNDtoUSD()" onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
-                                VND
-                            </td>
-                            <td align="center" class="P0">                               
-                                <input type="text" id="txtFitFeeExpAmt"  maxlength="18"  style="width: 70px" 
-                                    onblur="fitUSDtoVND();" onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"/>
-                                $
-                            </td>
-                            <td align="center" class="P0">
-                                <span>
-                                    <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
-                                    <img style="border-width: 0px;" id="btnAddFitFee" 
-                                    src="../../Common/Images/Icon/plus.gif" type="image" onclick="AddFitOutFee()" 
-                                    alt="Add Fit Out Fee"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </colgroup>           
-        </table>
-          </div>
-            <div class="Tb-Tp-tit">
-                <asp:Literal ID="ltMngFee" runat="server"></asp:Literal></div>
-            <table cellspacing="0" class="TbCel-Type2-A">
-                <colgroup>
-                    <col width="147px" />
-                    <col width="178px" />
-                    <col width="147px" />
-                    <col width="178px" />
-                    <tbody>
-                        <tr>
-                            <th>
-                               Current Using Date
-                            </th>
-                            <td >
-                                <asp:TextBox ID="txtMSUsingDt" runat="server" MaxLength="18" Width="100" CssClass="bgType3" ></asp:TextBox>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSUsingDt.ClientID %>')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;"  />
-                            </td>                             
-                            <th>
-                               Payment Cycle
-                            </th>
-                            <td >
-                                <asp:TextBox ID="txtMPayCycle" runat="server" MaxLength="18" Width="100" CssClass="bgType3" ></asp:TextBox>
-                                <asp:Literal ID="Literal8" runat="server" Text="Month(s)"></asp:Literal>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Payment Cycle Type
-                            </th>
-                            <td >
-                                <asp:DropDownList ID="ddlMPaymentCycle" runat="server">
-                                    <asp:ListItem Text="B" Value="M">By Monthly</asp:ListItem>
-                                    <asp:ListItem Text="O" Value="Q">Make Round Monthy</asp:ListItem>
-                                </asp:DropDownList> 
-                            </td>
-                            <th>
-                                <asp:Literal ID="Literal2" runat="server" Text="Current Pay Date"></asp:Literal>
-                            </th>
-                            <td>
-                                <asp:TextBox ID="txtMSPayDate" runat="server" MaxLength="2" Width="100" 
-                                    CssClass="bgType2" ></asp:TextBox>                                     
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSPayDate.ClientID %>')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;"  />                                
-                            </td>                           
-                        </tr>
-                        <tr>
-                           <th>
-                                Isue Date Type
-                            </th>
-                            <td>
-                                <asp:DropDownList ID="ddlMIsueDateType" runat="server" Width="110px">
-                                    <asp:ListItem  Value="E">End Of month</asp:ListItem>
-                                    <asp:ListItem  Value="A">By Perior Date</asp:ListItem>
-                                </asp:DropDownList>
-                            </td>  
-                            <th>
-                               Isue Date Adjust
-                            </th>
-                            <td >
-                                <asp:TextBox ID="txtMAdjustDate" runat="server" MaxLength="18" Width="100"  CssClass="bgType2"  Text="0"></asp:TextBox>&nbsp;Day(s)
-                            </td>                                                           
-                        </tr>
-                        <tr>
-                            <th><asp:Literal ID="Literal9" runat="server" Text="Special End Date"></asp:Literal></th>
-                            <td>
-                                <asp:TextBox ID="txtSMEndDate" runat="server" MaxLength="2" Width="100" 
-                                    CssClass="bgType2" ></asp:TextBox>                                     
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtSMEndDate.ClientID %>')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
-                            </td>
-                            <td colspan="2">
-                                <asp:Literal ID="Literal10" runat="server" Text="If you apply this date period using will be Current Using Date ~ Special End Date. After make debit this date will auto reset"></asp:Literal>
-                            </td>
-                        </tr>
-                    </tbody>
-                </colgroup>
-            </table>
-             <table class="TbCel-Type4-A">
+        <table cellspacing="0" class="TbCel-Type2-A">
             <colgroup>
                 <col width="185px" />
                 <col width="185px" />
@@ -1876,81 +1744,363 @@
                 <col width="80px" />
                 <tbody>
                     <tr>
-                        <th align="center" class="P0">
-                            Apply Start Date
-                        </th>
-                        <th align="center" class="P0">
-                            Appl End Date
-                        </th>
-                        <th align="center" class="P0">
+                        <td align="center" class="P0">
+                            <input type="hidden" id="fitfeeID" value="" />
+                            <input type="text" id="txtFitFeeStartDt" name="txtFitFeeStartDt" class="grBg bgType2"
+                                maxlength="10" style="width: 70px" />
+                            <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFitFeeStartDt')"
+                                src="/Common/Images/Common/calendar.gif" style="cursor: pointer; align: absmiddle;" />
+                        </td>
+                        <td align="center" class="P0">
+                            <input type="text" id="txtFitFeeEndDt" class="grBg bgType2" maxlength="10" style="width: 70px"
+                                readonly="true" />
+                            <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFitFeeEndDt')" src="/Common/Images/Common/calendar.gif"
+                                style="cursor: pointer; align: absmiddle;" />
+                        </td>
+                        <td align="center" class="P0">
+                            <input type="text" id="txtFitFeeExcRate" maxlength="18" style="width: 70px" onblur="fitVNDtoUSD()"
+                                onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
                             VND
-                        </th>
-                        <th align="center" class="P0">
-                            USD
-                        </th>
-                        <th align="center" class="P0">
-                        </th>
+                        </td>
+                        <td align="center" class="P0">
+                            <input type="text" id="txtFitFeeExpAmt" maxlength="18" style="width: 70px" onblur="fitUSDtoVND();"
+                                onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                            $
+                        </td>
+                        <td align="center" class="P0">
+                            <span>
+                                <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
+                                <img style="border-width: 0px;" id="btnAddFitFee" src="../../Common/Images/Icon/plus.gif"
+                                    type="image" onclick="AddFitOutFee()" alt="Add Fit Out Fee"></span>
+                        </td>
                     </tr>
                 </tbody>
             </colgroup>
         </table>
-            <table class="TbCel-Type4-A" id="tblListFee">
-            <colgroup>
-                <col width="185px">
-                <col width="185px">
-                <col width="185px">
-                <col width="185px">
-                <col width="80px">
-            </colgroup>
-            <tbody>                                                            
+    </div>
+    <div class="Tb-Tp-tit">
+        <asp:Literal ID="ltMngFee" runat="server"></asp:Literal></div>
+    <table cellspacing="0" class="TbCel-Type2-A">
+        <colgroup>
+            <col width="147px" />
+            <col width="178px" />
+            <col width="147px" />
+            <col width="178px" />
+            <tbody>
+                <tr>
+                    <th>
+                        Current Using Date
+                    </th>
+                    <td>
+                        <asp:TextBox ID="txtMSUsingDt" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSUsingDt.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                    </td>
+                    <th>
+                        Payment Cycle
+                    </th>
+                    <td>
+                        <asp:TextBox ID="txtMPayCycle" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                        <asp:Literal ID="Literal8" runat="server" Text="Month(s)"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Payment Cycle Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="ddlMPaymentCycle" runat="server">
+                            <asp:ListItem Text="B" Value="M">By Monthly</asp:ListItem>
+                            <asp:ListItem Text="O" Value="Q">Make Round Monthy</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        <asp:Literal ID="Literal2" runat="server" Text="Current Pay Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:TextBox ID="txtMSPayDate" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSPayDate.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Isue Date Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="ddlMIsueDateType" runat="server" Width="110px">
+                            <asp:ListItem Value="E">End Of month</asp:ListItem>
+                            <asp:ListItem Value="A">By Perior Date</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        Isue Date Adjust
+                    </th>
+                    <td>
+                        <asp:TextBox ID="txtMAdjustDate" runat="server" MaxLength="18" Width="100" CssClass="bgType2"
+                            Text="0"></asp:TextBox>&nbsp;Day(s)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <asp:Literal ID="Literal9" runat="server" Text="Special End Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:TextBox ID="txtSMEndDate" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtSMEndDate.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
+                    </td>
+                    <td colspan="2">
+                        <asp:Literal ID="Literal10" runat="server" Text="If you apply this date period using will be Current Using Date ~ Special End Date. After make debit this date will auto reset"></asp:Literal>
+                    </td>
+                </tr>
             </tbody>
-            </table>
-            <table cellspacing="0" class="TbCel-Type2-A">
-
-                <colgroup>
-                    <col width="185px" />
-                    <col width="185px" />
-                    <col width="185px" />
-                    <col width="185px" />
-                    <col width="80px" />
-                    <tbody>
-                        <tr>
-                            <td align="center" class="P0">
-                                <input type="hidden" id="Hidden1" value=""/>
-                                <input type="text" id="txtFeeStartDt" name="txtFeeStartDt" class="grBg bgType2" maxlength="10" style="width: 70px"/>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFeeStartDt')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;align: absmiddle;"  />                                                                    
-                            </td>
-                            <td align="center" class="P0">                                
-                                 <input type="text" id="txtFeeEndDt" class="grBg bgType2" maxlength="10"  style="width: 70px" ReadOnly="true"/>
-                                <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFeeEndDt')"
-                                    src="/Common/Images/Common/calendar.gif" style="cursor: pointer;align: absmiddle;"  />                                 
-                            </td>
-                            <td align="center" class="P0">                              
-                                <input type="text" id="txtFeeExcRate"  maxlength="18" style="width: 70px" onblur="VNDtoUSD()" onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"/>
-                                VND
-                            </td>
-                            <td align="center" class="P0">                               
-                                <input type="text" id="txtFeeExpAmt"  maxlength="18"  style="width: 70px" onblur="USDtoVND();" onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');"/>
-                                $
-                            </td>
-                            <td align="center" class="P0">
-                                <span>
-                                    <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
-                                    <img style="border-width: 0px;" id="btnAddFee" 
-                                    src="../../Common/Images/Icon/plus.gif" type="image" onclick="AddMngFee()" 
-                                    alt="Add Fee"></span>
-                                    <input type="hidden" id="feeID" value=""/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </colgroup>
-            
-
-        </table>    
+        </colgroup>
+    </table>
+    <table class="TbCel-Type4-A">
+        <colgroup>
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="80px" />
+            <tbody>
+                <tr>
+                    <th align="center" class="P0">
+                        Apply Start Date
+                    </th>
+                    <th align="center" class="P0">
+                        Appl End Date
+                    </th>
+                    <th align="center" class="P0">
+                        VND
+                    </th>
+                    <th align="center" class="P0">
+                        USD
+                    </th>
+                    <th align="center" class="P0">
+                    </th>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
+    <table class="TbCel-Type4-A" id="tblListFee">
+        <colgroup>
+            <col width="185px">
+            <col width="185px">
+            <col width="185px">
+            <col width="185px">
+            <col width="80px">
+        </colgroup>
+        <tbody>
+        </tbody>
+    </table>
+    <table cellspacing="0" class="TbCel-Type2-A">
+        <colgroup>
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="80px" />
+            <tbody>
+                <tr>
+                    <td align="center" class="P0">
+                        <input type="hidden" id="Hidden1" value="" />
+                        <input type="text" id="txtFeeStartDt" name="txtFeeStartDt" class="grBg bgType2" maxlength="10"
+                            style="width: 70px" />
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFeeStartDt')" src="/Common/Images/Common/calendar.gif"
+                            style="cursor: pointer; align: absmiddle;" />
+                    </td>
+                    <td align="center" class="P0">
+                        <input type="text" id="txtFeeEndDt" class="grBg bgType2" maxlength="10" style="width: 70px"
+                            readonly="true" />
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFeeEndDt')" src="/Common/Images/Common/calendar.gif"
+                            style="cursor: pointer; align: absmiddle;" />
+                    </td>
+                    <td align="center" class="P0">
+                        <input type="text" id="txtFeeExcRate" maxlength="18" style="width: 70px" onblur="VNDtoUSD()"
+                            onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                        VND
+                    </td>
+                    <td align="center" class="P0">
+                        <input type="text" id="txtFeeExpAmt" maxlength="18" style="width: 70px" onblur="USDtoVND();"
+                            onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                        $
+                    </td>
+                    <td align="center" class="P0">
+                        <span>
+                            <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
+                            <img style="border-width: 0px;" id="btnAddFee" src="../../Common/Images/Icon/plus.gif"
+                                type="image" onclick="AddMngFee()" alt="Add Fee"></span>
+                        <input type="hidden" id="feeID" value="" />
+                    </td>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
+        <div class="Tb-Tp-tit">
+        <asp:Literal ID="Literal17" Text="Addition Fee" runat="server"></asp:Literal></div>
+    <table cellspacing="0" class="TbCel-Type2-A">
+        <colgroup>
+            <col width="147px" />
+            <col width="178px" />
+            <col width="147px" />
+            <col width="178px" />
+            <tbody>
+                <tr>
+                    <th>
+                        Current Using Date
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox2" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSUsingDt.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                    </td>
+                    <th>
+                        Payment Cycle
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox3" runat="server" MaxLength="18" Width="100" CssClass="bgType3"></asp:TextBox>
+                        <asp:Literal ID="Literal18" runat="server" Text="Month(s)"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Payment Cycle Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="DropDownList1" runat="server">
+                            <asp:ListItem Text="B" Value="M">By Monthly</asp:ListItem>
+                            <asp:ListItem Text="O" Value="Q">Make Round Monthy</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        <asp:Literal ID="Literal19" runat="server" Text="Current Pay Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox4" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtMSPayDate.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Isue Date Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="DropDownList2" runat="server" Width="110px">
+                            <asp:ListItem Value="E">End Of month</asp:ListItem>
+                            <asp:ListItem Value="A">By Perior Date</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        Isue Date Adjust
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox5" runat="server" MaxLength="18" Width="100" CssClass="bgType2"
+                            Text="0"></asp:TextBox>&nbsp;Day(s)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <asp:Literal ID="Literal20" runat="server" Text="Special End Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:TextBox ID="TextBox6" runat="server" MaxLength="2" Width="100" CssClass="bgType2"></asp:TextBox>
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#<%=txtSMEndDate.ClientID %>')"
+                            src="/Common/Images/Common/calendar.gif" style="cursor: pointer;" value="" />
+                    </td>
+                    <td colspan="2">
+                        <asp:Literal ID="Literal21" runat="server" Text="If you apply this date period using will be Current Using Date ~ Special End Date. After make debit this date will auto reset"></asp:Literal>
+                    </td>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
+    <table class="TbCel-Type4-A">
+        <colgroup>
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="80px" />
+            <tbody>
+                <tr>
+                    <th align="center" class="P0">
+                        Apply Start Date
+                    </th>
+                    <th align="center" class="P0">
+                        Appl End Date
+                    </th>
+                    <th align="center" class="P0">
+                        VND
+                    </th>
+                    <th align="center" class="P0">
+                        USD
+                    </th>
+                    <th align="center" class="P0">
+                    </th>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
+    <table class="TbCel-Type4-A" id="Table1">
+        <colgroup>
+            <col width="185px">
+            <col width="185px">
+            <col width="185px">
+            <col width="185px">
+            <col width="80px">
+        </colgroup>
+        <tbody>
+        </tbody>
+    </table>
+    <table cellspacing="0" class="TbCel-Type2-A">
+        <colgroup>
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="185px" />
+            <col width="80px" />
+            <tbody>
+                <tr>
+                    <td align="center" class="P0">
+                        <input type="hidden" id="Hidden2" value="" />
+                        <input type="text" id="Text1" name="txtFeeStartDt" class="grBg bgType2" maxlength="10"
+                            style="width: 70px" />
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFeeStartDt')" src="/Common/Images/Common/calendar.gif"
+                            style="cursor: pointer; align: absmiddle;" />
+                    </td>
+                    <td align="center" class="P0">
+                        <input type="text" id="Text2" class="grBg bgType2" maxlength="10" style="width: 70px"
+                            readonly="true" />
+                        <img align="absmiddle" alt="Calendar" onclick="CallCalendar('#txtFeeEndDt')" src="/Common/Images/Common/calendar.gif"
+                            style="cursor: pointer; align: absmiddle;" />
+                    </td>
+                    <td align="center" class="P0">
+                        <input type="text" id="Text3" maxlength="18" style="width: 70px" onblur="VNDtoUSD()"
+                            onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                        VND
+                    </td>
+                    <td align="center" class="P0">
+                        <input type="text" id="Text4" maxlength="18" style="width: 70px" onblur="USDtoVND();"
+                            onkeypress="javascript:IsNumericOrDot(this, 'Please enter only numbers.');" />
+                        $
+                    </td>
+                    <td align="center" class="P0">
+                        <span>
+                            <%--<asp:ImageButton ID="imgbtnAdd" runat="server" ImageUrl="~/Common/Images/Icon/plus.gif"/></span>--%>
+                            <img style="border-width: 0px;" id="Img1" src="../../Common/Images/Icon/plus.gif"
+                                type="image" onclick="AddMngFee()" alt="Add Fee"></span>
+                        <input type="hidden" id="Hidden3" value="" />
+                    </td>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
     <asp:UpdatePanel ID="upInterior" runat="server" UpdateMode="Conditional">
         <Triggers>
-            <asp:PostBackTrigger ControlID = "lnkbtnWrite" />
+            <asp:PostBackTrigger ControlID="lnkbtnWrite" />
         </Triggers>
         <ContentTemplate>
             <div class="Tb-Tp-tit">
@@ -2056,7 +2206,7 @@
                         </tr>
                     </tbody>
                 </colgroup>
-            </table>             
+            </table>
             <table cellspacing="0" class="TbCel-Type2-A">
                 <colgroup>
                     <col width="147px" />
@@ -2066,7 +2216,7 @@
                     <tbody>
                         <tr>
                             <th>
-                                <asp:Literal ID="Literal12" runat="server" Text = "Remark"></asp:Literal>
+                                <asp:Literal ID="Literal12" runat="server" Text="Remark"></asp:Literal>
                             </th>
                             <td>
                                 <asp:TextBox ID="txtRemark" runat="server" Columns="70" TextMode="MultiLine" Rows="10"
@@ -2085,7 +2235,7 @@
                     <tbody>
                         <tr>
                             <th>
-                                <asp:Literal ID="Literal15" runat="server" Text = "Select contract files"></asp:Literal>
+                                <asp:Literal ID="Literal15" runat="server" Text="Select contract files"></asp:Literal>
                             </th>
                             <td>
                                 <asp:FileUpload ID="ContractFileUpload" runat="server" CssClass="bgType3" />
@@ -2123,7 +2273,7 @@
             <asp:HiddenField ID="hfListFeeMng" runat="server" />
             <asp:HiddenField ID="hfListFitFeeMng" runat="server" />
             <asp:HiddenField ID="hfListRentFee" runat="server" />
-            <asp:HiddenField ID="hfApplyFeeMn" runat="server"  Value="Y"/>
+            <asp:HiddenField ID="hfApplyFeeMn" runat="server" Value="Y" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

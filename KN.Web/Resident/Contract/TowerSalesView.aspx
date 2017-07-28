@@ -841,6 +841,75 @@
     </div>
         <div class="Tb-Tp-tit">
         <asp:Literal ID="Literal12" Text="Addition Area Fee" runat="server"></asp:Literal></div>
+        <table cellspacing="0" class="TbCel-Type2-A">
+        <colgroup>
+            <col width="147px" />
+            <col width="178px" />
+            <col width="147px" />
+            <col width="178px" />
+            <tbody>
+                <tr>
+                    <th>
+                        Current Using Date
+                    </th>
+                    <td>
+                        <asp:Literal ID="Literal13" runat="server"></asp:Literal>
+                    </td>
+                    <th>
+                        Payment Cycle
+                    </th>
+                    <td>
+                        <asp:Literal ID="Literal14" runat="server"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Payment Cycle Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="DropDownList1" runat="server" Enabled="False">
+                            <asp:ListItem Text="B" Value="M">By Monthly</asp:ListItem>
+                            <asp:ListItem Text="O" Value="Q">Make Round Monthy</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        <asp:Literal ID="Literal15" runat="server" Text="Current Pay Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:Literal ID="Literal16" runat="server"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Isue Date Type
+                    </th>
+                    <td>
+                        <asp:DropDownList ID="DropDownList2" runat="server" Width="110px" Enabled="False">
+                            <asp:ListItem Value="E">End Of month</asp:ListItem>
+                            <asp:ListItem Value="A">By Perior Date</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <th>
+                        Isue Date Adjust
+                    </th>
+                    <td>
+                        <asp:Literal ID="Literal17" runat="server"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <asp:Literal ID="Literal18" runat="server" Text="Special End Date"></asp:Literal>
+                    </th>
+                    <td>
+                        <asp:Literal ID="Literal19" runat="server"></asp:Literal>
+                    </td>
+                    <td colspan="2">
+                        <asp:Literal ID="Literal20" runat="server" Text="If you apply this date period using will be Current Using Date ~ Special End Date. After make debit this date will auto reset"></asp:Literal>
+                    </td>
+                </tr>
+            </tbody>
+        </colgroup>
+    </table>
         <div id="lstAdditionAreaFee" runat="server">
         <table class="TbCel-Type4-A">
             <colgroup>

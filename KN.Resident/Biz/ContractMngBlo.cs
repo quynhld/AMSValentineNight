@@ -628,6 +628,7 @@ namespace KN.Resident.Biz
 
             if (dtReturn != null)
             {
+                #region insert rent info and rent fee
                 if (dtReturn.Rows.Count > 0)
                 {
                     strContractNo = dtReturn.Rows[0]["ContractNo"].ToString();
@@ -654,8 +655,9 @@ namespace KN.Resident.Biz
                         }
                     }
                 }
-
+                #endregion
                 //Insert FittingFee
+                #region Insert Fitting Fee
                 if (riDs.APPL_YN == "Y")
                 {
                     var listFitFee = riDs.ListFitFee.Split(Char.Parse("|"));
@@ -672,8 +674,9 @@ namespace KN.Resident.Biz
                         ContractMngDao.InsertMngFee(fitfeeItem, strContractNo, "Y");
                     }
                 }
-
+                #endregion
                 //Insert MngFee
+                #region Insert Management Fee
                 var listMngFee = riDs.ListMngFee.Split(Char.Parse("|"));
                 foreach (var fitFee in listMngFee.Select(s => s.Split(Char.Parse(","))).TakeWhile(fitFee => !String.IsNullOrEmpty(fitFee.ToString())))
                 {
@@ -688,6 +691,11 @@ namespace KN.Resident.Biz
                     mngfeeItem[6] = riDs.InsMemIP;
                     ContractMngDao.InsertMngFee(mngfeeItem, strContractNo, "N");
                 }
+                #endregion
+
+                #region Insert Addition Fee
+
+                #endregion
             }
 
             return dtReturn;

@@ -86,6 +86,7 @@ namespace KN.Web.Resident.Contract
         protected void InitControls()
         {
             
+            
             ltPodium.Text = TextNm["PODIUMYN"];
             ltBasicInfo.Text = TextNm["CONTRACTINFO"];
             ltIncharge.Text = TextNm["INCHARGE"];
@@ -1351,8 +1352,6 @@ namespace KN.Web.Resident.Contract
                 riDs.M_ISUE_DATE_ADJUST = int.Parse(string.IsNullOrEmpty(txtMAdjustDate.Text) ? "0" : txtMAdjustDate.Text);
                 riDs.IS_SPECIAL = chkSpecialContract.Checked ? "Y" : "N";
 
-
-
                 if (ddlIndustry.SelectedValue.ToString()== CommValue.CODE_VALUE_EMPTY)
                 {
                     riDs.IndustryCd = "";
@@ -1401,7 +1400,6 @@ namespace KN.Web.Resident.Contract
 
                 strRoomNo = txtRoomNo.Text;//ddlFirst.SelectedValue + ddlSecond.SelectedValue + ddlThird.SelectedValue + ddlFouth.SelectedValue + ddlFifth.SelectedValue;
 
-
                 riDs.RoomNo = txtRoomNo.Text.ToUpper();
                 riDs.ExtRoomNo = txtExtRoomNo.Text.ToUpper();
                 riDs.FloorNo = Int32.Parse(txtFloor.Text);
@@ -1418,8 +1416,6 @@ namespace KN.Web.Resident.Contract
                 {
                     riDs.DongToDollar = CommValue.NUMBER_VALUE_0;
                 }
-
-                
 
                 if (txtHfPodium.Text.Equals(CommValue.CHOICE_VALUE_YES))
                 {
@@ -1438,24 +1434,6 @@ namespace KN.Web.Resident.Contract
                 }
 
                 riDs.PayDay = CommValue.NUMBER_VALUE_0;
-
-                //if (string.IsNullOrEmpty(txtSumRentVNDNo.Text))
-                //{
-                //    riDs.TotViAmtNo = CommValue.NUMBER_VALUE_0;
-                //}
-                //else
-                //{
-                //    riDs.TotViAmtNo = double.Parse(txtSumRentVNDNo.Text);
-                //}
-
-                //if (string.IsNullOrEmpty(txtSumRentUSDNo.Text))
-                //{
-                //    riDs.TotEnAmtNo = CommValue.NUMBER_VALUE_0;
-                //}
-                //else
-                //{
-                //    riDs.TotEnAmtNo = double.Parse(txtSumRentUSDNo.Text);
-                //}
 
                 if (txtHfPodium.Text.Equals(CommValue.CHOICE_VALUE_YES))
                 {
