@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -16,7 +17,7 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
+    <OldToolsVersion>4.0</OldToolsVersion>
     <UseIISExpress>false</UseIISExpress>
     <SccProjectName>
     </SccProjectName>
@@ -26,6 +27,10 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -458,6 +463,20 @@
     <Content Include="DLL\EPPlus.dll" />
     <Content Include="DLL\ZedGraph.dll" />
     <Content Include="DLL\ZedGraph.Web.dll" />
+    <Content Include="Inventory\IN\INNEW.aspx" />
+    <Content Include="Inventory\IN\INDETAILS.aspx" />
+    <Content Include="Inventory\IN\INList.aspx" />
+    <Content Include="Inventory\ITEMS\InventoryDetails.aspx" />
+    <Content Include="Inventory\ITEMS\InventoryAddNew.aspx" />
+    <Content Include="Inventory\ITEMS\InventoryList.aspx" />
+    <Content Include="Inventory\OUT\OUTDETAILS.aspx" />
+    <Content Include="Inventory\OUT\OUTList.aspx" />
+    <Content Include="Inventory\OUT\OUTNEW.aspx" />
+    <Content Include="Inventory\Reports\ItemInReportList.aspx" />
+    <Content Include="Inventory\Reports\ItemOutReportList.aspx" />
+    <Content Include="Inventory\Reports\TimesReportList.aspx" />
+    <Content Include="Inventory\Reports\ItemsReportList.aspx" />
+    <Content Include="Inventory\Reports\ReportList.aspx" />
     <Content Include="KN.Web.Publish.xml" />
     <Content Include="Management\Manage\APTDebitList.aspx" />
     <Content Include="Management\Manage\MngParkingFeeUpdateAPT.aspx" />
@@ -472,6 +491,7 @@
     <Content Include="Management\Remote\UtilFeeWrite.aspx" />
     <Content Include="Park\ChangeRoom.aspx" />
     <Content Include="Park\CardCost.aspx" />
+    <Content Include="Park\MonthParkingCardMerge.aspx" />
     <Content Include="Park\MonthParkingExcelImport.aspx" />
     <Content Include="Park\MonthParkingFeeUpdate.aspx" />
     <Content Include="Park\OfficeParkingMonthlyReport.aspx" />
@@ -1714,6 +1734,104 @@
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Inventory\IN\INNEW.aspx.cs">
+      <DependentUpon>INNEW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\IN\INNEW.aspx.designer.cs">
+      <DependentUpon>INNEW.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\IN\INDETAILS.aspx.cs">
+      <DependentUpon>INDETAILS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\IN\INDETAILS.aspx.designer.cs">
+      <DependentUpon>INDETAILS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\IN\INList.aspx.cs">
+      <DependentUpon>INList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\IN\INList.aspx.designer.cs">
+      <DependentUpon>INList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryDetails.aspx.cs">
+      <DependentUpon>InventoryDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryDetails.aspx.designer.cs">
+      <DependentUpon>InventoryDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryAddNew.aspx.cs">
+      <DependentUpon>InventoryAddNew.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryAddNew.aspx.designer.cs">
+      <DependentUpon>InventoryAddNew.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryList.aspx.cs">
+      <DependentUpon>InventoryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryList.aspx.designer.cs">
+      <DependentUpon>InventoryList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\OUT\OUTDETAILS.aspx.cs">
+      <DependentUpon>OUTDETAILS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\OUT\OUTDETAILS.aspx.designer.cs">
+      <DependentUpon>OUTDETAILS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\OUT\OUTList.aspx.cs">
+      <DependentUpon>OUTList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\OUT\OUTList.aspx.designer.cs">
+      <DependentUpon>OUTList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\OUT\OUTNEW.aspx.cs">
+      <DependentUpon>OUTNEW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\OUT\OUTNEW.aspx.designer.cs">
+      <DependentUpon>OUTNEW.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\ItemInReportList.aspx.cs">
+      <DependentUpon>ItemInReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\ItemInReportList.aspx.designer.cs">
+      <DependentUpon>ItemInReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\ItemOutReportList.aspx.cs">
+      <DependentUpon>ItemOutReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\ItemOutReportList.aspx.designer.cs">
+      <DependentUpon>ItemOutReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\TimesReportList.aspx.cs">
+      <DependentUpon>TimesReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\TimesReportList.aspx.designer.cs">
+      <DependentUpon>TimesReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\ItemsReportList.aspx.cs">
+      <DependentUpon>ItemsReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\ItemsReportList.aspx.designer.cs">
+      <DependentUpon>ItemsReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\ReportList.aspx.cs">
+      <DependentUpon>ReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\ReportList.aspx.designer.cs">
+      <DependentUpon>ReportList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2035,6 +2153,13 @@
     </Compile>
     <Compile Include="Park\CardCost.aspx.designer.cs">
       <DependentUpon>CardCost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Park\MonthParkingCardMerge.aspx.cs">
+      <DependentUpon>MonthParkingCardMerge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Park\MonthParkingCardMerge.aspx.designer.cs">
+      <DependentUpon>MonthParkingCardMerge.aspx</DependentUpon>
     </Compile>
     <Compile Include="Park\MonthParkingExcelImport.aspx.cs">
       <DependentUpon>MonthParkingExcelImport.aspx</DependentUpon>
@@ -3178,12 +3303,18 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Board\Master\" />
+    <Folder Include="InventoryImg\" />
     <Folder Include="obj\" />
     <Folder Include="Resident\Room\" />
     <Folder Include="ZedGraphImages\" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

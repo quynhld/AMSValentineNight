@@ -612,7 +612,7 @@ namespace KN.Resident.Dac
             objParams[70] = rsDs.IS_SPECIAL;
             objParams[71] = rsDs.PAYMENT_TYPE;
             objParams[72] = rsDs.REMARK;
-
+            objParams[73] = rsDs.RoomNoExt;
 
             dtReturn = SPExecute.ExecReturnSingle("KN_USP_RES_INSERT_SALESINFO_S00", objParams);
 
@@ -1295,7 +1295,7 @@ namespace KN.Resident.Dac
             objParams[67] = rsDs.IS_SPECIAL;
             objParams[68] = rsDs.PAYMENT_TYPE;
             objParams[69] = rsDs.REMARK;
-
+            objParams[70] = rsDs.RoomNoExt;
             var objReturn = SPExecute.ExecReturnNo("KN_USP_RES_UPDATE_SALESINFO_M00", objParams);
 
             return objReturn;
@@ -1364,7 +1364,8 @@ namespace KN.Resident.Dac
             objParams[1] = rsComDs.RentSeq;
             objParams[2] = TextLib.StringEncoder(TextLib.MakeNullToEmpty(rsComDs.LegalRep));
             objParams[3] = TextLib.StringEncoder(TextLib.MakeNullToEmpty(rsComDs.Position));
-            objParams[4] = TextLib.StringEncoder(TextLib.MakeNullToEmpty(rsComDs.TaxCd));
+            //objParams[4] = TextLib.StringEncoder(TextLib.MakeNullToEmpty(rsComDs.TaxCd));quynhld edit : tax code format change add -xxx value. remove encoding
+            objParams[4] = TextLib.MakeNullToEmpty(rsComDs.TaxCd);
             objParams[5] = TextLib.StringEncoder(TextLib.MakeNullToEmpty(rsComDs.IssueOrg));
 
             objReturn = SPExecute.ExecReturnNo("KN_USP_RES_UPDATE_SALESCOMPINFO_M00", objParams);

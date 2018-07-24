@@ -305,7 +305,7 @@ namespace KN.Web.Resident.Contract
             ltInsUnitNo.Text = dtRentInfo.Rows[0]["RoomNo"].ToString();
             ltInsFloor.Text = dtRentInfo.Rows[0]["FloorNo"].ToString();
             ltInsLeasingArea.Text = dtRentInfo.Rows[0]["LeasingArea"].ToString();
-
+            ltRoomNoExt.Text = dtRentInfo.Rows[0]["RoomNoExt"].ToString();
             //임대비용
             //ltInsExcangeRate.Text = dtRentInfo.Rows[0]["DongToDollar"].ToString();
             chkCC.Checked = dtRentInfo.Rows[0]["CURNCY_TYPE"].ToString() == "CC";

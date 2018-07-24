@@ -1072,7 +1072,7 @@
                             <col width="178px" />
                             <col width="147px" />
                             <col width="178px" />
-                            <tbody>
+                                                        <tbody>
                                 <tr>
                                     <th>
                                         <asp:Literal ID="ltUnitNo" runat="server"></asp:Literal>
@@ -1081,18 +1081,25 @@
                                         <asp:TextBox ID="txtUnitNo" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>
                                     </td>
                                     <th class="lebd">
-                                        <asp:Literal ID="ltFloor" runat="server"></asp:Literal>
+                                        <asp:Literal ID="ltRoomNoExt" Text="Room No Extend" runat="server"></asp:Literal>
                                     </th>
                                     <td>
-                                        <asp:TextBox ID="txtFloor" runat="server" MaxLength="3" CssClass="bgType2"></asp:TextBox>
+                                        <asp:TextBox ID="txtRoomNoExt" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
                                         <asp:Literal ID="ltLeasingArea" runat="server"></asp:Literal>
                                     </th>
-                                    <td colspan="3">
+                                    <td >
                                         <asp:TextBox ID="txtLeasingArea" runat="server" MaxLength="10" CssClass="bgType2"></asp:TextBox>&nbsp;㎡
+                                    </td>
+                                    <th class="lebd">
+                                        <asp:Literal ID="ltFloor" runat="server"></asp:Literal>
+                                    </th>
+                                    <td>
+                                        <asp:TextBox ID="txtFloor" runat="server" MaxLength="3" CssClass="bgType2"></asp:TextBox>
+                                        
                                     </td>
                                 </tr>
                             </tbody>

@@ -760,22 +760,22 @@ namespace KN.Web.Resident.Contract {
         protected global::System.Web.UI.WebControls.TextBox txtUnitNo;
         
         /// <summary>
-        /// ltFloor control.
+        /// ltRoomNoExt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltFloor;
+        protected global::System.Web.UI.WebControls.Literal ltRoomNoExt;
         
         /// <summary>
-        /// txtFloor control.
+        /// txtRoomNoExt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFloor;
+        protected global::System.Web.UI.WebControls.TextBox txtRoomNoExt;
         
         /// <summary>
         /// ltLeasingArea control.
@@ -794,6 +794,24 @@ namespace KN.Web.Resident.Contract {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtLeasingArea;
+        
+        /// <summary>
+        /// ltFloor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltFloor;
+        
+        /// <summary>
+        /// txtFloor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFloor;
         
         /// <summary>
         /// imgbtnCheckRoom control.

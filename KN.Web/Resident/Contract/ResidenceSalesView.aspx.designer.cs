@@ -679,22 +679,22 @@ namespace KN.Web.Resident.Contract {
         protected global::System.Web.UI.WebControls.Literal ltInsUnitNo;
         
         /// <summary>
-        /// ltFloor control.
+        /// ltRoomNoExt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltFloor;
+        protected global::System.Web.UI.WebControls.Literal ltRoomNoExt;
         
         /// <summary>
-        /// ltInsFloor control.
+        /// ltInsRoomNoExt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltInsFloor;
+        protected global::System.Web.UI.WebControls.Literal ltInsRoomNoExt;
         
         /// <summary>
         /// ltLeasingArea control.
@@ -713,6 +713,24 @@ namespace KN.Web.Resident.Contract {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltInsLeasingArea;
+        
+        /// <summary>
+        /// ltFloor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltFloor;
+        
+        /// <summary>
+        /// ltInsFloor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltInsFloor;
         
         /// <summary>
         /// ltExchangeRateTitle control.

@@ -305,30 +305,37 @@
         <col width="178px" />
         <col width="147px" />
         <col width="178px" />
-        <tbody>
-            <tr>
-                <th>
-                    <asp:Literal ID="ltUnitNo" runat="server"></asp:Literal>
-                </th>
-                <td>
-                    <asp:Literal ID="ltInsUnitNo" runat="server"></asp:Literal>
-                </td>
-                <th class="lebd">
-                    <asp:Literal ID="ltFloor" runat="server"></asp:Literal>
-                </th>
-                <td>
-                    <asp:Literal ID="ltInsFloor" runat="server"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <asp:Literal ID="ltLeasingArea" runat="server"></asp:Literal>
-                </th>
-                <td colspan="3">
-                    <asp:Literal ID="ltInsLeasingArea" runat="server"></asp:Literal>
-                </td>
-            </tr>
-        </tbody>
+ <tbody>
+                                <tr>
+                                    <th>
+                                        <asp:Literal ID="ltUnitNo" runat="server"></asp:Literal>
+                                    </th>
+                                    <td>
+                                        <asp:Literal ID="ltInsUnitNo" runat="server"  ></asp:Literal>
+                                    </td>
+                                    <th class="lebd">
+                                        <asp:Literal ID="ltRoomNoExt" Text="Room No Extend" runat="server"></asp:Literal>
+                                    </th>
+                                    <td>
+                                        <asp:Literal ID="ltInsRoomNoExt" runat="server"  ></asp:Literal>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <asp:Literal ID="ltLeasingArea" runat="server"></asp:Literal>
+                                    </th>
+                                    <td >
+                                        <asp:Literal ID="ltInsLeasingArea" runat="server" ></asp:Literal>&nbsp;㎡
+                                    </td>
+                                    <th class="lebd">
+                                        <asp:Literal ID="ltFloor" runat="server"></asp:Literal>
+                                    </th>
+                                    <td>
+                                        <asp:Literal ID="ltInsFloor" runat="server" ></asp:Literal>
+                                        
+                                    </td>
+                                </tr>
+                            </tbody>
     </table>
     <div class="Tb-Tp-tit">
         <asp:Literal ID="ltExchangeRateTitle" runat="server"></asp:Literal></div>

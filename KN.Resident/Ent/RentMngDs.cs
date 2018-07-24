@@ -1505,6 +1505,8 @@
                 get;
                 set;
             }
+
+            public string RoomNoExt { get; set; }
         }
 
         public class SalesCompInfo

@@ -677,6 +677,7 @@ namespace KN.Web.Resident.Contract
                 rsDs.BankAcc = txtBank.Text;
                 rsDs.ConcYn = ddlConcYn.SelectedValue;
                 rsDs.RoomNo = txtUnitNo.Text.ToUpper();
+                
                 rsDs.FloorNo = txtFloor.Text;
                 rsDs.ContDt = hfCommencingDt.Value.Replace("-","");
                 rsDs.ResaleDt = hfExpiringDt.Value.Replace("-","");
@@ -758,7 +759,7 @@ namespace KN.Web.Resident.Contract
                 rsDs.IS_SPECIAL = chkSpecialContract.Checked ? "Y" : "N";
                 rsDs.PAYMENT_TYPE = ddlPaymentType.SelectedValue;
                 rsDs.REMARK = txtContRemark.Text;
-
+                rsDs.RoomNoExt = txtRoomNoExt.Text;
                 rsDs.INFLATION_RATE = double.Parse(txtFloation.Text);
                 // 임대구매 정보
                 if (!string.IsNullOrEmpty(txtRepresent.Text) ||

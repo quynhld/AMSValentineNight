@@ -374,6 +374,7 @@ namespace KN.Web.Resident.Contract
             txtUnitNo.Text = dtRentInfo.Rows[0]["RoomNo"].ToString();
             txtFloor.Text = dtRentInfo.Rows[0]["FloorNo"].ToString();
             txtLeasingArea.Text = dtRentInfo.Rows[0]["LeasingArea"].ToString();
+            txtRoomNoExt.Text = dtRentInfo.Rows[0]["RoomNoExt"].ToString();
             ddlLessor.SelectedValue = string.IsNullOrEmpty(dtRentInfo.Rows[0]["Ref_ContractNo"].ToString()) ? "" : dtRentInfo.Rows[0]["Ref_ContractNo"].ToString();
             txtLessorRoomNo.Text = string.IsNullOrEmpty(dtRentInfo.Rows[0]["Ref_ContractNo"].ToString()) ? "" : dtRentInfo.Rows[0]["Ref_ContractNo"].ToString();
 
@@ -1013,6 +1014,7 @@ namespace KN.Web.Resident.Contract
                 rsDs.CONTRACT_TYPE = rbContractType.SelectedValue;
                 rsDs.SubYn = string.IsNullOrEmpty(rsDs.RefContractNo) ? "N" : "Y";
                 rsDs.REMARK = txtContRemark.Text;
+                rsDs.RoomNoExt = txtRoomNoExt.Text;
                 // KN_USP_RES_UPDATE_SALESINFO_M00
                 // KN_USP_RES_UPDATE_SALESCOMPINFO_M00
                 // KN_USP_RES_UPDATE_SALESCOINFO_M00
