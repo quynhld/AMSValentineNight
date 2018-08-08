@@ -11,19 +11,22 @@ using KN.Common.Method.Lib;
 using KN.Common.Method.Log;
 using KN.Common.Method.Util;
 
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Configuration;
+
 using KN.Settlement.Biz;
 
 namespace KN.Web.Inventory
 {
     public partial class OUTNEW : BasePage
     {
-        StringBuilder sbPageNavi = new StringBuilder();
-        PageNoListUtil pageUtil = new PageNoListUtil();
-
-        public string DATA_APT = CommValue.RENTAL_VALUE_APT;
-        public string DATA_APTSTORE = CommValue.RENTAL_VALUE_APTSHOP;
-
-        int intPageNo = CommValue.NUMBER_VALUE_0;
+        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TempDBConnection"].ConnectionString);
+        SqlCommand cmd = new SqlCommand();
+        string strSelect = string.Empty;
+        SqlDataAdapter adapter = new SqlDataAdapter();
+        //conn.ConnectionString = ConfigurationManager.ConnectionStrings["TempDBConnection"].ConnectionString;
+        DataSet ds = new DataSet();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,354 +37,331 @@ namespace KN.Web.Inventory
             {
                 if (!IsPostBack)
                 {
-                    if (CheckParams())
-                    {
-                        InitControls();
-                    }
+                    InitControls();
+                    LoadData();
                 }
             }
             catch (Exception ex)
             {
-                ErrLogger.MakeLogger(ex);
+                ErrLogger.MakeLogger(ex);// note for make log edit,create write as : user: action(insert,update,delete): date(datetime.now);
             }
-        }
-
-        protected bool CheckParams()
-        {
-            bool isReturnOk = CommValue.AUTH_VALUE_FALSE;
-
-            if (Request.Params["RentCd"] != null)
-            {
-                if (!string.IsNullOrEmpty(Request.Params["RentCd"].ToString()))
-                {
-                    hfRentCd.Value = Request.Params["RentCd"].ToString();
-
-                    if (!string.IsNullOrEmpty(hfCurrentPage.Value))
-                    {
-                        intPageNo = Int32.Parse(hfCurrentPage.Value);
-                        hfCurrentPage.Value = intPageNo.ToString();
-
-                        isReturnOk = CommValue.AUTH_VALUE_TRUE;
-                    }
-                    else
-                    {
-                        intPageNo = CommValue.BOARD_VALUE_DEFAULTPAGE;
-                        hfCurrentPage.Value = intPageNo.ToString();
-
-                        isReturnOk = CommValue.AUTH_VALUE_TRUE;
-                    }
-                }
-            }
-
-            return isReturnOk;
         }
 
         protected void InitControls()
         {
-            ltSearchName.Text = TextNm["NAME"];
-            ltSearchRoom.Text = TextNm["ROOMNO"];
-
-            // DropDownList Setting
-            CommCdDdlUtil.MakeEtcSubCdDdlUserTitle(ddlRentNm, Session["LangCd"].ToString(), CommValue.ETCCD_VALUE_RENTAL, TextNm["SELECT"]);
-
-            lnkbtnSearch.Text = TextNm["SEARCH"];
-            lnkbtnSearch.OnClientClick = "javascript:return fnCheckValidate('" + AlertNm["ALERT_INSERT_BLANK"] + "');";
-
-            ltSeq.Text = TextNm["SEQ"];
-            ltRentNm.Text = TextNm["RENT"];
-            ltName.Text = TextNm["NAME"];
-            ltRoomNo.Text = TextNm["ROOMNO"];
-            ltMngFee.Text = TextNm["MNGFEE"];
-            ltRentalFee.Text = TextNm["RENTALFEE"];
-            ltUtilFee.Text = TextNm["UTILITYFEE"];
-
-            lnkbtnPrint.Text = TextNm["PRINT"];
-            lnkbtnPrint.OnClientClick = "javascript:return fnDetailViewJs('" + AlertNm["INFO_HAS_NO_SELECTED_ITEM"] + "');";
-
-            // DropDownList Setting
-            // 년도
-            MakeYearDdl();
-
-            // 월
-            MakeMonthDdl();
-
-            // 수납 아이템
-            MakePaymentDdl();
-
-            // 문서 종류
-            MakeDocumentDdl();
-        }
-
-        /// <summary>
-        /// 년도용 DropdownList 생성
-        /// </summary>
-        private void MakeYearDdl()
-        {
-            ddlYear.Items.Clear();
-
-            for (int intTmpI = CommValue.START_YEAR; intTmpI <= DateTime.Now.AddYears(1).Year; intTmpI++)
-            {
-                ddlYear.Items.Add(new ListItem(intTmpI.ToString(), intTmpI.ToString()));
-            }
-
-            ddlYear.SelectedValue = DateTime.Now.Year.ToString();
-        }
-
-        /// <summary>
-        /// 월용 DropdownList 생성
-        /// </summary>
-        private void MakeMonthDdl()
-        {
-            ddlMonth.Items.Clear();
-
-            for (int intTmpI = 1; intTmpI <= 12; intTmpI++)
-            {
-                ddlMonth.Items.Add(new ListItem(intTmpI.ToString(), intTmpI.ToString().PadLeft(2, '0')));
-            }
-
-            ddlMonth.SelectedValue = DateTime.Now.Month.ToString().PadLeft(2, '0');
-        }
-
-        private void MakePaymentDdl()
-        {
-            DataTable dtReturn = new DataTable();
-
-            dtReturn = CommCdInfo.SelectSubCdWithNoTitle(Session["LangCd"].ToString(), CommValue.COMMCD_VALUE_ETC, CommValue.ETCCD_VALUE_RECEIT);
-            ddlPayment.Items.Clear();
-
-            ddlPayment.Items.Add(new ListItem(TextNm["PAYMENTKIND"], ""));
-
-            foreach (DataRow dr in dtReturn.Select())
-            {
-                if (!dr["CodeCd"].ToString().Equals(CommValue.RECEIT_VALUE_ELECTRICITYFEE) &&
-                    !dr["CodeCd"].ToString().Equals(CommValue.RECEIT_VALUE_WATERATE) &&
-                    !dr["CodeCd"].ToString().Equals(CommValue.RECEIT_VALUE_GASRATE))
-                {
-                    ddlPayment.Items.Add(new ListItem(dr["CodeNm"].ToString(), dr["CodeCd"].ToString()));
-                }
-            }
-
-            ddlPayment.Items.Add(new ListItem("0004", "Electric Over Time"));
-            ddlPayment.Items.Add(new ListItem("0005", "Electric Air-con Over Time"));
-        }
-
-        private void MakeDocumentDdl()
-        {
-            DataTable dtReturn = new DataTable();
-
-            dtReturn = CommCdInfo.SelectSubCdWithNoTitle(Session["LangCd"].ToString(), CommValue.COMMCD_VALUE_ETC, CommValue.ETCCD_VALUE_DOCUMENT);
-            ddlDocument.Items.Clear();
-
-            ddlDocument.Items.Add(new ListItem(TextNm["DOCUMENTKIND"], ""));
-
-            foreach (DataRow dr in dtReturn.Select())
-            {
-                if (!dr["Codecd"].ToString().Equals(CommValue.DOCUMENT_VALUE_TAX))
-                {
-                    if (!ddlPayment.SelectedValue.Equals(CommValue.RECEIT_VALUE_PARKINGCARDFEE) &&
-                        !ddlPayment.SelectedValue.Equals(CommValue.RECEIT_VALUE_PARKINGFEE))
-                    {
-                        ddlDocument.Items.Add(new ListItem(dr["CodeNm"].ToString(), dr["CodeCd"].ToString()));
-                    }
-                    else
-                    {
-                        if (!dr["CodeCd"].ToString().Equals(CommValue.DOCUMENT_VALUE_BILL))
-                        {
-                            ddlDocument.Items.Add(new ListItem(dr["CodeNm"].ToString(), dr["CodeCd"].ToString()));
-                        }
-                    }
-                }
-            }
         }
 
         private void LoadData()
         {
-            // 세션체크
-            AuthCheckLib.CheckSession();
+            string strSelectOut = string.Empty;
+            string strSelectOutDetail = string.Empty;
+            DataTable dtbOut = new DataTable();
+            DataTable dtbOutDetails = new DataTable();
+            cmd.Connection = conn;
 
-            DataSet dsReturn = new DataSet();
-
-            //int intSearchFloor = 0;
-            string strRentCd = string.Empty;
-
-            if (string.IsNullOrEmpty(ddlRentNm.SelectedValue))
+            if (Request.QueryString["outId"] != null && Request.QueryString["outId"].ToString() != string.Empty)
             {
-                strRentCd = hfRentCd.Value;
+                cmd.Connection = conn;//set connection
+                //load out
+                strSelectOut = @"SELECT [INV_OUT_ID]
+                                  ,[CreateDate]
+                                  ,[ModifyDate]
+                                  ,[CreateUser]
+                                  ,[ModifyUser]
+                                  ,[UsedFor]
+                                  ,[Note]
+                                  ,[Status]
+                              FROM [dbo].[Inventory_OUT] where INV_OUT_ID = {0}";
+                strSelectOut = string.Format(strSelectOut, Request.QueryString["outId"].ToString());
+                //bind out
+                
+                cmd.CommandText = strSelectOut;
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtbOut);
+                //set text 
+                txtUsedFor.Text = dtbOut.Rows[0]["UsedFor"] != null ? dtbOut.Rows[0]["UsedFor"].ToString():string.Empty;
+                txtNote.Text = dtbOut.Rows[0]["Note"] != null ? dtbOut.Rows[0]["UsedFor"].ToString() : string.Empty;
+                ltBindCreateBy.Text = dtbOut.Rows[0]["CreateUser"].ToString();
+                ltCreateDate.Text = dtbOut.Rows[0]["CreateDate"].ToString();
+                ltModDate.Text = dtbOut.Rows[0]["ModifyDate"].ToString();
+                ltBindModBy.Text = dtbOut.Rows[0]["ModifyUser"].ToString();
+
+                //load details
+                strSelectOutDetail = @"SELECT details.[ID]
+                                      ,details.[INV_OUT_ID]
+                                      ,details.[INV_ID]
+                                      ,details.[Amount]
+                                      ,details.[Note]
+                                      ,details.[status]
+									  ,i.Item_Name
+                                      ,i.ItemUnit
+                                        FROM [dbo].[Inventory_OUT_Details] details inner join Inventory_Items i on details.INV_ID = i.IVN_ID
+                                        where INV_OUT_ID = {0}";
+                strSelectOutDetail = string.Format(strSelectOutDetail, Request.QueryString["outId"].ToString());
+                cmd.CommandText = strSelectOutDetail;
+                //bind details
+                
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtbOutDetails);
+                lvOutDetails.DataSource = dtbOutDetails;
+                lvOutDetails.DataBind();
             }
             else
             {
-                strRentCd = ddlRentNm.SelectedValue;
-            }
-
-            hfRentCd.Value = strRentCd;
-
-            // 오피스 및 리테일 청구 대상 리스트
-            // KN_USP_MNG_SELECT_BILLINGINFO_S01
-            dsReturn = ReceiptMngBlo.SpreadMngRentBillingList(CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfCurrentPage.Value), txtSearchNm.Text, strRentCd, txtSearchRoom.Text, Session["LangCd"].ToString());
-
-            if (dsReturn != null)
-            {
-                lvPaymentList.DataSource = dsReturn.Tables[1];
-                lvPaymentList.DataBind();
-
-                sbPageNavi.Append(pageUtil.MakePageIndex(Int32.Parse(hfCurrentPage.Value), CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(dsReturn.Tables[0].Rows[0]["TotalCnt"].ToString())
-                    , TextNm["FIRST"], TextNm["END"], TextNm["PREV"], TextNm["NEXT"]));
-
-                spanPageNavi.InnerHtml = sbPageNavi.ToString();
+                lvOutDetails.DataSource = dtbOutDetails;
+                lvOutDetails.DataBind();
             }
         }
 
-        /// <summary>
-        /// ListView에서 빈 데이터의 경우 타이틀 및 알림메세지 정의
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void lvPaymentList_ItemCreated(object sender, ListViewItemEventArgs e)
+        //insert Inventory_OUT and OUT DETAILS
+        protected void ltAdd_Click(object sender, EventArgs e)
+        {
+            cmd.Connection = conn;
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+
+            Literal txtUnit = (Literal)lvOutDetails.InsertItem.FindControl("txtUnit");
+            TextBox txtItemAmount = (TextBox)lvOutDetails.InsertItem.FindControl("txtItemAmount");
+            TextBox txtInsertNote = (TextBox)lvOutDetails.InsertItem.FindControl("txtInsertNote");
+            DropDownList ddrSelectItems = (DropDownList)lvOutDetails.InsertItem.FindControl("ddrSelectItems");
+
+            int itemID = Convert.ToInt32(ddrSelectItems.SelectedValue);
+            decimal amount = Convert.ToDecimal(txtItemAmount.Text);
+            string strInsertNote = txtInsertNote.Text;
+
+            //fist check amount of item  not lager than amount remains in database
+            string selectRemainAmount =string.Format(  @"SELECT [Item_Amout]  FROM [dbo].[Inventory_Items] where IVN_ID={0}",itemID);
+            cmd.CommandText = selectRemainAmount;
+            var remainAmount = cmd.ExecuteScalar();
+            if (amount > Convert.ToDecimal(remainAmount))
+            {
+                //show alert that items remain not enought
+                string scriptAlert = string.Format( "alert('Not enought amount, remain amount for item is about :{0}')",remainAmount);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", scriptAlert, true);
+            }
+            else
+            {
+                try
+                {
+
+                    int OUT_ID = 0;
+                    //1.insert Inventory_OUT -- if query string exits - only add to outDetails
+                    if (Request.QueryString["outId"] == null)
+                    {
+                        string cmdInsert_Inventory_OUT = @"INSERT INTO [dbo].[Inventory_OUT]
+                                                           (
+                                                           [CreateDate]
+                                                           ,[ModifyDate]
+                                                           ,[CreateUser]
+                                                           ,[ModifyUser]
+                                                           ,[UsedFor]
+                                                           ,[Note]
+                                                           ,[Status]) OUTPUT INSERTED.[INV_OUT_ID]
+                                                     VALUES
+                                                           (
+                                                            '{0}' --<CreateDate, datetime,>
+                                                           ,'{1}' --<ModifyDate, datetime,>
+                                                           ,'{2}' --<CreateUser, nvarchar(50),>
+                                                           ,'{3}' --<ModifyUser, nvarchar(50),>
+                                                           ,'{4}' --<UsedFor, nvarchar(500),>
+                                                           ,'{5}' --<Note, nvarchar(2000),>
+                                                           ,1 )  --<Status, int,>";
+                        string usedFor = txtUsedFor.Text;
+                        string note = txtNote.Text;
+                        DateTime createDate = DateTime.Now;
+                        DateTime modifyDate = DateTime.Now;
+                        string createUser = Session["MemNo"].ToString();
+                        string modifyUser = Session["MemNo"].ToString();
+
+                        cmd.CommandText = string.Format(cmdInsert_Inventory_OUT, createDate, modifyDate, createUser, modifyUser, usedFor, note);
+                        OUT_ID = (int)cmd.ExecuteScalar();//get id return
+                    }
+                    else
+                    {
+                        OUT_ID = Convert.ToInt32(Request.QueryString["outId"]);
+                    }
+                    //2.insert Inventory_OUT_DETAILS
+                    string cmdInsert_Inventory_OUT_Details = @"INSERT INTO [dbo].[Inventory_OUT_Details]
+                                                                           ([INV_OUT_ID]
+                                                                           ,[INV_ID]
+                                                                           ,[Amount]
+                                                                           ,[Note]
+                                                                           ,[status])
+                                                                     VALUES
+                                                                           ({0} --<INV_OUT_ID, int,>
+                                                                           ,{1} --<INV_ID, int,>
+                                                                           ,{2} --<Amount, int,>
+                                                                           ,'{3}' --<Note, nvarchar(500),>
+                                                                           ,{4}) --<status, bit,>";
+                    //read values from insert item template
+
+                    cmd.CommandText = string.Format(cmdInsert_Inventory_OUT_Details, OUT_ID, itemID, amount, strInsertNote, 1);
+                    cmd.ExecuteNonQuery();
+
+                    //update amount of items
+                    cmd.CommandText = @"update Inventory_Items set Item_Amout = Item_Amout - " + amount + " where IVN_ID =" + itemID.ToString();
+                    cmd.ExecuteNonQuery();
+
+                    //3.reload data
+                    Response.Redirect(string.Format("~/Inventory/OUT/OUTNEW.aspx?outId={0}", OUT_ID));
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        protected void lvOutDetails_ItemCreated(object sender, ListViewItemEventArgs e)
+        {
+            if(e.Item.ItemType == ListViewItemType.InsertItem)
+            {
+                DataTable dtb = new DataTable();
+                cmd.CommandText = @"SELECT [IVN_ID]
+                                      ,[Item_Name]
+                                      ,[Item_EName]
+                                      ,[Item_Type]
+                                      ,[Item_LC_Area]
+                                      ,[Item_LC_Zone]
+                                      ,[Item_LC_No]
+                                      ,[Item_Size_W]
+                                      ,[Item_Size_H]
+                                      ,[Item_Size_Wide]
+                                      ,[Item_Size_Ra]
+                                      ,[Item_Amout]
+                                      ,[Item_Photo]
+                                      ,[Item_owner]
+                                      ,[Item_owner_ID]
+                                      ,[Item_Group_ID]
+                                      ,[Item_Group_Name]
+                                      ,[Item_Status]
+                                      ,[Item_Model]
+                                      ,[ItemUnit]
+                                      ,[CreateDate]
+                                      ,[CreateBy]
+                                      ,[ModDate]
+                                      ,[ModBy]
+                                  FROM [dbo].[Inventory_Items]";
+                cmd.Connection = conn;
+
+                adapter.SelectCommand = cmd;
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+                    }
+                    adapter.Fill(dtb);
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+                }
+                //bind data
+
+                DropDownList dllSelectItem = (e.Item.FindControl("ddrSelectItems") as DropDownList);
+                dllSelectItem.DataSource = dtb;
+                dllSelectItem.DataTextField = "Item_Name";
+                dllSelectItem.DataValueField = "IVN_ID";
+                dllSelectItem.DataBind();
+
+                Literal txtUnit = (Literal)lvOutDetails.InsertItem.FindControl("txtUnit");
+                TextBox txtItemAmount = (TextBox)lvOutDetails.InsertItem.FindControl("txtItemAmount");
+                TextBox txtInsertNote = (TextBox)lvOutDetails.InsertItem.FindControl("txtInsertNote");
+                DropDownList ddrSelectItems = (DropDownList)lvOutDetails.InsertItem.FindControl("ddrSelectItems");
+                txtUnit.Text = dtb.Rows[ddrSelectItems.SelectedIndex]["ItemUnit"].ToString();
+                
+            }
+        }
+
+        protected void ddrSelectItems_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                // ListView에서 빈 데이터의 경우 타이틀 및 알림메세지 정의
-                if (e.Item.ItemType.Equals(ListViewItemType.EmptyItem))
+                DataTable dtb = new DataTable();
+                cmd.CommandText = @"SELECT [IVN_ID]
+                                      ,[Item_Name]
+                                      ,[Item_EName]
+                                      ,[Item_Type]
+                                      ,[Item_LC_Area]
+                                      ,[Item_LC_Zone]
+                                      ,[Item_LC_No]
+                                      ,[Item_Size_W]
+                                      ,[Item_Size_H]
+                                      ,[Item_Size_Wide]
+                                      ,[Item_Size_Ra]
+                                      ,[Item_Amout]
+                                      ,[Item_Photo]
+                                      ,[Item_owner]
+                                      ,[Item_owner_ID]
+                                      ,[Item_Group_ID]
+                                      ,[Item_Group_Name]
+                                      ,[Item_Status]
+                                      ,[Item_Model]
+                                      ,[ItemUnit]
+                                      ,[CreateDate]
+                                      ,[CreateBy]
+                                      ,[ModDate]
+                                      ,[ModBy]
+                                  FROM [dbo].[Inventory_Items]";
+                cmd.Connection = conn;
+
+                adapter.SelectCommand = cmd;
+                try
                 {
-                    // ListView에서 빈 데이터의 경우 알림메세지 정의
-                    ((Literal)e.Item.FindControl("ltINFO_HAS_NO_DATA")).Text = AlertNm["INFO_HAS_NO_DATA"];
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+                    }
+                    adapter.Fill(dtb);
                 }
+                catch (Exception ex)
+                {
+                    conn.Close();
+                }
+                DropDownList dllSelectItem = (sender as DropDownList);
+                Literal txtInsertUnit = (Literal)lvOutDetails.InsertItem.FindControl("txtUnit");
+                txtInsertUnit.Text = dtb.Rows[dllSelectItem.SelectedIndex - 1]["ItemUnit"].ToString();
             }
             catch (Exception ex)
-            {
-                ErrLogger.MakeLogger(ex);
-            }
+            { }
+
         }
 
-        protected void lvPaymentList_ItemDataBound(object sender, ListViewItemEventArgs e)
+        protected void ltRemove_Click(object sender, EventArgs e)
         {
-            ListViewDataItem iTem = (ListViewDataItem)e.Item;
-            System.Data.DataRowView drView = (System.Data.DataRowView)iTem.DataItem;
-
-            if (e.Item.ItemType.Equals(ListViewItemType.DataItem))
-            {
-                if (!string.IsNullOrEmpty(drView["Seq"].ToString()))
-                {
-                    Literal ltInsSeq = (Literal)iTem.FindControl("ltInsSeq");
-                    ltInsSeq.Text = TextLib.StringDecoder(drView["Seq"].ToString());
-                }
-
-                if (!string.IsNullOrEmpty(drView["RoomNo"].ToString()))
-                {
-                    Literal ltInsRoomNo = (Literal)iTem.FindControl("ltInsRoomNo");
-                    ltInsRoomNo.Text = TextLib.StringDecoder(drView["RoomNo"].ToString());
-                }
-
-                if (!string.IsNullOrEmpty(drView["RentNm"].ToString()))
-                {
-                    Literal ltInsRentNm = (Literal)iTem.FindControl("ltInsRentNm");
-                    ltInsRentNm.Text = TextLib.StringDecoder(drView["RentNm"].ToString());
-                }
-
-                if (!string.IsNullOrEmpty(drView["UserNm"].ToString()))
-                {
-                    Literal ltInsName = (Literal)iTem.FindControl("ltInsName");
-                    ltInsName.Text = TextLib.TextCutString(TextLib.StringDecoder(drView["UserNm"].ToString()), 30, "..");
-                }
-
-                Literal ltInsMngFee = (Literal)iTem.FindControl("ltInsMngFee");
-
-                if (!string.IsNullOrEmpty(drView["MngMonthViAmtNo"].ToString()))
-                {
-                    ltInsMngFee.Text = TextLib.MakeVietIntNo(double.Parse(TextLib.StringDecoder(drView["MngMonthViAmtNo"].ToString())).ToString("###,##0"));
-                }
-                else
-                {
-                    ltInsMngFee.Text = "-";
-                }
-
-                Literal ltInsRentalFee = (Literal)iTem.FindControl("ltInsRentalFee");
-
-                if (!string.IsNullOrEmpty(drView["RentMonthViAmtNo"].ToString()))
-                {
-
-                    ltInsRentalFee.Text = TextLib.MakeVietIntNo(double.Parse(TextLib.StringDecoder(drView["RentMonthViAmtNo"].ToString())).ToString("###,##0"));
-                }
-                else
-                {
-                    ltInsRentalFee.Text = "-";
-                }
-
-                Literal ltInsUtilFee = (Literal)iTem.FindControl("ltInsUtilFee");
-
-                if (!string.IsNullOrEmpty(drView["RequestUtilAmt"].ToString()))
-                {
-                    ltInsUtilFee.Text = TextLib.MakeVietIntNo(double.Parse(TextLib.StringDecoder(drView["RequestUtilAmt"].ToString())).ToString("###,##0"));
-                }
-                else
-                {
-                    ltInsUtilFee.Text = "-";
-                }
-            }
+            
         }
 
-        /// <summary>
-        /// 페이징버튼 클릭시 이벤트 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void imgbtnPageMove_Click(object sender, ImageClickEventArgs e)
+        protected void lvOutDetails_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            try
+            if(e.CommandName=="Remove")
             {
-                // 세션체크
-                AuthCheckLib.CheckSession();
-
+                if(conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                e.Item.Visible = false;
+                //remove in database
+                int outDetailsId = Convert.ToInt32( ((Literal)e.Item.FindControl("ltOutDetailID")).Text);
+                int itemID = Convert.ToInt32(((Literal)e.Item.FindControl("ltItemID")).Text); 
+                decimal amoutRemove = Convert.ToDecimal(((Literal)e.Item.FindControl("ltItemAmount")).Text);
+                cmd.CommandText = @"Delete from Inventory_OUT_Details where ID ="+outDetailsId.ToString();
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                //update amout of item in Inventory_Items
+                cmd.CommandText = @"update Inventory_Items set Item_Amout = Item_Amout + " + amoutRemove + " where IVN_ID ="+itemID.ToString();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                //reload()
                 LoadData();
             }
-            catch (Exception ex)
-            {
-                ErrLogger.MakeLogger(ex);
-            }
-        }
-
-        /// <summary>
-        /// 검색버튼 클릭시 이벤트 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void lnkbtnSearch_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 세션체크
-                AuthCheckLib.CheckSession();
-
-                hfCurrentPage.Value = CommValue.NUMBER_VALUE_ONE;
-
-                LoadData();
-            }
-            catch (Exception ex)
-            {
-                ErrLogger.MakeLogger(ex);
-            }
-        }
-
-        /// <summary>
-        /// 상세보기 클릭시 이벤트 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void imgbtnDetailview_Click(object sender, ImageClickEventArgs e)
-        {
-            try
-            {
-                Session["ReportingOk"] = CommValue.CONCLUSION_TYPE_TEXT_YES;
-            }
-            catch (Exception ex)
-            {
-                ErrLogger.MakeLogger(ex);
-            }
-        }
-
-        protected void ddlPayment_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MakeDocumentDdl();
         }
     }
 }

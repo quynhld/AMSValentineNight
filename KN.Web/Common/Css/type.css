@@ -501,7 +501,9 @@ table.TbCel-Type-Pup5 .Pwrite textarea{width:100%;height:200px;border:1px solid 
 /* Sh-fieldset Type5 */
 .sh-field5{clear:both;width:840px;overflow:hidden;border:1px solid #d3d3d3;background:#e9e9e9;vertical-align:middle;text-align:center;}
 .sh-field5 ul.sf5-ag{padding:2px 0;width:770px;overflow:hidden;background:url('/Common/Images/Common/btDot.gif') repeat-x left bottom}
-.sh-field5 ul.sf5-ag li{float:left;padding:3px 0 3px 10px;}
+.sh-field5 ul.sf5-ag li{float:left;padding:3px 0 3px 10px;
+	width: 167px;
+}
 .sh-field5 .sh-input{border:1px solid #d3d3d3;vertical-align:middle;}
 .sh-field5 span.Cal{display:inline-block;vertical-align:middle;}
 
