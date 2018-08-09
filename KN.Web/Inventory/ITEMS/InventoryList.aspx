@@ -94,7 +94,7 @@
 			            <td class="TbTxtCenter"><asp:Image ID="imgIvtImage" runat="server" ImageUrl='<%# Eval("Item_Photo").ToString() %>'></asp:Image></td>
 			            <td class="TbTxtCenter"><asp:Literal ID="ltIvtSize" runat="server"  Text='<% #Eval("Item_Size_W")%>'></asp:Literal></td>
 			            <td class="TbTxtCenter"><asp:Literal ID="ltIvtAmout" runat="server"  Text='<% #Eval("Item_Amout")%>'></asp:Literal></td>
-                        <td class="TbTxtCenter"><asp:LinkButton runat="server" ID="lnkDetails" PostBackUrl='<%# "~/Inventory/ITEMS/InventoryDetails.aspx?ID="+Eval("IVN_ID").ToString()%>'> Details </asp:LinkButton></td>
+                        <td class="TbTxtCenter"><asp:LinkButton runat="server" ID="lnkDetails" PostBackUrl='<%# "~/Inventory/ITEMS/InventoryAddNew.aspx?ID="+Eval("IVN_ID").ToString()%>'> Details </asp:LinkButton></td>
                     </tr>
                 </ItemTemplate>
                 <EmptyDataTemplate>

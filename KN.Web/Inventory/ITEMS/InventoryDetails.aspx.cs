@@ -29,7 +29,7 @@ namespace KN.Web.Inventory
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TempDBConnection"].ToString());
         public string DATA_APT = CommValue.RENTAL_VALUE_APT;
         public string DATA_APTSTORE = CommValue.RENTAL_VALUE_APTSHOP;
-        
+
         string strIvnID = string.Empty;
 
         DataTable dtItemInfo = new DataTable();
@@ -44,9 +44,10 @@ namespace KN.Web.Inventory
             if (Request.QueryString["ID"] != null)
             {
                 strIvnID = Request.QueryString["ID"].ToString();
+                loadData(strIvnID);
             }
 
-            loadData(strIvnID);
+            
 
             try
             {

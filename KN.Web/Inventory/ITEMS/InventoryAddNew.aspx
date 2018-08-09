@@ -190,7 +190,7 @@
                     </tbody>
                 </colgroup>
             </table>
-            <asp:ListView ID="lsvIN" runat="server" ItemPlaceholderID="iphItemPlaceHolderID">
+            <asp:ListView ID="lsvIN" runat="server" ItemPlaceholderID="iphItemPlaceHolderID" InsertItemPosition="None">
                 <LayoutTemplate>
                     <table class="TypeA">
                         <col width="60" />
@@ -272,7 +272,7 @@
                     </tbody>
                 </colgroup>
             </table>
-            <asp:ListView ID="lsvOut" runat="server" ItemPlaceholderID="iphItemPlaceHolderID">
+            <asp:ListView ID="lsvOut" runat="server" ItemPlaceholderID="iphItemPlaceHolderID" InsertItemPosition="None">
                 <LayoutTemplate>
                     <table class="TypeA">
                         <col width="60" />

@@ -1,6 +1,46 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Template/MainFrame.Master" AutoEventWireup="true" CodeBehind="OUTList.aspx.cs" Inherits="KN.Web.Inventory.OUTList" ValidateRequest="false"%>
 <%@ MasterType VirtualPath="~/Common/Template/MainFrame.Master"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphContent" runat="server">
+    <script language="javascript" type="text/javascript">
+    <!--//
+    function fnMovePage(intPageNo) 
+    {
+        if (intPageNo == null) 
+        {
+            intPageNo = 1;
+        }
+        
+        document.getElementById("<%=hfCurrentPage.ClientID%>").value = intPageNo;
+        <%=Page.GetPostBackEventReference(imgbtnPageMove)%>;
+    }
+    </script>
+        <fieldset class="sh-field2">
+        <ul class="sf2-ag MrgL10 ">
+            <li><asp:Literal ID="ltTerm" runat="server"></asp:Literal></li>
+            <li>
+                <asp:TextBox ID="txtStartDt" runat="server" Width="70px"></asp:TextBox>
+                <img align="absmiddle" alt="Calendar" onclick="Calendar(this, '<%=txtStartDt.ClientID%>', '<%=hfStartDt.ClientID%>', true)" src="/Common/Images/Common/calendar.gif" style="cursor:pointer;" value=""/>
+                <asp:HiddenField ID="hfStartDt" runat="server"/>
+            </li>
+            <li><span>~</span></li>
+            <li>
+	            <asp:TextBox ID="txtEndDt" runat="server" Width="70px"></asp:TextBox>
+	            <img align="absmiddle" alt="Calendar" onclick="Calendar(this, '<%=txtEndDt.ClientID%>', '<%=hfEndDt.ClientID%>', true)" src="/Common/Images/Common/calendar.gif" style="cursor:pointer;" value=""/>
+	            <asp:HiddenField ID="hfEndDt" runat="server"/>
+            </li>
+            <li>
+	            <div class="Btn-Type4-wp">
+		            <div class="Btn-Tp4-L">
+			            <div class="Btn-Tp4-R">
+				            <div class="Btn-Tp4-M">
+					            <span><asp:LinkButton ID="lnkbtnSearch" runat="server" OnClick="lnkbtnSearch_Click"></asp:LinkButton></span>
+				            </div>
+			            </div>
+		            </div>
+	            </div>			
+            </li>
+        </ul>
+    </fieldset>    
     <asp:UpdatePanel ID="upPaymentList" runat="server">
         <Triggers>
         </Triggers>
@@ -56,7 +96,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <tr>
-                        <td class="TbTxtCenter"><asp:Literal ID="ltInsSeq" runat="server"  Text='<%#Eval("INV_OUT_ID") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter"><asp:Literal ID="ltInsSeq" runat="server"  Text='<%#Eval("RealSeq") %>'></asp:Literal></td>
 			            <td class="TbTxtCenter"><asp:Literal ID="ltInsCreator" runat="server" Text='<%#Eval("CreateUser") %>'></asp:Literal></td>
 			            <td class="TbTxtCenter"><asp:Literal ID="ltInsCreateDate" runat="server"  Text='<%#Eval("CreateDate") %>'></asp:Literal></td>
 			            <td class="TbTxtCenter"><asp:Literal ID="ltInsUseFor" runat="server"  Text='<%#Eval("UsedFor") %>'></asp:Literal></td>
@@ -79,6 +119,8 @@
             <div>
                 <span id="spanPageNavi" runat="server" style="width:100%"></span>
             </div>
+            <asp:HiddenField ID="hfCurrentPage" runat="server"/>
+            <asp:ImageButton ID="imgbtnPageMove" runat="server" ImageUrl="~/Common/Images/Common/blank.gif" onClick="imgbtnPageMove_Click"/>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
