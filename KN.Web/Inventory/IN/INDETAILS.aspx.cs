@@ -12,7 +12,7 @@ namespace KN.Web.Inventory.IN
         SqlConnection conn = new SqlConnection();
         SqlCommand cmd = new SqlCommand();
         SqlDataAdapter adap = new SqlDataAdapter();
-
+        string strA = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             // 세션체크
