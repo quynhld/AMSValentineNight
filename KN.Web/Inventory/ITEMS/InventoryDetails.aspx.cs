@@ -30,7 +30,7 @@ namespace KN.Web.Inventory
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TempDBConnection"].ToString());
         public string DATA_APT = CommValue.RENTAL_VALUE_APT;
         public string DATA_APTSTORE = CommValue.RENTAL_VALUE_APTSHOP;
-
+        string strAA = string.Empty;
         string strIvnID = string.Empty;
 
         DataTable dtItemInfo = new DataTable();
