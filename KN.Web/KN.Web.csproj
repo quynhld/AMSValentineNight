@@ -84,6 +84,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KN.Parking\bin\Debug\KN.Parking.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core">
@@ -468,6 +469,7 @@
     <Content Include="Inventory\IN\INList.aspx" />
     <Content Include="Inventory\ITEMS\InventoryDetails.aspx" />
     <Content Include="Inventory\ITEMS\InventoryAddNew.aspx" />
+    <Content Include="Inventory\ITEMS\InventoryCommCode.aspx" />
     <Content Include="Inventory\ITEMS\InventoryList.aspx" />
     <Content Include="Inventory\OUT\OUTDETAILS.aspx" />
     <Content Include="Inventory\OUT\OUTList.aspx" />
@@ -1768,6 +1770,13 @@
     </Compile>
     <Compile Include="Inventory\ITEMS\InventoryAddNew.aspx.designer.cs">
       <DependentUpon>InventoryAddNew.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryCommCode.aspx.cs">
+      <DependentUpon>InventoryCommCode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\ITEMS\InventoryCommCode.aspx.designer.cs">
+      <DependentUpon>InventoryCommCode.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\ITEMS\InventoryList.aspx.cs">
       <DependentUpon>InventoryList.aspx</DependentUpon>
@@ -3282,6 +3291,10 @@
     <ProjectReference Include="..\KN.Config\KN.Config.csproj">
       <Project>{C626274F-E6EC-4687-B7A7-F1DE73539BE7}</Project>
       <Name>KN.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KN.Inventory\KN.Inventory.csproj">
+      <Project>{6b43b4fd-7b9e-4192-bf47-6c3aeca2b6c6}</Project>
+      <Name>KN.Inventory</Name>
     </ProjectReference>
     <ProjectReference Include="..\KN.Manage\KN.Manage.csproj">
       <Project>{F521BA33-A655-447F-8ED7-102FDE781B73}</Project>

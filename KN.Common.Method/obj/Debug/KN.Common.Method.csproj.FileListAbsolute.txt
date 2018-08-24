@@ -36,3 +36,14 @@ E:\setup\KNHLM_20150424\KNHLM\KN.Common.Method\bin\Debug\KN.Common.Base.pdb
 E:\setup\KNHLM_20150424\KNHLM\KN.Common.Method\obj\Debug\KN.Common.Method.csprojResolveAssemblyReference.cache
 E:\setup\KNHLM_20150424\KNHLM\KN.Common.Method\obj\Debug\KN.Common.Method.dll
 E:\setup\KNHLM_20150424\KNHLM\KN.Common.Method\obj\Debug\KN.Common.Method.pdb
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\KN.Common.Method.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\KN.Common.Method.pdb
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\EPPlus.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\Excel.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\ICSharpCode.SharpZipLib.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\KN.Common.Base.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\KN.Common.DB.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\bin\Debug\KN.Common.Base.pdb
+H:\Keangnam\AMS\trunk\KN.Common.Method\obj\Debug\KN.Common.Method.csprojResolveAssemblyReference.cache
+H:\Keangnam\AMS\trunk\KN.Common.Method\obj\Debug\KN.Common.Method.dll
+H:\Keangnam\AMS\trunk\KN.Common.Method\obj\Debug\KN.Common.Method.pdb

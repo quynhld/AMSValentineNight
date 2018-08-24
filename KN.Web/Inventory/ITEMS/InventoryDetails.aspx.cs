@@ -24,7 +24,8 @@ namespace KN.Web.Inventory
 {
     public partial class InventoryDetails : BasePage
     {
-        StringBuilder sbPageNavi = new StringBuilder();
+        StringBuilder sbInPageNavi = new StringBuilder();
+        StringBuilder sbOutPageNavi = new StringBuilder();
         PageNoListUtil pageUtil = new PageNoListUtil();
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TempDBConnection"].ToString());
         public string DATA_APT = CommValue.RENTAL_VALUE_APT;
@@ -33,27 +34,30 @@ namespace KN.Web.Inventory
         string strIvnID = string.Empty;
 
         DataTable dtItemInfo = new DataTable();
-        DataTable dtInInfo = new DataTable();
-        DataTable dtOutInfo = new DataTable();     
+        DataSet dtInInfo = new DataSet();
+        DataSet dtOutInfo = new DataSet();
+
+        int intInPageNo = CommValue.NUMBER_VALUE_0;
+        int intOutPageNo = CommValue.NUMBER_VALUE_0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             // 세션체크
             AuthCheckLib.CheckSession();
-            
-            if (Request.QueryString["ID"] != null)
-            {
-                strIvnID = Request.QueryString["ID"].ToString();
-                loadData(strIvnID);
-            }
-
-            
-
             try
             {
                 if (!IsPostBack)
                 {
+                    CheckInParams();
+                    CheckOutParams();
                     InitControls();
+                    if (Request.QueryString["ID"] != null)
+                    {
+                        strIvnID = Request.QueryString["ID"].ToString();
+                        loadData(strIvnID);
+                        loadInData(strIvnID);
+                        loadOutData(strIvnID);
+                    }
                 }
             }
             catch (Exception ex)
@@ -193,20 +197,6 @@ namespace KN.Web.Inventory
             SqlDataAdapter ItemAdapInf = new System.Data.SqlClient.SqlDataAdapter();
             ItemAdapInf.SelectCommand = cmdgetItemInfo;
 
-
-            //get in info
-            string getInInfo = string.Format("select * from Inventory_IN where IVN_IN_ID in (select INV_IN_ID from Inventory_IN_Details where IVN_ID = {0})", id);
-            SqlCommand cmdGetInInfo = new System.Data.SqlClient.SqlCommand(getInInfo);
-            cmdGetInInfo.Connection = conn;
-            SqlDataAdapter InAdap = new System.Data.SqlClient.SqlDataAdapter();
-            InAdap.SelectCommand = cmdgetItemInfo;
-
-            //get out info
-            string getOutInfo = string.Format("select * from Inventory_OUT where INV_OUT_ID in (select INV_OUT_ID from Inventory_OUT_Details where INV_ID = {0})", id);
-            SqlCommand cmdGetOutInfo = new System.Data.SqlClient.SqlCommand(getOutInfo);
-            cmdGetOutInfo.Connection = conn;
-            SqlDataAdapter OutAdap = new System.Data.SqlClient.SqlDataAdapter();
-            OutAdap.SelectCommand = cmdGetOutInfo;
             try
             { 
                 if(conn.State != ConnectionState.Open)
@@ -215,17 +205,156 @@ namespace KN.Web.Inventory
                 }
 
                 ItemAdapInf.Fill(dtItemInfo);
-                InAdap.Fill(dtInInfo);
-                OutAdap.Fill(dtOutInfo);
-
-                bindata(dtItemInfo, dtInInfo, dtOutInfo);
+                bindata(dtItemInfo);
             }
             catch(Exception ex)
             {
                 conn.Close();
             }
         }
-        private void bindata(DataTable Item, DataTable dtbIn, DataTable dtbOut)
+
+        private void loadInData(string id)
+        {
+            //get in info
+            string getInInfo = string.Format(selectItemIn(CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfInCurrentPage.Value), id));
+            SqlCommand cmdGetInInfo = new System.Data.SqlClient.SqlCommand(getInInfo);
+            cmdGetInInfo.Connection = conn;
+            SqlDataAdapter InAdap = new System.Data.SqlClient.SqlDataAdapter();
+            InAdap.SelectCommand = cmdGetInInfo;
+            InAdap.Fill(dtInInfo);
+
+            lsvIN.DataSource = dtInInfo.Tables[1];
+            lsvIN.DataBind();
+            if (dtInInfo.Tables[1].Rows.Count > 0)
+            {
+                sbInPageNavi.Append(pageUtil.MakePageIndex(Int32.Parse(hfInCurrentPage.Value), CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(dtInInfo.Tables[0].Rows[0]["TotalCnt"].ToString())
+                    , TextNm["FIRST"], TextNm["END"], TextNm["PREV"], TextNm["NEXT"]));
+                spanInPageNavi.InnerHtml = sbInPageNavi.ToString();
+            }
+        }
+
+        private void loadOutData(string id)
+        {
+            //get out info
+            string getOutInfo = string.Format(selectItemOut(id, CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfOutCurrentPage.Value)));
+            SqlCommand cmdGetOutInfo = new System.Data.SqlClient.SqlCommand(getOutInfo);
+            cmdGetOutInfo.Connection = conn;
+            SqlDataAdapter OutAdap = new System.Data.SqlClient.SqlDataAdapter();
+            OutAdap.SelectCommand = cmdGetOutInfo;
+
+            OutAdap.Fill(dtOutInfo);
+
+            lsvOut.DataSource = dtOutInfo.Tables[1];
+            lsvOut.DataBind();
+            if (dtOutInfo.Tables[1].Rows.Count > 0)
+            {
+                sbOutPageNavi.Append(pageUtil.MakePageIndex(Int32.Parse(hfOutCurrentPage.Value), CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(dtOutInfo.Tables[0].Rows[0]["TotalCnt"].ToString())
+                    , TextNm["FIRST"], TextNm["END"], TextNm["PREV"], TextNm["NEXT"]));
+                spanOutPageNavi.InnerHtml = sbOutPageNavi.ToString();
+            }
+        }
+
+        public string selectItemIn( int pageSize, int pageNow,string ID)
+        {
+            string str = @"
+	                        DECLARE
+	                         @intPageSize		INT
+	                        ,@intNowPage		INT
+	                        ,@strStartDt		VARCHAR(8)
+	                        ,@strEndDt			VARCHAR(8)
+                            ,@StrID             varchar(20)
+
+	                        SET @intPageSize	= {0} -- pagesize
+	                        SET @intNowPage		= {1} -- pagenow
+                            set @strID          = '{2}'
+
+	                        SELECT  COUNT(*) AS TotalCnt
+		                        FROM  dbo.Inventory_IN AS A
+		                        WHERE  1 = 1
+                                AND IVN_IN_ID in (select INV_IN_ID from Inventory_IN_Details where IVN_ID =  @strID)
+	                        ;WITH LogList
+	                        AS 
+	                        (
+	                        SELECT  ROW_NUMBER() OVER (ORDER BY A.[CreateDate] DESC) AS RealSeq
+			                        ,A.[IVN_IN_ID]
+		                            ,A.[CreateDate]
+                                    ,A.CreateUser
+		                            ,A.[ModifyDate]
+		                            ,A.[ModifyUser]
+		                            ,A.[UsedFor]
+		                            ,A.[Note]
+		                            ,A.[Status]
+		                        FROM  dbo.Inventory_IN AS A
+		                        WHERE  1 = 1
+                                AND IVN_IN_ID in (select INV_IN_ID from Inventory_IN_Details where IVN_ID =  @strID)
+	                        )
+	                        SELECT  X.RealSeq
+		                            ,X.IVN_IN_ID
+                                    ,X.[CreateDate]
+                                    ,X.CreateUser
+		                            ,X.[ModifyDate]
+		                            ,X.[ModifyUser]
+		                            ,X.[UsedFor]
+		                            ,X.[Note]
+		                            ,X.[Status]
+		                        FROM  LogList AS X
+		                        WHERE  1 = 1
+		                        AND  X.RealSeq <= @intNowPage * @intPageSize
+		                        AND  X.RealSeq >= (@intNowPage-1) * @intPageSize + 1";
+            return string.Format(str, pageSize, pageNow,ID);
+        }
+
+        public string selectItemOut(string ID, int pageSize, int pageNow)
+        {
+            string str = @"
+	                        DECLARE
+	                         @intPageSize		INT
+	                        ,@intNowPage		INT
+	                        ,@strStartDt		VARCHAR(8)
+	                        ,@strEndDt			VARCHAR(8)
+                            ,@StrID             varchar(20)
+
+	                        SET @intPageSize	= {0} -- pagesize
+	                        SET @intNowPage		= {1} -- pagenow
+                            set @strID          = '{2}'
+
+	                        SELECT  COUNT(*) AS TotalCnt
+		                        FROM  dbo.Inventory_OUT AS A
+		                        WHERE  1 = 1
+                                AND INV_OUT_ID in (select INV_OUT_ID from Inventory_OUT_Details where INV_ID = @StrID)	 		
+	                        ;WITH LogList
+	                        AS 
+	                        (
+	                        SELECT  ROW_NUMBER() OVER (ORDER BY A.[CreateDate] DESC) AS RealSeq
+			                        ,A.[INV_OUT_ID]
+		                            ,A.[CreateDate]
+                                    ,A.CreateUser
+		                            ,A.[ModifyDate]
+		                            ,A.[ModifyUser]
+		                            ,A.[UsedFor]
+		                            ,A.[Note]
+		                            ,A.[Status]
+		                        FROM  dbo.Inventory_OUT AS A
+		                        WHERE  1 = 1
+                                AND INV_OUT_ID in (select INV_OUT_ID from Inventory_OUT_Details where INV_ID = @StrID)
+	                        )
+	                        SELECT  X.RealSeq
+		                            ,X.INV_OUT_ID
+                                    ,X.[CreateDate]
+                                    ,X.CreateUser
+		                            ,X.[ModifyDate]
+		                            ,X.[ModifyUser]
+		                            ,X.[UsedFor]
+		                            ,X.[Note]
+		                            ,X.[Status]
+		                        FROM  LogList AS X
+		                        WHERE  1 = 1
+		                        AND  X.RealSeq <= @intNowPage * @intPageSize
+		                        AND  X.RealSeq >= (@intNowPage-1) * @intPageSize + 1";
+            return string.Format(str, pageSize, pageNow,ID);
+        }
+
+        private void bindata(DataTable Item)
         {
             txtIvtArea.Text = (Item.Rows[0]["Item_LC_Area"] == null ? string.Empty : Item.Rows[0]["Item_LC_Area"].ToString());
             txtIVTCategory.Text = (Item.Rows[0]["Item_Group_Name"] == null ? string.Empty : Item.Rows[0]["Item_Group_Name"].ToString());
@@ -241,12 +370,44 @@ namespace KN.Web.Inventory
             txtIvtWidth.Text = (Item.Rows[0]["Item_Size_W"] == null ? string.Empty : Item.Rows[0]["Item_Size_W"].ToString());
             txtIvtZone.Text = (Item.Rows[0]["Item_LC_Zone"] == null ? string.Empty : Item.Rows[0]["Item_LC_Zone"].ToString());
             IvtImage.ImageUrl = (Item.Rows[0]["Item_Photo"] == null ? string.Empty : Item.Rows[0]["Item_Photo"].ToString());
+        }
 
-            lsvIN.DataSource = dtbIn;
-            lsvIN.DataBind();
+        protected void imgbtnOutPageMove_Click(object sender, ImageClickEventArgs e)
+        {
+            loadOutData(Request.QueryString["ID"].ToString());
+        }
 
-            lsvOut.DataSource = dtbOut;
-            lsvOut.DataBind();
+        protected void imgbtnInPageMove_Click(object sender, ImageClickEventArgs e)
+        {
+            loadInData(Request.QueryString["ID"].ToString());
+        }
+
+        private void CheckInParams()
+        {
+            if (!string.IsNullOrEmpty(hfInCurrentPage.Value))
+            {
+                intInPageNo = Int32.Parse(hfInCurrentPage.Value);
+                hfInCurrentPage.Value = intInPageNo.ToString();
+            }
+            else
+            {
+                intInPageNo = CommValue.BOARD_VALUE_DEFAULTPAGE;
+                hfInCurrentPage.Value = intInPageNo.ToString();
+            }
+        }
+
+        private void CheckOutParams()
+        {
+            if (!string.IsNullOrEmpty(hfOutCurrentPage.Value))
+            {
+                intOutPageNo = Int32.Parse(hfOutCurrentPage.Value);
+                hfOutCurrentPage.Value = intOutPageNo.ToString();
+            }
+            else
+            {
+                intOutPageNo = CommValue.BOARD_VALUE_DEFAULTPAGE;
+                hfOutCurrentPage.Value = intOutPageNo.ToString();
+            }
         }
     }
 

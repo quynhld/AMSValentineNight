@@ -22,3 +22,9 @@ E:\setup\KNHLM_20150424\KNHLM\KN.Common.Base\bin\Debug\KN.Common.DB.dll
 E:\setup\KNHLM_20150424\KNHLM\KN.Common.Base\obj\Debug\KN.Common.Base.dll
 E:\setup\KNHLM_20150424\KNHLM\KN.Common.Base\obj\Debug\KN.Common.Base.pdb
 E:\setup\KNHLM_20150424\KNHLM\KN.Common.Base\obj\Debug\KN.Common.Base.csprojResolveAssemblyReference.cache
+H:\Keangnam\AMS\trunk\KN.Common.Base\bin\Debug\KN.Common.Base.dll
+H:\Keangnam\AMS\trunk\KN.Common.Base\bin\Debug\KN.Common.Base.pdb
+H:\Keangnam\AMS\trunk\KN.Common.Base\bin\Debug\KN.Common.DB.dll
+H:\Keangnam\AMS\trunk\KN.Common.Base\obj\Debug\KN.Common.Base.csprojResolveAssemblyReference.cache
+H:\Keangnam\AMS\trunk\KN.Common.Base\obj\Debug\KN.Common.Base.dll
+H:\Keangnam\AMS\trunk\KN.Common.Base\obj\Debug\KN.Common.Base.pdb

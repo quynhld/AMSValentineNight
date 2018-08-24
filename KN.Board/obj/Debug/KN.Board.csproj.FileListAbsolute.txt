@@ -37,3 +37,13 @@ E:\setup\KNHLM_20150424\KNHLM\KN.Board\bin\Debug\KN.Common.Method.pdb
 E:\setup\KNHLM_20150424\KNHLM\KN.Board\obj\Debug\KN.Board.csprojResolveAssemblyReference.cache
 E:\setup\KNHLM_20150424\KNHLM\KN.Board\obj\Debug\KN.Board.dll
 E:\setup\KNHLM_20150424\KNHLM\KN.Board\obj\Debug\KN.Board.pdb
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Board.dll
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Board.pdb
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Common.Base.pdb
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Common.Method.pdb
+H:\Keangnam\AMS\trunk\KN.Board\obj\Debug\KN.Board.csprojResolveAssemblyReference.cache
+H:\Keangnam\AMS\trunk\KN.Board\obj\Debug\KN.Board.dll
+H:\Keangnam\AMS\trunk\KN.Board\obj\Debug\KN.Board.pdb
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Common.Base.dll
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Common.DB.dll
+H:\Keangnam\AMS\trunk\KN.Board\bin\Debug\KN.Common.Method.dll

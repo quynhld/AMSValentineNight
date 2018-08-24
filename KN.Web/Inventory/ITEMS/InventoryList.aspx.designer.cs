@@ -148,6 +148,15 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanPageNavi;
         
         /// <summary>
+        /// lnkAddCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddCategory;
+        
+        /// <summary>
         /// lnkBtnAdd control.
         /// </summary>
         /// <remarks>

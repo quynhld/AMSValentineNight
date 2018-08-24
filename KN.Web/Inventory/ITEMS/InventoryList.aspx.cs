@@ -85,6 +85,11 @@ namespace KN.Web.Inventory
         {
             LoadData(txtSearchNm.Text);
         }
+
+        protected void lnkAddCategory_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Inventory/ITEMS/InventoryCommCode.aspx");
+        }
         
     }
 

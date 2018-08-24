@@ -2,9 +2,29 @@
 
 <%@ MasterType VirtualPath="~/Common/Template/MainFrame.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphContent" runat="server">
+    <script language="javascript" type="text/javascript">
+    <!--//
+    function fnMovePageIn(intInPageNo) {
+        if (intInPageNo == null) {
+            intInPageNo = 1;
+        }
+
+        document.getElementById("<%=hfInCurrentPage.ClientID%>").value = intInPageNo;
+        <%=Page.GetPostBackEventReference(imgbtnInPageMove)%>;
+    }
+
+        function fnMovePageOut(intOutPageNo) {
+            if (intOutPageNo == null) {
+                intOutPageNo = 1;
+            }
+
+            document.getElementById("<%=hfOutCurrentPage.ClientID%>").value = intOutPageNo;
+                <%=Page.GetPostBackEventReference(imgbtnOutPageMove)%>;
+            }
+    </script>
     <asp:UpdatePanel ID="upAddItem" runat="server" UpdateMode="Conditional">
         <Triggers>
-            <asp:PostBackTrigger ControlID ="lnkbtnSave" />
+            <asp:PostBackTrigger ControlID="lnkbtnSave" />
         </Triggers>
         <ContentTemplate>
             <table cellspacing="0" class="TbCel-Type1B iw840">
@@ -118,41 +138,41 @@
             </table>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <asp:UpdatePanel ID="upPaymentList" runat="server">
+    <asp:UpdatePanel ID="upInList" runat="server">
         <Triggers>
         </Triggers>
         <ContentTemplate>
             <table class="TypeA">
                 <colgroup>
-                    <col width="60" />
-                    <col width="70" />
+                    <col width="20" />
+                    <col width="260" />
                     <col width="110" />
-                    <col width="210" />
-                    <col width="130" />
-                    <col width="130" />
-                    <col width="130" />
+                    <col width="110" />
+                    <col width="110" />
+                    <col width="110" />
+                    <col width="120" />
                     <thead>
                         <tr>
                             <th class="Fr-line">
-                                <asp:Literal ID="ltSeq" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltInSeq" runat="server" Text="Seq"></asp:Literal>
                             </th>
                             <th>
-                                <asp:Literal ID="ltRentNm" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltInTitle" runat="server" Text="Title"></asp:Literal>
                             </th>
                             <th>
-                                <asp:Literal ID="ltRoomNo" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltInCreateBy" runat="server" Text="Create By"></asp:Literal>
                             </th>
                             <th>
-                                <asp:Literal ID="ltName" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltInCreateDate" runat="server" Text="Create Date"></asp:Literal>
                             </th>
                             <th>
-                                <asp:Literal ID="ltMngFee" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltInModBy" runat="server" Text="Mod By"></asp:Literal>
                             </th>
                             <th>
-                                <asp:Literal ID="ltRentalFee" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltInModDate" runat="server" Text="Mode Date"></asp:Literal>
                             </th>
-                            <th class="Ls-line">
-                                <asp:Literal ID="ltUtilFee" runat="server"></asp:Literal>
+                            <th>
+                                <asp:Literal ID="ltInDetails" runat="server"></asp:Literal>
                             </th>
                         </tr>
                     </thead>
@@ -160,16 +180,16 @@
                     </tbody>
                 </colgroup>
             </table>
-            <asp:ListView ID="lsvIN" runat="server" ItemPlaceholderID="iphItemPlaceHolderID">
+            <asp:ListView ID="lsvIN" runat="server" ItemPlaceholderID="iphItemPlaceHolderID" InsertItemPosition="None">
                 <LayoutTemplate>
                     <table class="TypeA">
-                        <col width="60" />
-                        <col width="70" />
+                        <col width="20" />
+                        <col width="260" />
                         <col width="110" />
-                        <col width="210" />
-                        <col width="130" />
-                        <col width="130" />
-                        <col width="130" />
+                        <col width="110" />
+                        <col width="110" />
+                        <col width="110" />
+                        <col width="120" />
                         <tbody>
                             <tr id="iphItemPlaceHolderID" runat="server"></tr>
                         </tbody>
@@ -178,101 +198,19 @@
                 <ItemTemplate>
                     <tr>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsSeq" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemSeq" runat="server" Text='<%#Eval("RealSeq") %>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsRentNm" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemTitle" runat="server" Text='<%#Eval("UsedFor") %>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsRoomNo" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemCreator" runat="server" Text='<%#Eval("CreateUser") %>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsName" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemCreateDate" runat="server" Text='<%#Eval("CreateDate","{0:d}") %>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsMngFee" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemModBy" runat="server" Text='<%#Eval("ModifyUser") %>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsRentalFee" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemModDate" runat="server" Text='<%#Eval("ModifyDate","{0:d}") %>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsUtilFee" runat="server"></asp:Literal></td>
-                    </tr>
-                </ItemTemplate>
-                <EmptyDataTemplate>
-                    <table class="TypeA">
-                        <tbody>
-                            <tr>
-                                <td colspan="5" style="text-align: center">
-                                    <asp:Literal ID="ltINFO_HAS_NO_DATA" runat="server"></asp:Literal></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </EmptyDataTemplate>
-            </asp:ListView>
-            <table class="TypeA">
-                <colgroup>
-                    <col width="60" />
-                    <col width="70" />
-                    <col width="110" />
-                    <col width="210" />
-                    <col width="130" />
-                    <col width="130" />
-                    <col width="130" />
-                    <thead>
-                        <tr>
-                            <th class="Fr-line">
-                                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="Literal2" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="Literal3" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="Literal4" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="Literal5" runat="server"></asp:Literal>
-                            </th>
-                            <th>
-                                <asp:Literal ID="Literal6" runat="server"></asp:Literal>
-                            </th>
-                            <th class="Ls-line">
-                                <asp:Literal ID="Literal7" runat="server"></asp:Literal>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </colgroup>
-            </table>
-            <asp:ListView ID="lsvOut" runat="server" ItemPlaceholderID="iphItemPlaceHolderID">
-                <LayoutTemplate>
-                    <table class="TypeA">
-                        <col width="60" />
-                        <col width="70" />
-                        <col width="110" />
-                        <col width="210" />
-                        <col width="130" />
-                        <col width="130" />
-                        <col width="130" />
-                        <tbody>
-                            <tr id="iphItemPlaceHolderID" runat="server"></tr>
-                        </tbody>
-                    </table>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <tr>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsSeq" runat="server"></asp:Literal></td>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsRentNm" runat="server"></asp:Literal></td>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsRoomNo" runat="server"></asp:Literal></td>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsName" runat="server"></asp:Literal></td>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsMngFee" runat="server"></asp:Literal></td>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsRentalFee" runat="server"></asp:Literal></td>
-                        <td class="TbTxtCenter">
-                            <asp:Literal ID="ltInsUtilFee" runat="server"></asp:Literal></td>
+                            <asp:Literal ID="ltInItemStt" runat="server" Text='<%#Eval("Status") %>'></asp:Literal></td>
                     </tr>
                 </ItemTemplate>
                 <EmptyDataTemplate>
@@ -287,8 +225,103 @@
                 </EmptyDataTemplate>
             </asp:ListView>
             <div>
-                <span id="spanPageNavi" runat="server" style="width: 100%"></span>
+                <span id="spanInPageNavi" runat="server" style="width: 100%"></span>
             </div>
+            <asp:HiddenField ID="hfInCurrentPage" runat="server" />
+            <asp:ImageButton ID="imgbtnInPageMove" runat="server" ImageUrl="~/Common/Images/Common/blank.gif" OnClick="imgbtnInPageMove_Click" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <asp:UpdatePanel ID="upOutList" runat="server">
+        <Triggers>
+        </Triggers>
+        <ContentTemplate>
+            <table class="TypeA">
+                <colgroup>
+                    <col width="20" />
+                    <col width="260" />
+                    <col width="110" />
+                    <col width="110" />
+                    <col width="110" />
+                    <col width="110" />
+                    <col width="120" />
+                    <thead>
+                        <tr>
+                            <th class="Fr-line">
+                                <asp:Literal ID="ltOutSeq" runat="server" Text="Seq"></asp:Literal>
+                            </th>
+                            <th>
+                                <asp:Literal ID="ltOutTitle" runat="server" Text="Title"></asp:Literal>
+                            </th>
+                            <th>
+                                <asp:Literal ID="ltOutCreateBy" runat="server" Text="Create By"></asp:Literal>
+                            </th>
+                            <th>
+                                <asp:Literal ID="ltOutCreateDate" runat="server" Text="Create Date"></asp:Literal>
+                            </th>
+                            <th>
+                                <asp:Literal ID="ltOutModBy" runat="server" Text="Mod By"></asp:Literal>
+                            </th>
+                            <th>
+                                <asp:Literal ID="ltOutModDate" runat="server" Text="Mode Date"></asp:Literal>
+                            </th>
+                            <th>
+                                <asp:Literal ID="ltOutDetails" runat="server"></asp:Literal>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </colgroup>
+            </table>
+            <asp:ListView ID="lsvOut" runat="server" ItemPlaceholderID="iphItemPlaceHolderID" InsertItemPosition="None">
+                <LayoutTemplate>
+                    <table class="TypeA">
+                        <col width="20" />
+                        <col width="260" />
+                        <col width="110" />
+                        <col width="110" />
+                        <col width="110" />
+                        <col width="110" />
+                        <col width="120" />
+                        <tbody>
+                            <tr id="iphItemPlaceHolderID" runat="server"></tr>
+                        </tbody>
+                    </table>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <tr>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltInsSeq" runat="server" Text='<%#Eval("RealSeq") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltOutItemTitle" runat="server" Text='<%#Eval("UsedFor") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltOutItemCreator" runat="server" Text='<%#Eval("CreateUser") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltOutItemCreateDate" runat="server" Text='<%#Eval("CreateDate","{0:d}") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltOutItemModBy" runat="server" Text='<%#Eval("ModifyUser") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltOutItemModeDate" runat="server" Text='<%#Eval("ModifyDate","{0:d}") %>'></asp:Literal></td>
+                        <td class="TbTxtCenter">
+                            <asp:Literal ID="ltOutItemStt" runat="server" Text='<%#Eval("Status") %>'></asp:Literal></td>
+                    </tr>
+                </ItemTemplate>
+                <EmptyDataTemplate>
+                    <table class="TypeA">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" style="text-align: center">
+                                    <asp:Literal ID="ltINFO_HAS_NO_DATA" runat="server"></asp:Literal></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </EmptyDataTemplate>
+            </asp:ListView>
+            <div>
+                <span id="spanOutPageNavi" runat="server" style="width: 100%"></span>
+            </div>
+            <asp:HiddenField ID="hfOutCurrentPage" runat="server" />
+            <asp:ImageButton ID="imgbtnOutPageMove" runat="server" ImageUrl="~/Common/Images/Common/blank.gif" OnClick="imgbtnOutPageMove_Click" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

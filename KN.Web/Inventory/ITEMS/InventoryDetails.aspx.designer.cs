@@ -319,76 +319,76 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.LinkButton lnkbtnSave;
         
         /// <summary>
-        /// upPaymentList control.
+        /// upInList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upPaymentList;
+        protected global::System.Web.UI.UpdatePanel upInList;
         
         /// <summary>
-        /// ltSeq control.
+        /// ltInSeq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltSeq;
+        protected global::System.Web.UI.WebControls.Literal ltInSeq;
         
         /// <summary>
-        /// ltRentNm control.
+        /// ltInTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltRentNm;
+        protected global::System.Web.UI.WebControls.Literal ltInTitle;
         
         /// <summary>
-        /// ltRoomNo control.
+        /// ltInCreateBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltRoomNo;
+        protected global::System.Web.UI.WebControls.Literal ltInCreateBy;
         
         /// <summary>
-        /// ltName control.
+        /// ltInCreateDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltName;
+        protected global::System.Web.UI.WebControls.Literal ltInCreateDate;
         
         /// <summary>
-        /// ltMngFee control.
+        /// ltInModBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltMngFee;
+        protected global::System.Web.UI.WebControls.Literal ltInModBy;
         
         /// <summary>
-        /// ltRentalFee control.
+        /// ltInModDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltRentalFee;
+        protected global::System.Web.UI.WebControls.Literal ltInModDate;
         
         /// <summary>
-        /// ltUtilFee control.
+        /// ltInDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltUtilFee;
+        protected global::System.Web.UI.WebControls.Literal ltInDetails;
         
         /// <summary>
         /// lsvIN control.
@@ -400,67 +400,103 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.ListView lsvIN;
         
         /// <summary>
-        /// Literal1 control.
+        /// spanInPageNavi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanInPageNavi;
         
         /// <summary>
-        /// Literal2 control.
+        /// hfInCurrentPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal2;
+        protected global::System.Web.UI.WebControls.HiddenField hfInCurrentPage;
         
         /// <summary>
-        /// Literal3 control.
+        /// imgbtnInPageMove control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal3;
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnInPageMove;
         
         /// <summary>
-        /// Literal4 control.
+        /// upOutList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal4;
+        protected global::System.Web.UI.UpdatePanel upOutList;
         
         /// <summary>
-        /// Literal5 control.
+        /// ltOutSeq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal5;
+        protected global::System.Web.UI.WebControls.Literal ltOutSeq;
         
         /// <summary>
-        /// Literal6 control.
+        /// ltOutTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal6;
+        protected global::System.Web.UI.WebControls.Literal ltOutTitle;
         
         /// <summary>
-        /// Literal7 control.
+        /// ltOutCreateBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal7;
+        protected global::System.Web.UI.WebControls.Literal ltOutCreateBy;
+        
+        /// <summary>
+        /// ltOutCreateDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltOutCreateDate;
+        
+        /// <summary>
+        /// ltOutModBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltOutModBy;
+        
+        /// <summary>
+        /// ltOutModDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltOutModDate;
+        
+        /// <summary>
+        /// ltOutDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltOutDetails;
         
         /// <summary>
         /// lsvOut control.
@@ -472,13 +508,31 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.ListView lsvOut;
         
         /// <summary>
-        /// spanPageNavi control.
+        /// spanOutPageNavi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanPageNavi;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanOutPageNavi;
+        
+        /// <summary>
+        /// hfOutCurrentPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfOutCurrentPage;
+        
+        /// <summary>
+        /// imgbtnOutPageMove control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnOutPageMove;
         
         /// <summary>
         /// Master property.

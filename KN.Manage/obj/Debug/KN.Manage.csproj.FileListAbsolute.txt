@@ -42,3 +42,15 @@ E:\setup\KNHLM_20150424\KNHLM\KN.Manage\bin\Debug\KN.Common.Method.pdb
 E:\setup\KNHLM_20150424\KNHLM\KN.Manage\obj\Debug\KN.Manage.csprojResolveAssemblyReference.cache
 E:\setup\KNHLM_20150424\KNHLM\KN.Manage\obj\Debug\KN.Manage.dll
 E:\setup\KNHLM_20150424\KNHLM\KN.Manage\obj\Debug\KN.Manage.pdb
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Manage.dll
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Manage.pdb
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Common.Base.dll
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Common.DB.dll
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Common.Method.dll
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\Excel.dll
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\ICSharpCode.SharpZipLib.dll
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Common.Base.pdb
+H:\Keangnam\AMS\trunk\KN.Manage\bin\Debug\KN.Common.Method.pdb
+H:\Keangnam\AMS\trunk\KN.Manage\obj\Debug\KN.Manage.csprojResolveAssemblyReference.cache
+H:\Keangnam\AMS\trunk\KN.Manage\obj\Debug\KN.Manage.dll
+H:\Keangnam\AMS\trunk\KN.Manage\obj\Debug\KN.Manage.pdb
