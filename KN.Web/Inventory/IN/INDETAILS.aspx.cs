@@ -17,7 +17,7 @@ namespace KN.Web.Inventory.IN
         {
             // 세션체크
             AuthCheckLib.CheckSession();
-
+            string str = string.Empty;
             try
             {
                 if (!IsPostBack)
