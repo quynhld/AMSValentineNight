@@ -20,7 +20,7 @@ namespace KN.Web.Inventory.IN
 
         string editIdDetails = null;
         string status = null;
-
+        string strtest = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
