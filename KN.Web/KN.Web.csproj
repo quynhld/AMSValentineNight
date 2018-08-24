@@ -468,7 +468,6 @@
     <Content Include="Inventory\IN\InDetails.aspx" />
     <Content Include="Inventory\IN\INList.aspx" />
     <Content Include="Inventory\IN\InModified.aspx" />
-    <Content Include="Inventory\IN\WebForm1.aspx" />
     <Content Include="Inventory\ITEMS\InventoryDetails.aspx" />
     <Content Include="Inventory\ITEMS\InventoryAddNew.aspx" />
     <Content Include="Inventory\ITEMS\InventoryCommCode.aspx" />
@@ -1765,13 +1764,6 @@
     </Compile>
     <Compile Include="Inventory\IN\InModified.aspx.designer.cs">
       <DependentUpon>InModified.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Inventory\IN\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Inventory\IN\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\ITEMS\InventoryDetails.aspx.cs">
       <DependentUpon>InventoryDetails.aspx</DependentUpon>
