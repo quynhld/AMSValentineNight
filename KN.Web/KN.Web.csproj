@@ -1739,24 +1739,28 @@
     </Compile>
     <Compile Include="Inventory\IN\DetailsModified.aspx.cs">
       <DependentUpon>DetailsModified.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Inventory\IN\DetailsModified.aspx.designer.cs">
       <DependentUpon>DetailsModified.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\IN\InDetails.aspx.cs">
       <DependentUpon>InDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Inventory\IN\InDetails.aspx.designer.cs">
       <DependentUpon>InDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\IN\INList.aspx.cs">
       <DependentUpon>INList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Inventory\IN\INList.aspx.designer.cs">
       <DependentUpon>INList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\IN\InModified.aspx.cs">
       <DependentUpon>InModified.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Inventory\IN\InModified.aspx.designer.cs">
       <DependentUpon>InModified.aspx</DependentUpon>
