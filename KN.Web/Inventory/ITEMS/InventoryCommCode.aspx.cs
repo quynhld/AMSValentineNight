@@ -58,7 +58,7 @@ namespace KN.Web.Inventory
         }
         private void LoadData(string itemname)
         {
-            int pageSize=10, nowPage = 1;
+            int pageSize = 10, nowPage = 1;
             DataSet ds = new DataSet();
             ds = InventoryBiz.selectCategory(pageSize, nowPage);
             lvItemList.DataSource = ds.Tables[1];
@@ -78,7 +78,7 @@ namespace KN.Web.Inventory
 
         protected void lnkBtnAdd_Click1(object sender, EventArgs e)
         {
-            InventoryBiz.insertCategory("",txtGroupName.Text,"",txtTypeName.Text,"",txtSubTypeName.Text);
+            InventoryBiz.insertCategory("", txtGroupName.Text, "", txtTypeName.Text, "", txtSubTypeName.Text);
             LoadData(txtSearchNm.Text);
         }
 
@@ -86,7 +86,7 @@ namespace KN.Web.Inventory
         {
 
         }
-        
+
     }
 
 }

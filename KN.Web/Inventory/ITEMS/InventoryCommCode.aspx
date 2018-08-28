@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Template/MainFrame.Master" AutoEventWireup="true" CodeBehind="InventoryCommCode.aspx.cs" Inherits="KN.Web.Inventory.InventoryCommCode" ValidateRequest="false" %>
+
 <%@ MasterType VirtualPath="~/Common/Template/MainFrame.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphContent" runat="server">
     <script language="javascript" type="text/javascript">
@@ -18,7 +19,7 @@
         </Triggers>
         <ContentTemplate>
             <fieldset class="sh-field2 MrgB10">
-                
+
                 <ul class="sf2-ag MrgL10">
                     <li>
                         <asp:Literal ID="ltSearchName" Text="Item Name" runat="server"></asp:Literal></li>
@@ -33,8 +34,10 @@
                         <div class="Btn-Type4-wp">
                             <div class="Btn-Tp4-L">
                                 <div class="Btn-Tp4-R">
-                                    <div class="Btn-Tp4-M"><span>
-                                        <asp:LinkButton ID="lnkbtnSearch" runat="server" OnClick="lnkbtnSearch_Click"></asp:LinkButton></span></div>
+                                    <div class="Btn-Tp4-M">
+                                        <span>
+                                            <asp:LinkButton ID="lnkbtnSearch" runat="server" OnClick="lnkbtnSearch_Click"></asp:LinkButton></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,10 +79,10 @@
             <asp:ListView ID="lvItemList" runat="server" ItemPlaceholderID="iphItemPlaceHolderID">
                 <LayoutTemplate>
                     <table class="TypeA">
-                    <col width="120" />
-                    <col width="120" />
-                    <col width="120" />
-                    <col width="130" />
+                        <col width="120" />
+                        <col width="120" />
+                        <col width="120" />
+                        <col width="130" />
                         <tbody>
                             <tr id="iphItemPlaceHolderID" runat="server"></tr>
                         </tbody>
@@ -95,31 +98,31 @@
                             <asp:Literal ID="ltSubTypeName" runat="server" Text='<% #Eval("grSubTypeName")%>'></asp:Literal></td>
                         <td class="TbTxtCenter">
                             <asp:LinkButton runat="server" ID="Edit" CommandName="edit" Text="Edit"></asp:LinkButton>
-                            </td>
+                        </td>
                     </tr>
                 </ItemTemplate>
                 <EditItemTemplate>
                     <td class="TbTxtCenter">
-                            <asp:DropDownList runat="server" ID="ddlEditGroup"></asp:DropDownList>
+                        <asp:DropDownList runat="server" ID="ddlEditGroup"></asp:DropDownList>
                         <td class="TbTxtCenter">
                             <asp:DropDownList runat="server" ID="ddlEditType"></asp:DropDownList>
-                        <td class="TbTxtCenter">
-                            <asp:TextBox runat="server" ID="txtEditSubType"></asp:TextBox>
-                        <td class="TbTxtCenter">
-                            <asp:LinkButton runat="server" ID="lnkUpdate" Text="Update"></asp:LinkButton>
-                            <asp:LinkButton runat="server" ID="lnkDelete" Text="Delete"></asp:LinkButton>
-                        </td>
+                            <td class="TbTxtCenter">
+                                <asp:TextBox runat="server" ID="txtEditSubType"></asp:TextBox>
+                                <td class="TbTxtCenter">
+                                    <asp:LinkButton runat="server" ID="lnkUpdate" Text="Update"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" ID="lnkDelete" Text="Delete"></asp:LinkButton>
+                                </td>
                 </EditItemTemplate>
                 <InsertItemTemplate>
                     <td class="TbTxtCenter">
-                            <asp:DropDownList runat="server" ID="ddlGroup"></asp:DropDownList>
+                        <asp:DropDownList runat="server" ID="ddlGroup"></asp:DropDownList>
                         <td class="TbTxtCenter">
                             <asp:DropDownList runat="server" ID="ddlType"></asp:DropDownList>
-                        <td class="TbTxtCenter">
-                            <asp:TextBox runat="server" ID="txtSubType"></asp:TextBox>
-                        <td class="TbTxtCenter">
-                            <asp:LinkButton runat="server" ID="lnkCreate" Text="Create"></asp:LinkButton>
-                        </td>
+                            <td class="TbTxtCenter">
+                                <asp:TextBox runat="server" ID="txtSubType"></asp:TextBox>
+                                <td class="TbTxtCenter">
+                                    <asp:LinkButton runat="server" ID="lnkCreate" Text="Create"></asp:LinkButton>
+                                </td>
                 </InsertItemTemplate>
                 <EmptyDataTemplate>
                     <table class="TypeA">
@@ -135,8 +138,8 @@
             <div>
                 <span id="spanPageNavi" runat="server" style="width: 100%"></span>
             </div>
-            <asp:HiddenField ID="hfCurrentPage" runat="server"/>
-            <asp:ImageButton ID="imgbtnPageMove" runat="server" ImageUrl="~/Common/Images/Common/blank.gif" onClick="imgbtnPageMove_Click"/>
+            <asp:HiddenField ID="hfCurrentPage" runat="server" />
+            <asp:ImageButton ID="imgbtnPageMove" runat="server" ImageUrl="~/Common/Images/Common/blank.gif" OnClick="imgbtnPageMove_Click" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <table class="TypeA">
@@ -148,7 +151,7 @@
         </colgroup>
         <tr>
             <td>
-               <%-- <asp:DropDownList runat="server" ID="ddlInsertGr">
+                <%-- <asp:DropDownList runat="server" ID="ddlInsertGr">
                     <asp:ListItem Text="IT Department" Value="1"></asp:ListItem>
                     <asp:ListItem Text="IT Department" Value="1"></asp:ListItem>
                 </asp:DropDownList>--%>
