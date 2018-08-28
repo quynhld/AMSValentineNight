@@ -2,6 +2,17 @@
 
 <%@ MasterType VirtualPath="~/Common/Template/MainFrame.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphContent" runat="server">
+    <script language="javascript" type="text/javascript">
+    <!--//
+    function fnMovePage(intPageNo) {
+        if (intPageNo == null) {
+            intPageNo = 1;
+        }
+
+        document.getElementById("<%=hfCurrentPage.ClientID%>").value = intPageNo;
+        <%=Page.GetPostBackEventReference(imgbtnPageMove)%>;
+    }
+    </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <Triggers>
         </Triggers>
@@ -170,6 +181,8 @@
             <div>
                 <span id="spanPageNavi" runat="server" style="width: 100%"></span>
             </div>
+            <asp:HiddenField ID="hfCurrentPage" runat="server" />
+            <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/Common/Images/Common/blank.gif" OnClick="ImageButton1_Click" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <table class="TypeA">
