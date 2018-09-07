@@ -118,5 +118,128 @@ namespace KN.Inventory.Dac
             dtb = SPExecute.ExecReturnMulti("KN_USP_IVN_IN_SELECT_PAGING_BY_IVNID", objParams);
             return dtb;
         }
+<<<<<<< .mine
+
+        #endregion
+
+
+        public static object[] DeleteRentalMngReasonInfo(string strRentCd, string strFeeTy, string strUserSeq, string strMngYear, string strMngMM,
+                                                 string strInsCompNo, string strInsMemNo, string strInsMemIp)
+        {
+            object[] objReturn = new object[2];
+            object[] objParams = new object[8];
+
+            objParams[0] = strRentCd;
+            objParams[1] = strFeeTy;
+            objParams[2] = strUserSeq;
+            objParams[3] = strMngYear;
+            objParams[4] = strMngMM;
+            objParams[5] = strInsCompNo;
+            objParams[6] = strInsMemNo;
+            objParams[7] = strInsMemIp;
+
+            objReturn = SPExecute.ExecReturnNo("KN_USP_RES_DELETE_RENTALMNGREASONINFO_M00", objParams);
+            
+            return objReturn;
+        }
+
+        //quynhld----------------------------------------------
+        public static object[] insertCategory(string groupID, string groupName, string grTypeID, string grTypeName, string grSubTypeID, string grSubTypeName)
+        {
+            object[] objReturn = new object[2];
+            object[] objParams = new object[6];
+
+            objParams[0] = groupID;
+            objParams[1] = groupName;
+            objParams[2] = grTypeID;
+            objParams[3] = grTypeName;
+            objParams[4] = grSubTypeID;
+            objParams[5] = grSubTypeName;
+
+            objReturn = SPExecute.ExecReturnNo("KN_USP_IVN_INSERT_CATEGORY", objParams);
+            return objReturn;
+        }
+
+        public static DataSet selectCategory(int pageSize, int pageNow)
+        {
+            DataSet ds = new DataSet();
+            object[] objParams = new object[2];
+            objParams[0] = pageSize;
+            objParams[1] = pageNow;
+            ds = SPExecute.ExecReturnMulti("KN_USP_IVN_SELECT_CATEGORY", objParams);
+            return ds;
+        }
+        public static DataSet selectInDetailsCategory(int pageSize, int pageNow)
+        {
+            DataSet ds = new DataSet();
+            object[] objParams = new object[2];
+            objParams[0] = pageSize;
+            objParams[1] = pageNow;
+            ds = SPExecute.ExecReturnMulti("KN_USP_IVN_IN_DETAILS_SELECT_CATEGORY", objParams);
+            return ds;
+        }
+        public static DataSet selectInCategory(int pageSize, int pageNow)
+        {
+            DataSet ds = new DataSet();
+            object[] objParams = new object[2];
+            objParams[0] = pageSize;
+            objParams[1] = pageNow;
+            ds = SPExecute.ExecReturnMulti("KN_USP_IVN_IN_SELECT_CATEGORY", objParams);
+            return ds;
+        }
+||||||| .r36
+
+        #endregion
+
+
+        public static object[] DeleteRentalMngReasonInfo(string strRentCd, string strFeeTy, string strUserSeq, string strMngYear, string strMngMM,
+                                                 string strInsCompNo, string strInsMemNo, string strInsMemIp)
+        {
+            object[] objReturn = new object[2];
+            object[] objParams = new object[8];
+
+            objParams[0] = strRentCd;
+            objParams[1] = strFeeTy;
+            objParams[2] = strUserSeq;
+            objParams[3] = strMngYear;
+            objParams[4] = strMngMM;
+            objParams[5] = strInsCompNo;
+            objParams[6] = strInsMemNo;
+            objParams[7] = strInsMemIp;
+
+            objReturn = SPExecute.ExecReturnNo("KN_USP_RES_DELETE_RENTALMNGREASONINFO_M00", objParams);
+            
+            return objReturn;
+        }
+
+        //quynhld----------------------------------------------
+        public static object[] insertCategory(string groupID, string groupName, string grTypeID, string grTypeName, string grSubTypeID, string grSubTypeName)
+        {
+            object[] objReturn = new object[2];
+            object[] objParams = new object[6];
+
+            objParams[0] = groupID;
+            objParams[1] = groupName;
+            objParams[2] = grTypeID;
+            objParams[3] = grTypeName;
+            objParams[4] = grSubTypeID;
+            objParams[5] = grSubTypeName;
+
+            objReturn = SPExecute.ExecReturnNo("KN_USP_IVN_INSERT_CATEGORY", objParams);
+            return objReturn;
+        }
+
+        public static DataSet selectCategory(int pageSize, int pageNow)
+        {
+            DataSet ds = new DataSet();
+            object[] objParams = new object[2];
+            objParams[0] = pageSize;
+            objParams[1] = pageNow;
+            ds = SPExecute.ExecReturnMulti("KN_USP_IVN_SELECT_CATEGORY", objParams);
+            return ds;
+        }
+        
+=======
+>>>>>>> .r56
     }
 }
