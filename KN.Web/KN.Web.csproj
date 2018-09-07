@@ -221,8 +221,6 @@
     <Content Include="Common\Images\Common\FIP-WpBg.gif" />
     <Content Include="Common\Images\Common\FIP-WpBg2.gif" />
     <Content Include="Common\Images\Common\FIP-WpBg3.gif" />
-    <Content Include="Common\Images\Common\foot-copy.gif" />
-    <Content Include="Common\Images\Common\footer.gif" />
     <Content Include="Common\Images\Common\home.gif" />
     <Content Include="Common\Images\Common\icon01.gif" />
     <Content Include="Common\Images\Common\icon2.gif" />

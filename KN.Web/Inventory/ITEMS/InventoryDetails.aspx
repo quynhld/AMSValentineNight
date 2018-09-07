@@ -127,7 +127,7 @@
                                 <div class="Btn-Tp3-R">
                                     <div class="Btn-Tp3-M">
                                         <span>
-                                            <asp:LinkButton ID="lnkbtnSave" Text="Save" runat="server" OnClick="lnkbtnSave_Click"></asp:LinkButton></span>
+                                            <asp:LinkButton ID="lnkbtnSave" Text="Update" runat="server" OnClick="lnkbtnSave_Click"></asp:LinkButton></span>
                                     </div>
                                 </div>
                             </div>
