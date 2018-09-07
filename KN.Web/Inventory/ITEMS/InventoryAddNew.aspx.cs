@@ -17,6 +17,8 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
+using KN.Inventory;
+using KN.Inventory.Biz;
 
 namespace KN.Web.Inventory
 {
@@ -24,16 +26,6 @@ namespace KN.Web.Inventory
     {
         StringBuilder sbPageNavi = new StringBuilder();
         PageNoListUtil pageUtil = new PageNoListUtil();
-        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TempDBConnection"].ToString());
-
-        public string DATA_APT = CommValue.RENTAL_VALUE_APT;
-        public string DATA_APTSTORE = CommValue.RENTAL_VALUE_APTSHOP;
-
-        string strIvnID = string.Empty;
-
-        DataTable dtItemInfo = new DataTable();
-        DataTable dtInInfo = new DataTable();
-        DataTable dtOutInfo = new DataTable();  
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,11 +36,7 @@ namespace KN.Web.Inventory
                 if (!IsPostBack)
                 {
                     InitControls();
-                    if (Request.QueryString["ID"] != null)
-                    {
-                        strIvnID = Request.QueryString["ID"].ToString();
-                        loadData(strIvnID);
-                    }
+                    bindata();
                 }
             }
             catch (Exception ex)
@@ -64,37 +52,7 @@ namespace KN.Web.Inventory
 
         protected void lnkbtnSave_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-                string cmdStr = string.Empty;
-                int IVN_ID = 0;
-                if (conn.State != ConnectionState.Open)
-                {
-                    conn.Open();
-                }
-
-                if(Request.QueryString["ID"] == null)
-                {
-                    cmdStr = string.Format(stringInsertCommand(), getParameter());
-                    cmd.CommandText = cmdStr;
-                    IVN_ID = (int)cmd.ExecuteScalar();
-                    Response.Redirect(string.Format("~/Inventory/ITEMS/InventoryAddNew.aspx?ID=={0}", IVN_ID));
-                }
-                else
-                {
-                    cmdStr = string.Format(stringUpdateCommand(),getParameterForUpdateCommand());
-                    cmd.CommandText = cmdStr;
-                    cmd.ExecuteNonQuery();
-                }
-
-                
-            }
-            catch (Exception ex)
-            {
-                conn.Close();
-            }
+            object[] tmpObj = InventoryBiz.insertItem(getParameter());
         }
 
         protected void lnkBtnImportExcel_Click(object sender, EventArgs e)
@@ -182,35 +140,7 @@ namespace KN.Web.Inventory
             //strInsert = string.Format(strInsert, insertParams);
             return strInsert;
         }
-
-        private string stringUpdateCommand()
-        {
-            string strUpdate = string.Empty;
-            strUpdate = @"UPDATE [dbo].[Inventory_Items]
-                           SET [Item_Name]      = N'{0}'  --<Item_Name, nvarchar(500),> 1
-                              ,[Item_EName]     = N'{1}' --<Item_EName, nvarchar(500),> 2
-                              ,[Item_Type]      = N'{2}' --<Item_Type, nvarchar(500),> 3
-                              ,[Item_LC_Area]   = N'{3}' --<Item_LC_Area, nvarchar(50),> 4
-                              ,[Item_LC_Zone]   = N'{4}' --<Item_LC_Zone, nvarchar(50),> 5
-                              ,[Item_LC_No]     = N'{5}' --<Item_LC_No, nvarchar(50),> 6
-                              ,[Item_Size_W]    = {6} --<Item_Size_W, decimal(18,0),> 7
-                              ,[Item_Size_H]    = {7} --<Item_Size_H, decimal(18,0),>8
-                              ,[Item_Size_L]    = {8} --<Item_Size_Wide, decimal(18,0),> 9
-                              ,[Item_Size_Ra]   = {9} --<Item_Size_Ra, decimal(18,0),> 10
-                              ,[Item_Amout]     = {10} --<Item_Amout, decimal(18,2),> 11
-                              ,[Item_Photo]     = N'{11}' --<Item_Photo, nvarchar(500),> 12
-                              ,[Item_owner]     = N'{12}' --<Item_owner, nvarchar(500),> 13
-                              ,[Item_owner_ID]  = {13} --<Item_owner_ID, int,> 14
-                              ,[Item_Group_ID]  = {14} --<Item_Group_ID, int,> 15
-                              ,[Item_Group_Name] = N'{15}' --<Item_Group_Name, nvarchar(500),> 16
-                              ,[Item_Status]    = '{16}' --<Item_Status, bit,> 17
-                              ,[Item_Model]     = N'{17}' --<Item_Model, nvarchar(500),> 18
-                              ,[ItemUnit]       = N'{18}' --<ItemUnit, nvarchar(50),> 19
-                              ,[ModDate]        = '{19}' --<ModDate, datetime,> 22
-                              ,[ModBy]          = '{20}' --<ModBy, nvarchar(500),> 23
-                                 WHERE IVN_ID = {21}";
-            return strUpdate;
-        }
+        
 
         private object[] getParameter()
         {
@@ -270,14 +200,14 @@ namespace KN.Web.Inventory
             insertParams[18] = txtIVTUnit.Text;
             insertParams[19] = DateTime.Now;
             insertParams[20] = strInsMemIP;
-            
+
             if (fuIvtImage.HasFile)
             {
                 try
                 {
                     string strImgFilePath = Server.MapPath(string.Format("~//InventoryImg//{0}", fuIvtImage.FileName));
                     fuIvtImage.SaveAs(strImgFilePath);
-                    insertParams[11] = fuIvtImage.FileName;
+                    insertParams[11] = "~//InventoryImg//" + fuIvtImage.FileName;
                 }
                 catch (Exception ex)
                 {
@@ -363,69 +293,32 @@ namespace KN.Web.Inventory
             return insertParams;
         }
 
-        private void loadData(string id)
+        private void bindata()
         {
-            //get items info
-            string strGetItemInfo = string.Format("select * from Inventory_Items where IVN_ID={0}", id);
-            SqlCommand cmdgetItemInfo = new System.Data.SqlClient.SqlCommand(strGetItemInfo);
-            cmdgetItemInfo.Connection = conn;
-            SqlDataAdapter ItemAdapInf = new System.Data.SqlClient.SqlDataAdapter();
-            ItemAdapInf.SelectCommand = cmdgetItemInfo;
-
-
-            //get in info
-            string getInInfo = string.Format("select * from Inventory_IN where IVN_IN_ID in (select INV_IN_ID from Inventory_IN_Details where IVN_ID = {0})", id);
-            SqlCommand cmdGetInInfo = new System.Data.SqlClient.SqlCommand(getInInfo);
-            cmdGetInInfo.Connection = conn;
-            SqlDataAdapter InAdap = new System.Data.SqlClient.SqlDataAdapter();
-            InAdap.SelectCommand = cmdgetItemInfo;
-
-            //get out info
-            string getOutInfo = string.Format("select * from Inventory_OUT where INV_OUT_ID in (select INV_OUT_ID from Inventory_OUT_Details where INV_ID = {0})", id);
-            SqlCommand cmdGetOutInfo = new System.Data.SqlClient.SqlCommand(getOutInfo);
-            cmdGetOutInfo.Connection = conn;
-            SqlDataAdapter OutAdap = new System.Data.SqlClient.SqlDataAdapter();
-            OutAdap.SelectCommand = cmdGetOutInfo;
-            try
+            int IVNID = 0;
+            if (Request.QueryString["ID"] != null)
             {
-                if (conn.State != ConnectionState.Open)
-                {
-                    conn.Open();
-                }
-
-                ItemAdapInf.Fill(dtItemInfo);
-                InAdap.Fill(dtInInfo);
-                OutAdap.Fill(dtOutInfo);
-
-                bindata(dtItemInfo, dtInInfo, dtOutInfo);
+                IVNID = Convert.ToInt32(Request.QueryString["ID"].ToString());
             }
-            catch (Exception ex)
+            DataTable Item = new DataTable();
+            Item = InventoryBiz.selectOneItem(IVNID);
+            if (Item.Rows.Count > 0)
             {
-                conn.Close();
+                txtIvtArea.Text = (Item.Rows[0]["Item_LC_Area"] == null ? string.Empty : Item.Rows[0]["Item_LC_Area"].ToString());
+                txtIVTCategory.Text = (Item.Rows[0]["Item_Group_Name"] == null ? string.Empty : Item.Rows[0]["Item_Group_Name"].ToString());
+                txtIVTEngName.Text = (Item.Rows[0]["Item_EName"] == null ? string.Empty : Item.Rows[0]["Item_EName"].ToString());
+                txtIvtHeight.Text = (Item.Rows[0]["Item_Size_H"] == null ? string.Empty : Item.Rows[0]["Item_Size_H"].ToString());
+                txtIVTModel.Text = (Item.Rows[0]["Item_Model"] == null ? string.Empty : Item.Rows[0]["Item_Model"].ToString());
+                txtIvtNo.Text = (Item.Rows[0]["Item_LC_No"] == null ? string.Empty : Item.Rows[0]["Item_LC_No"].ToString());
+                txtIvtQuantity.Text = (Item.Rows[0]["Item_Amout"] == null ? string.Empty : Item.Rows[0]["Item_Amout"].ToString());
+                txtIvtRadius.Text = (Item.Rows[0]["Item_Size_Ra"] == null ? string.Empty : Item.Rows[0]["Item_Size_Ra"].ToString());
+                txtIVTUnit.Text = (Item.Rows[0]["ItemUnit"] == null ? string.Empty : Item.Rows[0]["ItemUnit"].ToString());
+                txtIVTViName.Text = (Item.Rows[0]["Item_Name"] == null ? string.Empty : Item.Rows[0]["Item_Name"].ToString());
+                txtIvtWide.Text = (Item.Rows[0]["Item_Size_L"] == null ? string.Empty : Item.Rows[0]["Item_Size_L"].ToString());
+                txtIvtWidth.Text = (Item.Rows[0]["Item_Size_W"] == null ? string.Empty : Item.Rows[0]["Item_Size_W"].ToString());
+                txtIvtZone.Text = (Item.Rows[0]["Item_LC_Zone"] == null ? string.Empty : Item.Rows[0]["Item_LC_Zone"].ToString());
+                IvtImage.ImageUrl = (Item.Rows[0]["Item_Photo"] == null ? string.Empty : Item.Rows[0]["Item_Photo"].ToString());
             }
-        }
-        private void bindata(DataTable Item, DataTable dtbIn, DataTable dtbOut)
-        {
-            txtIvtArea.Text = (Item.Rows[0]["Item_LC_Area"] == null ? string.Empty : Item.Rows[0]["Item_LC_Area"].ToString());
-            txtIVTCategory.Text = (Item.Rows[0]["Item_Group_Name"] == null ? string.Empty : Item.Rows[0]["Item_Group_Name"].ToString());
-            txtIVTEngName.Text = (Item.Rows[0]["Item_EName"] == null ? string.Empty : Item.Rows[0]["Item_EName"].ToString());
-            txtIvtHeight.Text = (Item.Rows[0]["Item_Size_H"] == null ? string.Empty : Item.Rows[0]["Item_Size_H"].ToString());
-            txtIVTModel.Text = (Item.Rows[0]["Item_Model"] == null ? string.Empty : Item.Rows[0]["Item_Model"].ToString());
-            txtIvtNo.Text = (Item.Rows[0]["Item_LC_No"] == null ? string.Empty : Item.Rows[0]["Item_LC_No"].ToString());
-            txtIvtQuantity.Text = (Item.Rows[0]["Item_Amout"] == null ? string.Empty : Item.Rows[0]["Item_Amout"].ToString());
-            txtIvtRadius.Text = (Item.Rows[0]["Item_Size_Ra"] == null ? string.Empty : Item.Rows[0]["Item_Size_Ra"].ToString());
-            txtIVTUnit.Text = (Item.Rows[0]["ItemUnit"] == null ? string.Empty : Item.Rows[0]["ItemUnit"].ToString());
-            txtIVTViName.Text = (Item.Rows[0]["Item_Name"] == null ? string.Empty : Item.Rows[0]["Item_Name"].ToString());
-            txtIvtWide.Text = (Item.Rows[0]["Item_Size_L"] == null ? string.Empty : Item.Rows[0]["Item_Size_L"].ToString());
-            txtIvtWidth.Text = (Item.Rows[0]["Item_Size_W"] == null ? string.Empty : Item.Rows[0]["Item_Size_W"].ToString());
-            txtIvtZone.Text = (Item.Rows[0]["Item_LC_Zone"] == null ? string.Empty : Item.Rows[0]["Item_LC_Zone"].ToString());
-            IvtImage.ImageUrl = (Item.Rows[0]["Item_Photo"] == null ? string.Empty : Item.Rows[0]["Item_Photo"].ToString());
-
-            lsvIN.DataSource = dtbIn;
-            lsvIN.DataBind();
-
-            lsvOut.DataSource = dtbOut;
-            lsvOut.DataBind();
         }
     }
 

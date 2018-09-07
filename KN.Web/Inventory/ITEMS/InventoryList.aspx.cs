@@ -14,16 +14,15 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Configuration;
 
-using KN.Settlement.Biz;
+using KN.Inventory.Biz;
 
 namespace KN.Web.Inventory
 {
     public partial class InventoryList : BasePage
     {
-        SqlConnection conn = new SqlConnection();
-        SqlCommand cmd = new SqlCommand();
-        SqlDataAdapter adap = new SqlDataAdapter();
-        
+        StringBuilder sbPageNavi = new StringBuilder();
+        PageNoListUtil pageUtil = new PageNoListUtil();
+        int intPageNo = CommValue.NUMBER_VALUE_0;
         protected void Page_Load(object sender, EventArgs e)
         {
             // 세션체크
@@ -32,8 +31,9 @@ namespace KN.Web.Inventory
             {
                 if (!IsPostBack)
                 {
-                        InitControls();
-                        LoadData(txtSearchNm.Text);
+                    CheckParams();
+                    InitControls();
+                    LoadData(txtSearchNm.Text);
                 }
             }
             catch (Exception ex)
@@ -46,33 +46,16 @@ namespace KN.Web.Inventory
         }
         private void LoadData(string itemname)
         {
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = ConfigurationManager.ConnectionStrings["TempDBConnection"].ConnectionString;
-            string commandText = "select * from inventory_items";
-            if(itemname != string.Empty  )
+
+            DataSet ds = InventoryBiz.selectAllItem(CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfCurrentPage.Value), hfStartDt.Value.Replace("-", ""), hfEndDt.Value.Replace("-", ""));
+            lvItemList.DataSource = ds.Tables[1];
+            lvItemList.DataBind();
+            if (ds.Tables[1].Rows.Count > 0)
             {
-                commandText = string.Format("select * from inventory_items where item_name like '%{0}%'",itemname)  ; 
+                sbPageNavi.Append(pageUtil.MakePageIndex(Int32.Parse(hfCurrentPage.Value), CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(ds.Tables[0].Rows[0]["TotalCnt"].ToString())
+                    , TextNm["FIRST"], TextNm["END"], TextNm["PREV"], TextNm["NEXT"]));
+                spanPageNavi.InnerHtml = sbPageNavi.ToString();
             }
-            cmd.CommandText = commandText ;
-            cmd.Connection = conn ;
-            DataSet ds = new DataSet();
-            adap.SelectCommand = cmd ;
-            try
-            {
-                if (conn.State != ConnectionState.Open)
-                {
-                    conn.Open();
-                }
-                adap.Fill(ds);
-                lvItemList.DataSource = ds.Tables[0];
-                lvItemList.DataBind();
-            }
-            catch(Exception ex)
-            {
-                conn.Close();
-            }
-            
-            //lvItemList
               
         }
 
@@ -90,7 +73,24 @@ namespace KN.Web.Inventory
         {
             Response.Redirect("~/Inventory/ITEMS/InventoryCommCode.aspx");
         }
-        
+        private void CheckParams()
+        {
+            if (!string.IsNullOrEmpty(hfCurrentPage.Value))
+            {
+                intPageNo = Int32.Parse(hfCurrentPage.Value);
+                hfCurrentPage.Value = intPageNo.ToString();
+            }
+            else
+            {
+                intPageNo = CommValue.BOARD_VALUE_DEFAULTPAGE;
+                hfCurrentPage.Value = intPageNo.ToString();
+            }
+        }
+
+        protected void imgbtnPageMove_Click(object sender, ImageClickEventArgs e)
+        {
+            LoadData(txtSearchNm.Text);
+        }
     }
 
 }

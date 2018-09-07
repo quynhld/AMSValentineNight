@@ -57,7 +57,7 @@ namespace KN.Web.Inventory
        
         private void LoadData()
         {
-            cmd.CommandText = stringSelectPaging(CommValue.BOARD_VALUE_PAGESIZE,Int32.Parse(hfCurrentPage.Value), hfStartDt.Value.Replace("-", ""), hfEndDt.Value.Replace("-", ""));
+            cmd.CommandText = stringSelectPaging(CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfCurrentPage.Value), hfStartDt.Value.Replace("-", ""), hfEndDt.Value.Replace("-", ""));
             cmd.Connection = conn;
 
             adapter.SelectCommand = cmd;
