@@ -124,10 +124,9 @@
                         <td class="TbTxtCenter">
                             <asp:Literal ID="ltIvtLocation" runat="server" Text='<% #Eval("Item_LC_Area")%>'></asp:Literal></td>
                         <td class="TbTxtCenter">
-                            <div class="zoom">
-                                <asp:Image ID="imgIvtImage" runat="server" ImageUrl='<%# Eval("Item_Photo").ToString() %>'></asp:Image>
+                            <div class="zoom" style='width=60px;height=60px; background-image:url(<%# Eval("Item_Photo") %>)'></div>
+                            <asp:Image ID="imgIvtImage" runat="server"  style="width:60px;height:60px;" ImageUrl='<%# Eval("Item_Photo").ToString() %>'></asp:Image>
                         </td>
-                        </div>
                         <td class="TbTxtCenter">
                             <asp:Literal ID="ltIvtSize" runat="server" Text='<% #Eval("Item_Size_W")%>'></asp:Literal></td>
                         <td class="TbTxtCenter">

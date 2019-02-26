@@ -15,7 +15,7 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Configuration;
 
-using KN.Settlement.Biz;
+using KN.Inventory.Biz;
 
 namespace KN.Web.Inventory
 {
@@ -25,14 +25,11 @@ namespace KN.Web.Inventory
         SqlCommand cmd = new SqlCommand();
         string strSelect = string.Empty;
         SqlDataAdapter adapter = new SqlDataAdapter();
-        //conn.ConnectionString = ConfigurationManager.ConnectionStrings["TempDBConnection"].ConnectionString;
         DataSet ds = new DataSet();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // 세션체크
             AuthCheckLib.CheckSession();
-
             try
             {
                 if (!IsPostBack)
@@ -53,35 +50,16 @@ namespace KN.Web.Inventory
 
         private void LoadData()
         {
-            string strSelectOut = string.Empty;
-            string strSelectOutDetail = string.Empty;
+
             DataTable dtbOut = new DataTable();
             DataTable dtbOutDetails = new DataTable();
             cmd.Connection = conn;
 
             if (Request.QueryString["outId"] != null && Request.QueryString["outId"].ToString() != string.Empty)
             {
-                cmd.Connection = conn;//set connection
-                //load out
-                strSelectOut = @"SELECT [INV_OUT_ID]
-                                  ,[CreateDate]
-                                  ,[ModifyDate]
-                                  ,[CreateUser]
-                                  ,[ModifyUser]
-                                  ,[UsedFor]
-                                  ,[Note]
-                                  ,[Status]
-                              FROM [dbo].[Inventory_OUT] where INV_OUT_ID = {0}";
-                strSelectOut = string.Format(strSelectOut, Request.QueryString["outId"].ToString());
                 //bind out
-                
-                cmd.CommandText = strSelectOut;
-                if (conn.State != ConnectionState.Open)
-                {
-                    conn.Open();
-                }
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtbOut);
+                dtbOut = InventoryBiz.IVN_OUT_SELECT_BY_ID(Convert.ToInt32(Request.QueryString["outId"]));
+
                 //set text 
                 txtUsedFor.Text = dtbOut.Rows[0]["UsedFor"] != null ? dtbOut.Rows[0]["UsedFor"].ToString():string.Empty;
                 txtNote.Text = dtbOut.Rows[0]["Note"] != null ? dtbOut.Rows[0]["UsedFor"].ToString() : string.Empty;
@@ -89,24 +67,10 @@ namespace KN.Web.Inventory
                 ltCreateDate.Text = dtbOut.Rows[0]["CreateDate"].ToString();
                 ltModDate.Text = dtbOut.Rows[0]["ModifyDate"].ToString();
                 ltBindModBy.Text = dtbOut.Rows[0]["ModifyUser"].ToString();
+                //load details ---KN_USP_IVN_OUT_DETAIL_SELECT_BY_ID
 
-                //load details
-                strSelectOutDetail = @"SELECT details.[ID]
-                                      ,details.[INV_OUT_ID]
-                                      ,details.[INV_ID]
-                                      ,details.[Amount]
-                                      ,details.[Note]
-                                      ,details.[status]
-									  ,i.Item_Name
-                                      ,i.ItemUnit
-                                        FROM [dbo].[Inventory_OUT_Details] details inner join Inventory_Items i on details.INV_ID = i.IVN_ID
-                                        where INV_OUT_ID = {0}";
-                strSelectOutDetail = string.Format(strSelectOutDetail, Request.QueryString["outId"].ToString());
-                cmd.CommandText = strSelectOutDetail;
                 //bind details
-                
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtbOutDetails);
+                dtbOutDetails = InventoryBiz.IVN_OUT_DETAIL_SELECT_BY_ID(Convert.ToInt32(Request.QueryString["outId"]));
                 lvOutDetails.DataSource = dtbOutDetails;
                 lvOutDetails.DataBind();
             }

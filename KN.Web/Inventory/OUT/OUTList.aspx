@@ -41,7 +41,7 @@
             </li>
         </ul>
     </fieldset>    
-    <asp:UpdatePanel ID="upPaymentList" runat="server">
+    <asp:UpdatePanel ID="upOUTList" runat="server">
         <Triggers>
         </Triggers>
         <ContentTemplate>
@@ -105,7 +105,6 @@
 			            <td class="TbTxtCenter"><asp:LinkButton ID="lnkViewDetails"  runat="server" Text="Details"></asp:LinkButton></td>
                     </tr>
                 </ItemTemplate>
-                <EditItemTemplate></EditItemTemplate>
                 <EmptyDataTemplate>
                     <table class="TypeA">
                         <tbody>

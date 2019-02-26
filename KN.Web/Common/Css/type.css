@@ -857,11 +857,9 @@ table tr.endline td{border-bottom:1px solid #B6B6B6;}
 }
 
 .zoom {
-    padding: 50px;
-    background-color: green;
     transition: transform .2s;
-    width: 200px;
-    height: 200px;
+    width: 40px;
+    height: 60px;
     margin: 0 auto;
 }
 

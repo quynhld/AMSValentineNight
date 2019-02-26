@@ -15,6 +15,7 @@ using System.Data.SqlClient;
 using KN.Settlement.Biz;
 using System.Configuration ;
 using KN.Config.Biz;
+using KN.Inventory.Biz;
 
 namespace KN.Web.Inventory
 {
@@ -22,12 +23,6 @@ namespace KN.Web.Inventory
     {
         StringBuilder sbPageNavi = new StringBuilder();
         PageNoListUtil pageUtil = new PageNoListUtil();
-
-        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TempDBConnection"].ConnectionString);
-        SqlCommand cmd = new SqlCommand();
-        string strSelect = string.Empty;
-        SqlDataAdapter adapter = new SqlDataAdapter();
-        //conn.ConnectionString = ConfigurationManager.ConnectionStrings["TempDBConnection"].ConnectionString;
         DataSet ds = new DataSet();
 
         int intPageNo = CommValue.NUMBER_VALUE_0;
@@ -54,32 +49,17 @@ namespace KN.Web.Inventory
         protected void InitControls()
         {
         }
-       
+
         private void LoadData()
         {
-            cmd.CommandText = stringSelectPaging(CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfCurrentPage.Value), hfStartDt.Value.Replace("-", ""), hfEndDt.Value.Replace("-", ""));
-            cmd.Connection = conn;
-
-            adapter.SelectCommand = cmd;
-            try
+            ds = InventoryBiz.INV_OUT_SELECT_PAGING_ALL(CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(hfCurrentPage.Value), hfStartDt.Value.Replace("-", ""), hfEndDt.Value.Replace("-", ""));
+            lvLstOUT.DataSource = ds.Tables[1];
+            lvLstOUT.DataBind();
+            if (ds.Tables[1].Rows.Count > 0)
             {
-                if(conn.State != ConnectionState.Open )
-                {
-                    conn.Open();
-                }
-                adapter.Fill(ds);
-                lvLstOUT.DataSource = ds.Tables[1];
-                lvLstOUT.DataBind();
-                if (ds.Tables[1].Rows.Count > 0)
-                {
-                    sbPageNavi.Append(pageUtil.MakePageIndex(Int32.Parse(hfCurrentPage.Value), CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(ds.Tables[0].Rows[0]["TotalCnt"].ToString())
-                        , TextNm["FIRST"], TextNm["END"], TextNm["PREV"], TextNm["NEXT"]));
-                    spanPageNavi.InnerHtml = sbPageNavi.ToString();
-                }
-            }
-            catch(Exception ex)
-            {
-                conn.Close();
+                sbPageNavi.Append(pageUtil.MakePageIndex(Int32.Parse(hfCurrentPage.Value), CommValue.BOARD_VALUE_PAGESIZE, Int32.Parse(ds.Tables[0].Rows[0]["TotalCnt"].ToString())
+                    , TextNm["FIRST"], TextNm["END"], TextNm["PREV"], TextNm["NEXT"]));
+                spanPageNavi.InnerHtml = sbPageNavi.ToString();
             }
         }
 
@@ -160,7 +140,7 @@ namespace KN.Web.Inventory
 
         protected void lnkbtnSearch_Click(object sender, EventArgs e)
         {
-
+            LoadData(); 
         }
     }
 }

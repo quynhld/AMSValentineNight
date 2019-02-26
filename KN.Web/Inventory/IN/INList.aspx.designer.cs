@@ -13,31 +13,49 @@ namespace KN.Web.Inventory {
     public partial class INList {
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// ltTerm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.Literal ltTerm;
         
         /// <summary>
-        /// ltSearchName control.
+        /// txtStartDt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltSearchName;
+        protected global::System.Web.UI.WebControls.TextBox txtStartDt;
         
         /// <summary>
-        /// txtSearchNm control.
+        /// hfStartDt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchNm;
+        protected global::System.Web.UI.WebControls.HiddenField hfStartDt;
+        
+        /// <summary>
+        /// txtEndDt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEndDt;
+        
+        /// <summary>
+        /// hfEndDt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfEndDt;
         
         /// <summary>
         /// lnkbtnSearch control.
@@ -58,13 +76,22 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.UpdatePanel upINList;
         
         /// <summary>
-        /// ltIvnInId control.
+        /// ltSeq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltIvnInId;
+        protected global::System.Web.UI.WebControls.Literal ltSeq;
+        
+        /// <summary>
+        /// ltCreator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltCreator;
         
         /// <summary>
         /// ltCreateDate control.
@@ -76,40 +103,13 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.Literal ltCreateDate;
         
         /// <summary>
-        /// ltModifyDate control.
+        /// ltUserFor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltModifyDate;
-        
-        /// <summary>
-        /// ltCreateUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltCreateUser;
-        
-        /// <summary>
-        /// ltModifyUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltModifyUser;
-        
-        /// <summary>
-        /// ltUsedFor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltUsedFor;
+        protected global::System.Web.UI.WebControls.Literal ltUserFor;
         
         /// <summary>
         /// ltNote control.
@@ -121,49 +121,13 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.Literal ltNote;
         
         /// <summary>
-        /// ltStatus control.
+        /// lvLstIN control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltStatus;
-        
-        /// <summary>
-        /// ltDetails control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltDetails;
-        
-        /// <summary>
-        /// LtEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LtEdit;
-        
-        /// <summary>
-        /// LtRemove control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LtRemove;
-        
-        /// <summary>
-        /// lvPaymentList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lvPaymentList;
+        protected global::System.Web.UI.WebControls.ListView lvLstIN;
         
         /// <summary>
         /// spanPageNavi control.
@@ -184,15 +148,6 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfCurrentPage;
         
         /// <summary>
-        /// ImageButton1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
-        
-        /// <summary>
         /// imgbtnPageMove control.
         /// </summary>
         /// <remarks>
@@ -200,24 +155,6 @@ namespace KN.Web.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgbtnPageMove;
-        
-        /// <summary>
-        /// imgbtnDetailview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgbtnDetailview;
-        
-        /// <summary>
-        /// lnkAddNew control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkAddNew;
         
         /// <summary>
         /// Master property.

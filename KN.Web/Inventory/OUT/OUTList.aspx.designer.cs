@@ -67,13 +67,13 @@ namespace KN.Web.Inventory {
         protected global::System.Web.UI.WebControls.LinkButton lnkbtnSearch;
         
         /// <summary>
-        /// upPaymentList control.
+        /// upOUTList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upPaymentList;
+        protected global::System.Web.UI.UpdatePanel upOUTList;
         
         /// <summary>
         /// ltSeq control.

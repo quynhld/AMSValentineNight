@@ -91,6 +91,8 @@ namespace KN.Web.Inventory
         {
             LoadData(txtSearchNm.Text);
         }
+
+
     }
 
 }
